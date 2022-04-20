@@ -28,6 +28,12 @@ body {
     background: #E5E5E5;
 }
 
+.screen_second {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .quizz_title {
     width: 100%;
     height: 227px;
@@ -56,7 +62,7 @@ body {
 
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
     background: #FFFFFF;
-    padding: 25px 36px 36px 36px;
+    padding: 25px 36px 15px 36px;
 
     max-width: 759px;
     margin-bottom: 42px;
@@ -81,6 +87,8 @@ body {
 .quizz-question div {
     width: 330px;
     height: fit-content;
+    cursor: pointer;
+    
 }
 
 .quizz-question div:nth-child(2n+1) {
@@ -103,5 +111,16 @@ body {
     color: #000000;
 
     margin-bottom: 19px;
+}
 
+.answer_red {
+    color: #FF4B4B;
+}
+
+.answer_green {
+    color: #009C22;
+}
+
+.answer_opacity {
+    opacity: 0.3;
 }
