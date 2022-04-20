@@ -1,0 +1,10 @@
+body
+    header
+        .screen_first
+            .my-quizzes
+            .all-quizzes
+        .screen_second
+        .screen_third
+    main
+    footer
+        scripts
