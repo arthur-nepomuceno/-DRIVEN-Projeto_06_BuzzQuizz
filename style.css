@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 
-button:hover {
+.quizz, button:hover {
     cursor: pointer;
 }
 

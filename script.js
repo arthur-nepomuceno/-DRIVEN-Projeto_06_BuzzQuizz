@@ -272,3 +272,31 @@ function deuErrado(erro) {
     console.log("Erroooou " + erro.response.status);
     console.log(erro.response.data);
 }
+
+//=======================================================================================
+//==================================== FIRST SCREEN  ====================================
+//=======================================================================================
+const c = console.log.bind(document)
+
+function getAllQuizzes() {
+    const promise = axios.get(API);
+    promise.then(renderAllQuizzes);
+    promise.then(deuErrado);
+}
+
+function renderAllQuizzes(response) {
+    const allQuizzesList = response.data;
+    const allQuizzesHTML = document.querySelector(".all-quizzes");
+    renderQuizzesList(allQuizzesList, allQuizzesHTML);
+}
+
+function renderQuizzesList(arr, documentObject) {
+    for(let i = 0; i < arr.length; i++) {
+        documentObject.innerHTML += `<div class="quizz">                 
+                                        <img src=${arr[i].image}>
+                                        <img class="black-mask" src="./img/black-mask.png" style="height: 60%; bottom: 0;">
+                                        <p>${arr[i].title}</p>
+                                    </div>`
+    }
+}
+
