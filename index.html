@@ -20,15 +20,20 @@
                 <p>Você não criou nenhum quizz ainda :(</p>
                 <button>Criar Quizz</button>
             </div>
-            <button onclick="getAllQuizzes()">test button: get all quizzes</button>
-            <div class="my-quizzes"></div>
+            <!--<button onclick="getAllQuizzes()">test button: get all quizzes</button>
+            <button onclick="getUserQuizzes()">test button: get user quizzes</button>-->
+            <div class="user-quizzes">
+                <p>Seus Quizzes<ion-icon name="add-circle-sharp"></ion-icon></p>
+                <div class="quizzes">
+                    <!--here goes all user quizzes-->
+                </div>
+            </div>
             <div class="all-quizzes">
-                <p>Todos os Quizzes</p>                                
-                <!--<div class="quizz">                 
-                    <img src="./img/test-img-simpsons.png">
-                    <img class="black-mask" src="./img/black-mask.png" style="height: 60%; bottom: 0;">
-                    <p>Acerte os personagens corretos dos Simpsons e prove seu amor!</p>
-                </div>-->                                 
+                <p>Todos os Quizzes</p>
+                <div class="quizzes">
+                    <!--here goes all quizzes-->
+                </div>                             
+                                                 
             </div>
         </section>
         <section class="screen_second">
@@ -37,6 +42,8 @@
     </main>
 </body>
 <footer>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>
 </footer>

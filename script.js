@@ -277,16 +277,18 @@ function deuErrado(erro) {
 //==================================== FIRST SCREEN  ====================================
 //=======================================================================================
 const c = console.log.bind(document)
+getAllQuizzes()
+getUserQuizzes()
 
 function getAllQuizzes() {
     const promise = axios.get(API);
     promise.then(renderAllQuizzes);
-    promise.then(deuErrado);
+    promise.catch(deuErrado);
 }
 
 function renderAllQuizzes(response) {
     const allQuizzesList = response.data;
-    const allQuizzesHTML = document.querySelector(".all-quizzes");
+    const allQuizzesHTML = document.querySelector(".all-quizzes > .quizzes");
     renderQuizzesList(allQuizzesList, allQuizzesHTML);
 }
 
@@ -294,9 +296,22 @@ function renderQuizzesList(arr, documentObject) {
     for(let i = 0; i < arr.length; i++) {
         documentObject.innerHTML += `<div class="quizz">                 
                                         <img src=${arr[i].image}>
-                                        <img class="black-mask" src="./img/black-mask.png" style="height: 60%; bottom: 0;">
+                                        <img class="black-mask" src="./img/black-mask.png" style="height: 55%; bottom: 0;">
                                         <p>${arr[i].title}</p>
                                     </div>`
     }
 }
+
+function getUserQuizzes() {
+    const promise = axios.get(API);
+    promise.then(renderUserQuizzes);
+    promise.catch(deuErrado);
+}
+
+function renderUserQuizzes(response) {
+    const userQuizzesList = response.data;
+    const userQuizzesHTML = document.querySelector(".user-quizzes > .quizzes");
+    renderQuizzesList(userQuizzesList, userQuizzesHTML);
+}
+
 
