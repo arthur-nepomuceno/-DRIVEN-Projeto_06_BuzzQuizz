@@ -6,6 +6,10 @@ body
                 button
             .my-quizzes
             .all-quizzes
+                .quizz
+                    img (quizz img)
+                    img (black mask)
+                    p (quizz invitation)
         .screen_second
         .screen_third
     main

@@ -267,7 +267,8 @@ body {
 .all-quizzes {
     width: 1050px;
     height: fit-content;
-    margin-top: 77px;
+    margin-top: 78px;
+    margin-bottom: 78px;
 
     display: flex;
     flex-wrap: wrap;
@@ -294,20 +295,13 @@ body {
     margin-top: 12px;
     border-radius: 5px;
     position: relative;
-
-
-    border: 1px dashed black;
-}
-
-.black-mask {
-    -webkit-mask-image: linear-gradient(black, transparent);
-    mask-image: linear-gradient(black, transparent);
 }
 
 .quizz img {
     width: 340px;
     height: 180px;
     border-radius: 5px;
+    position: absolute;
 }
 
 .quizz p {
@@ -323,4 +317,9 @@ body {
     position: absolute;
     bottom: 8px;
     left: 18px;
+}
+
+.black-mask {
+    -webkit-mask-image: linear-gradient(transparent,black);
+    mask-image: linear-gradient(transparent,black);
 }

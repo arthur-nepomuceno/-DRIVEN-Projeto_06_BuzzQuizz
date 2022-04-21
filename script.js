@@ -3,6 +3,7 @@ let questionAnswered = 0;
 let quizzData;
 let answerIndex =[];
 let id = 2;
+let API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes";
 
 function quizzPage () {
     resetVariables();
