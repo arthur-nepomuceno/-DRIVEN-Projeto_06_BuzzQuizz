@@ -2,10 +2,16 @@ let pontuation = 0;
 let questionAnswered = 0;
 let quizzData;
 let answerIndex =[];
+let id = 2;
 
 function quizzPage () {
-    const id = "2"; //Usarei um único quizz para estilizar tudo e montar o código, depois trocar isso.
+    resetVariables();
+    //Usando um único quizz (id = 2) para estilizar tudo e montar o código, depois trocar isso.
 
+    //Adicionar o Scroll após responder algo
+    //Scroll para resultado também
+    //Falta Versão mobile
+    //Remover espaço demais
 
     const promise = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${id}`)
 
@@ -150,7 +156,7 @@ function renderResult(result) {
             <p>${result.text}</p>
         </div>
         <div class="quizz-result-buttons">
-            <button class="quizz-result-button_answer-again" onclick="quizzAgain()">Reiniciar Quizz</button>
+            <button class="quizz-result-button_answer-again" onclick="quizzPage()">Reiniciar Quizz</button>
             <button class="quizz-result_button_back-home">Voltar pra home</button>
         </div>        
     </div>
@@ -206,10 +212,8 @@ function deuErrado(erro) {
     console.log(erro.response.data);
 }
 
-function quizzAgain() {
+function resetVariables() {
     pontuation = 0;
     questionAnswered = 0;
     answerIndex =[];
-
-    quizzPage();
 }
