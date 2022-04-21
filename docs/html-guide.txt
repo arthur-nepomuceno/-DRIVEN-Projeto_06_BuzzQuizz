@@ -4,12 +4,18 @@ body
             .no-quizzes
                 p
                 button
-            .my-quizzes
+            .user-quizzes
+                .quizzes
+                    .quizz
+                        img (quizz img)
+                        img (black mask)
+                        p (quizz invitation)
             .all-quizzes
-                .quizz
-                    img (quizz img)
-                    img (black mask)
-                    p (quizz invitation)
+                .quizzes
+                    .quizz
+                        img (quizz img)
+                        img (black mask)
+                        p (quizz invitation)
         .screen_second
         .screen_third
     main
