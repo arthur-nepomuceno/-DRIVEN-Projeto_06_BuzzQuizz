@@ -118,11 +118,11 @@ body {
 }
 
 .answer_red {
-    color: #FF4B4B;
+    color: #FF4B4B !important;
 }
 
 .answer_green {
-    color: #009C22;
+    color: #009C22 !important;
 }
 
 .answer_opacity {

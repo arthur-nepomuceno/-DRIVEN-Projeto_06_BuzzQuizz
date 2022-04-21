@@ -3,6 +3,7 @@ let questionAnswered = 0;
 let quizzData;
 let answerIndex =[];
 let id = 2;
+const Time_2S = 2 * 1000;
 
 function quizzPage () {
     resetVariables();
@@ -179,8 +180,9 @@ function chooseAnswer(element) {
         questionAnswered++;
 
         checkIfFinished();
+
+        setTimeout(scrollToNextQuestion,Time_2S,element);
     }
-    
 }
 
 function checkIfScore(element,elementParent) {
@@ -189,9 +191,10 @@ function checkIfScore(element,elementParent) {
 
     if (answerIndex[question] === answer) {
         pontuation++;
+        colorChoose(true,element);
+    } else {
+        colorChoose(false,element);
     }
-
-
 }
 
 function checkIfFinished() {
@@ -202,6 +205,63 @@ function checkIfFinished() {
     }
 }
 
+function scrollToNextQuestion(element) {
+    const nextQuestionIndex = parseInt(element.parentElement.getAttribute("data-question"))+1;
+    if (nextQuestionIndex < document.querySelectorAll(".quizz-question").length) {
+        const nextQuestionElement = document.querySelector(`.question_${nextQuestionIndex}`);
+        nextQuestionElement.scrollIntoView();
+    } else {
+        document.querySelector(".quizz-result").scrollIntoView();
+    }
+
+}
+
+function colorChoose(boolean,element) {
+    if (boolean) {
+        element.querySelector("h1").classList.add("answer_green");
+
+    } else {
+        element.querySelector("h1").classList.add("answer_red");
+    }
+    
+    colorRest(element);
+}
+
+function colorRest(element) {
+    const divs = element.parentElement.querySelectorAll("div");
+    const arrayDivs = [...divs];
+    element.classList.add("choose");
+
+    arrayDivs.filter(removeElement).map(addOpacityColor);
+
+}
+
+function removeElement(element) {
+    if (element !== element.parentElement.querySelector(".choose")) {
+        return true;
+    }
+}
+
+function addOpacityColor(element) {
+    element.classList.add("answer_opacity");
+
+    const question = parseInt(element.parentElement.getAttribute("data-question"));
+    const elementIndex = parseInt(element.getAttribute("data-answer"));
+
+    if (answerIndex[question] === elementIndex) {
+        element.querySelector("h1").classList.add("answer_green");
+    } else {
+        element.querySelector("h1").classList.add("answer_red");
+    }
+}
+
+function resetVariables() {
+    pontuation = 0;
+    questionAnswered = 0;
+    answerIndex = [];
+
+    document.querySelector("header").scrollIntoView();
+}
 
 function deuCerto () {
     console.log("Deu certo");
@@ -210,10 +270,4 @@ function deuCerto () {
 function deuErrado(erro) {
     console.log("Erroooou " + erro.response.status);
     console.log(erro.response.data);
-}
-
-function resetVariables() {
-    pontuation = 0;
-    questionAnswered = 0;
-    answerIndex =[];
 }
