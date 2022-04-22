@@ -294,7 +294,7 @@ function renderAllQuizzes(response) {
 
 function renderQuizzesList(arr, documentObject) {
     for(let i = 0; i < arr.length; i++) {
-        documentObject.innerHTML += `<div class="quizz">                 
+        documentObject.innerHTML += `<div class="quizz-card">                 
                                         <img src=${arr[i].image}>
                                         <img class="black-mask" src="./img/black-mask.png" style="height: 55%; bottom: 0;">
                                         <p>${arr[i].title}</p>

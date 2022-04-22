@@ -6,18 +6,32 @@ body
                 button
             .user-quizzes
                 .quizzes
-                    .quizz
+                    .quizz-card
                         img (quizz img)
                         img (black mask)
                         p (quizz invitation)
             .all-quizzes
                 .quizzes
-                    .quizz
+                    .quizz-card
                         img (quizz img)
                         img (black mask)
                         p (quizz invitation)
         .screen_second
         .screen_third
+            .new-quizz-start
+                p
+                .basic-data
+                    .title
+                        input
+                    .url
+                        input
+                    .number-of-questions
+                        input
+                    .number-of-levels
+                        input
+                button
+            .new-quizz-questions
+            .new-quizz-levels
     main
     footer
         scripts
