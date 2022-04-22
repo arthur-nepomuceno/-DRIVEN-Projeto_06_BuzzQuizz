@@ -3,8 +3,11 @@ let questionAnswered = 0;
 let quizzData;
 let answerIndex =[];
 let id = 2;
-let API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes";
+const API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes";
 const Time_2S = 2 * 1000;
+const first_SCREEN = document.querySelector(".screen_first");
+const second_SCREEN = document.querySelector(".screen_second");
+const third_SCREEN = document.querySelector(".screen_third");
 
 function quizzPage () {
     resetVariables();
@@ -275,9 +278,14 @@ function deuErrado(erro) {
 }
 
 //=======================================================================================
-//==================================== FIRST SCREEN  ====================================
+//=============================== FIRST SCREEN FUNCTIONS ================================
 //=======================================================================================
-const c = console.log.bind(document)
+//= function getAllQuizzes()
+//= function renderAllQuizzes(response)
+//= function getUserQuizzes()
+//= function renderUserQuizzes(response)
+//=======================================================================================
+
 getAllQuizzes()
 getUserQuizzes()
 
@@ -293,16 +301,6 @@ function renderAllQuizzes(response) {
     renderQuizzesList(allQuizzesList, allQuizzesHTML);
 }
 
-function renderQuizzesList(arr, documentObject) {
-    for(let i = 0; i < arr.length; i++) {
-        documentObject.innerHTML += `<div class="quizz-card">                 
-                                        <img src=${arr[i].image}>
-                                        <img class="black-mask" src="./img/black-mask.png" style="height: 55%; bottom: 0;">
-                                        <p>${arr[i].title}</p>
-                                    </div>`
-    }
-}
-
 function getUserQuizzes() {
     const promise = axios.get(API);
     promise.then(renderUserQuizzes);
@@ -315,4 +313,35 @@ function renderUserQuizzes(response) {
     renderQuizzesList(userQuizzesList, userQuizzesHTML);
 }
 
+function createNewQuizz() {
+    displayNone(first_SCREEN);
+    displayFlex(third_SCREEN);
+}
 
+
+
+//=======================================================================================
+//================================= AUXILIAR FUNCTIONS ==================================
+//=======================================================================================
+//= function renderQuizzesList(arr, documentObject)
+//= function displayNone(documentObject)
+//= function displayFlex(documentObject)
+//=======================================================================================
+
+function renderQuizzesList(arr, documentObject) {
+    for(let i = 0; i < arr.length; i++) {
+        documentObject.innerHTML += `<div class="quizz-card">                 
+                                        <img src=${arr[i].image}>
+                                        <img class="black-mask" src="./img/black-mask.png" style="height: 55%; bottom: 0;">
+                                        <p>${arr[i].title}</p>
+                                    </div>`
+    }
+}
+
+function displayNone(documentObject){
+    documentObject.setAttribute("style", "display:none");
+}
+
+function displayFlex(documentObject){
+    documentObject.setAttribute("style", "display:flex");
+}
