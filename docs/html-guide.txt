@@ -1,5 +1,7 @@
 body
     header
+        h1
+    main
         .screen_first
             .no-quizzes
                 p
@@ -20,7 +22,7 @@ body
         .screen_third
             .new-quizz-start
                 p
-                .basic-data
+                .new-quizz-basic
                     .title
                         input
                     .url
@@ -31,7 +33,22 @@ body
                         input
                 button
             .new-quizz-questions
+                p
+                .new-question (x3)
+                    p
+                    .new-question-data
+                        .question-text
+                        .question-color
+                        p
+                        .right-answer-text
+                        .righr-answer-image
+                        p
+                        .wrong-answer-text
+                        .wrong-answer-image
+                        .wrong-answer-text
+                        .wrong-answer-image
+                        .wrong-answer-text
+                        .wrong-answer-image     
             .new-quizz-levels
-    main
     footer
         scripts

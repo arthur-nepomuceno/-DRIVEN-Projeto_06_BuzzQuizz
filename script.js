@@ -284,6 +284,7 @@ function deuErrado(erro) {
 //= function renderAllQuizzes(response)
 //= function getUserQuizzes()
 //= function renderUserQuizzes(response)
+//= function createNewQuizz()
 //=======================================================================================
 
 getAllQuizzes()
@@ -316,6 +317,25 @@ function renderUserQuizzes(response) {
 function createNewQuizz() {
     displayNone(first_SCREEN);
     displayFlex(third_SCREEN);
+}
+
+//=======================================================================================
+//=============================== THIRD SCREEN FUNCTIONS ================================
+//=======================================================================================
+
+//=======================================================================================
+
+function hideNewQuestionData(element){
+    const newQuestionData = element.parentNode.parentNode.querySelector(".new-question-data");
+    newQuestionData.classList.toggle("hidden");
+}
+
+function moveToCreateQuestionsScreen() {
+    const newQuizzStart = third_SCREEN.querySelector(".new-quizz-start");
+    const newQuizzQuestions = third_SCREEN.querySelector(".new-quizz-questions")
+
+    displayNone(newQuizzStart);
+    displayFlex(newQuizzQuestions);
 }
 
 
