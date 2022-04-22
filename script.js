@@ -330,12 +330,25 @@ function hideNewQuestionData(element){
     newQuestionData.classList.toggle("hidden");
 }
 
+function hideNewLevelData(element){
+    const newLevelData = element.parentNode.parentNode.querySelector(".new-level-data");
+    newLevelData.classList.toggle("hidden");
+}
+
 function moveToCreateQuestionsScreen() {
     const newQuizzStart = third_SCREEN.querySelector(".new-quizz-start");
     const newQuizzQuestions = third_SCREEN.querySelector(".new-quizz-questions")
 
     displayNone(newQuizzStart);
     displayFlex(newQuizzQuestions);
+}
+
+function moveToCreateLevelsScreen() {
+    const newQuizzQuestions = third_SCREEN.querySelector(".new-quizz-questions");
+    const newQuizzLevels = third_SCREEN.querySelector(".new-quizz-levels");
+
+    displayNone(newQuizzQuestions);
+    displayFlex(newQuizzLevels);
 }
 
 

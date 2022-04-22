@@ -491,8 +491,8 @@ body {
 ======================================================================================== */
 
 .screen_third {
-    /*display: flex;*/
-    display: none;
+    display: flex;
+    /*display: none;*/
     flex-direction: column;
     align-items: center;
 }
@@ -687,3 +687,103 @@ body {
     color: #FFF5F4;
 }
 
+/* ================================================================
+========================= NEW QUIZZ LEVELS ========================
+================================================================ */
+
+.new-quizz-levels {
+    width: 600px;
+    height: fit-content;
+    margin-top: 70px;
+    
+    /*display: flex;*/
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    /*border: 1px dashed black;*/
+}
+
+.new-quizz-levels p {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 26px;
+}
+
+.new-level {
+    width: 600px;
+    height: fit-content;
+    margin-top: 28px;
+    padding-left: 18px;
+    padding-right: 18px;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: #FFFFFF;
+
+    /*border: 1px dashed black;*/
+}
+
+.new-level p {
+    width: 100%;
+    margin-top: 22px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.new-level-data .level-text, .level-percentage, .level-url, .level-description {
+    width: 564px;
+    height: 46px;
+    margin-bottom: 14px;
+    padding-left: 24px;
+    padding-right: 24px;
+
+    display: flex;
+    align-items: center;
+
+    border: 1px solid #D1D1D1;
+    border-radius: 5px;
+}
+
+.new-level-data > .level-description {
+    margin-bottom: 28px;
+}
+
+.new-level-data input {
+    width: 100%;
+    outline: none;
+    border: none;
+
+    font-style: italic;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 22px;
+    color: #BABABA;
+}
+
+.new-level-data input::placeholder {
+    color: #BABABA;
+}
+
+.new-quizz-levels button {
+    width: 370px;
+    height: 54px;
+    margin-top: 84px;
+    margin-bottom: 84px;
+
+    background: #EC362D;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #FFF5F4;
+}
