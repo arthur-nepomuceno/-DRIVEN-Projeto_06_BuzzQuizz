@@ -20,42 +20,51 @@
                 <p>Você não criou nenhum quizz ainda :(</p>
                 <button>Criar Quizz</button>
             </div>
-            <div class="my-quizzes"></div>
-            <div class="all-quizzes">
-                <p>Todos os Quizzes</p>                
-                <div class="quizz">
-                    <img class="black-mask" src="./img/test-img-simpsons.png" >
-                    <p>Acerte os personagens corretos dos Simpsons e prove seu amor!</p>
+            <!--<button onclick="getAllQuizzes()">test button: get all quizzes</button>
+            <button onclick="getUserQuizzes()">test button: get user quizzes</button>-->
+            <div class="user-quizzes">
+                <p>Seus Quizzes<ion-icon name="add-circle-sharp"></ion-icon></p>
+                <div class="quizzes">
+                    <!--here goes all user quizzes-->
                 </div>
-                
-                <div class="quizz">
-                    <img src="./img/test-img-simpsons.png">
-                    <p>invitation</p>
-                </div>  
-                <div class="quizz">
-                    <img src="./img/test-img-simpsons.png">
-                    <p>invitation</p>
-                </div>  
-                <div class="quizz">
-                    <img src="./img/test-img-simpsons.png">
-                    <p>invitation</p>
-                </div>  
-                <div class="quizz">
-                    <img src="./img/test-img-simpsons.png">
-                    <p>invitation</p>
-                </div>  
-                <div class="quizz">
-                    <img src="./img/test-img-simpsons.png">
-                    <p>invitation</p>
-                </div>                
+            </div>
+            <div class="all-quizzes">
+                <p>Todos os Quizzes</p>
+                <div class="quizzes">
+                    <!--here goes all quizzes-->
+                </div>                             
+                                                 
             </div>
         </section>
         <section class="screen_second">
         </section>
-        <section class="screen_third"></section>
+        <section class="screen_third">
+            <div class="new-quizz-start">
+                <p>Comece pelo começo</p>
+                <div class="basic-data">
+                    <div class="title">
+                        <input type="text" placeholder="Título do seu quizz">
+                    </div>
+                    <div class="url">
+                        <input type="text" placeholder="URL da imagem do seu quizz">
+                    </div>
+                    <div class="number-of-questions">
+                        <input type="text" placeholder="Quantidade de perguntas do quizz">
+                    </div>
+                    <div class="number-of-levels">
+                        <input type="text" placeholder="Quantidade de níveis do quizz">
+                    </div>
+                </div>
+                <button>Prosseguir para criar perguntas</button>
+            </div>
+            <div class="new-quizz-questions"></div>
+            <div class="new-quizz-levels"></div>
+        </section>
     </main>
 </body>
 <footer>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>
 </footer>
