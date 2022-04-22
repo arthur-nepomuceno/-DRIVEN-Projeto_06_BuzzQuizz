@@ -9,15 +9,15 @@ function quizzPage () {
     resetVariables();
     //Usando um único quizz (id = 2) para estilizar tudo e montar o código, depois trocar isso.
 
-    //Adicionar o Scroll após responder algo
-    //Scroll para resultado também
-    //Falta Versão mobile
+    //SO PARA ESTILIZAR, REMOVENDO A PARTE DO ARTHUR:
+    document.querySelector(".screen_first").innerHTML = "";
+    
     //Remover espaço demais
 
     const promise = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${id}`)
 
     promise.then(getQuizz);
-    promise.catch(deuErrado);
+    promise.catch(error);
 }
 
 function getQuizz(quizz) {
@@ -263,11 +263,6 @@ function resetVariables() {
     document.querySelector("header").scrollIntoView();
 }
 
-function deuCerto () {
-    console.log("Deu certo");
-}
-
-function deuErrado(erro) {
-    console.log("Erroooou " + erro.response.status);
-    console.log(erro.response.data);
+function error(erro) {
+    alert(erro.response.data);
 }
