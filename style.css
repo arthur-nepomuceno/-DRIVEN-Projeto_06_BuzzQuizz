@@ -665,7 +665,7 @@ body {
     /*border: 1px dashed black;*/
 }
 
-.new-quizz-questions p {
+.new-quizz-questions > p {
     font-style: normal;
     font-weight: 700;
     font-size: 22px;
@@ -687,20 +687,48 @@ body {
     /*border: 1px dashed black;*/
 }
 
-.new-question p {
+.new-question > p {
     width: 100%;
     margin-top: 22px;
     margin-bottom: 22px;
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 26px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.new-question-data > p {
+    width: 100%;
+    margin-top: 22px;
+    margin-bottom: 22px;
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 26px;
+}
+
+.new-question-data > p.invalid-info {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #EC362D;
 }
 
 .new-question-data .question-text, .question-color, .right-answer-text,
 .right-answer-image, .wrong-answer-text, .wrong-answer-image {
     width: 564px;
     height: 46px;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     padding-left: 24px;
     padding-right: 24px;
 
@@ -709,10 +737,6 @@ body {
 
     border: 1px solid #D1D1D1;
     border-radius: 5px;
-}
-
-.new-question-data > .wrong-answer-image {
-    margin-bottom: 32px;
 }
 
 .new-question-data input {

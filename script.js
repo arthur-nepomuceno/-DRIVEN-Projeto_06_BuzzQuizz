@@ -360,8 +360,10 @@ function moveToCreateQuestionsScreen() {
 }
 
 function moveToCreateLevelsScreen() {
-    displayNone(newQuizzQuestions);
-    displayFlex(newQuizzLevels);
+    isValidQuestionText();
+
+    //displayNone(newQuizzQuestions);
+    //displayFlex(newQuizzLevels);
 }
 
 function moveToSuccessScreen() {
@@ -377,6 +379,10 @@ function moveToFirstScreen() {
 
 /* ============================================================================
 ===================== NEW QUIZZ - START SCREEN FUNCTIONS ======================
+//= isValidTitle()
+//= isValidURL()
+//= isValidNumberOfQuestions()
+//= isValidNumberOfLevels()
 ============================================================================ */
 
 function isValidTitle(){    
@@ -384,15 +390,17 @@ function isValidTitle(){
     const newQuizzTitleInput = newQuizzTitle.querySelector("input");
     const invalidTitle = document.querySelector(".new-quizz-basic > .invalid-info#title");
 
-    if(newQuizzTitleInput.value.length < 20) {        
-        invalidTitle.classList.remove("hidden");
-        newQuizzTitle.setAttribute("style", "background-color: #FFE9E9");
-        newQuizzTitleInput.setAttribute("style", "background-color: #FFE9E9"); 
+    if(newQuizzTitleInput.value.length < 20 || newQuizzTitleInput.value.length > 65) { 
+        showObject(invalidTitle);
+        backgroundPink(newQuizzTitle);
+        backgroundPink(newQuizzTitleInput);
+        
         return false;
     } else {
-        invalidTitle.classList.add("hidden");
-        newQuizzTitle.setAttribute("style", "background-color: #FFFFFF");
-        newQuizzTitleInput.setAttribute("style", "background-color: #FFFFFF");
+        hideObject(invalidTitle);
+        backgroundWhite(newQuizzTitle);
+        backgroundWhite(newQuizzTitleInput);
+
         return true;
     }
 }
@@ -408,23 +416,19 @@ function isValidURL() {
     const includesWWW = url.includes("www.");
 
     if (testResult === null || (includesHTTPS === false && includesWWW === false)) {
-        invalidURL.classList.remove("hidden");
-        newQuizzURL.setAttribute("style", "background-color: #FFE9E9");
-        newQuizzURLInput.setAttribute("style", "background-color: #FFE9E9");
+        showObject(invalidURL);
+        backgroundPink(newQuizzURL);
+        backgroundPink(newQuizzURLInput);
+
         return false;
     } else {
-        invalidURL.classList.add("hidden");
-        newQuizzURL.setAttribute("style", "background-color: #FFFFFF");
-        newQuizzURLInput.setAttribute("style", "background-color: #FFFFFF");
+        hideObject(invalidURL);
+        backgroundWhite(newQuizzURL);
+        backgroundWhite(newQuizzURLInput);
+
         return true;
     }
 }
-
-/*
-function isValidURL(string) {
-    var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-    return (res !== null)
-};*/
 
 function isValidNumberOfQuestions(){    
     const newQuizzNumberOfQuestions = document.querySelector(".new-quizz-basic > .number-of-questions");
@@ -432,14 +436,16 @@ function isValidNumberOfQuestions(){
     const invalidNumberOfQuestions = document.querySelector(".new-quizz-basic > .invalid-info#number-of-questions");
 
     if(newQuizzNumberOfQuestionsInput.value < 3 ||  isNaN(Number(newQuizzNumberOfQuestionsInput.value))) {        
-        invalidNumberOfQuestions.classList.remove("hidden");
-        newQuizzNumberOfQuestions.setAttribute("style", "background-color: #FFE9E9");
-        newQuizzNumberOfQuestionsInput.setAttribute("style", "background-color: #FFE9E9");
+        showObject(invalidNumberOfQuestions);
+        backgroundPink(newQuizzNumberOfQuestions);
+        backgroundPink(newQuizzNumberOfQuestionsInput);
+        
         return false; 
     } else {
-        invalidNumberOfQuestions.classList.add("hidden");
-        newQuizzNumberOfQuestions.setAttribute("style", "background-color: #FFFFFF");
-        newQuizzNumberOfQuestionsInput.setAttribute("style", "background-color: #FFFFFF");
+        hideObject(invalidNumberOfQuestions);
+        backgroundWhite(newQuizzNumberOfQuestions);
+        backgroundWhite(newQuizzNumberOfQuestionsInput);
+
         return true;
     }
 }
@@ -450,16 +456,49 @@ function isValidNumberOfLevels(){
     const invalidNumberOfLevels = document.querySelector(".new-quizz-basic > .invalid-info#number-of-levels");
 
     if(newQuizzNumberOfLevelsInput.value < 2 ||  isNaN(Number(newQuizzNumberOfLevelsInput.value))) {        
-        invalidNumberOfLevels.classList.remove("hidden");
-        newQuizzNumberOfLevels.setAttribute("style", "background-color: #FFE9E9");
-        newQuizzNumberOfLevelsInput.setAttribute("style", "background-color: #FFE9E9");
+        showObject(invalidNumberOfLevels);
+        backgroundPink(newQuizzNumberOfLevels);
+        backgroundPink(newQuizzNumberOfLevelsInput);
+
         return false;
     } else {
-        invalidNumberOfLevels.classList.add("hidden");
-        newQuizzNumberOfLevels.setAttribute("style", "background-color: #FFFFFF");
-        newQuizzNumberOfLevelsInput.setAttribute("style", "background-color: #FFFFFF");
+        hideObject(invalidNumberOfLevels);
+        backgroundWhite(newQuizzNumberOfLevels);
+        backgroundWhite(newQuizzNumberOfLevelsInput);
+
         return true;
     }
+}
+
+/* ============================================================================
+=================== NEW QUIZZ - QUESTIONS SCREEN FUNCTIONS ====================
+//= isValidQuestionText()
+//= isValidQuestionColor()
+//= isValidRightAnswer()
+//= isValidWrongAnswer()
+============================================================================ */
+
+function isValidQuestionText() {
+    const allQuestionData = document.querySelectorAll(".new-question-data");
+    
+    for (let i = 0; i <= allQuestionData.length; i++){
+        const newQuestionText = allQuestionData[i].querySelector(".question-text");
+        const newQuestionTextInput = newQuestionText.querySelector("input");
+        const invalidQuestionText = allQuestionData[i].querySelector(".invalid-info#question-text");
+
+        if (newQuestionTextInput.value < 20) {
+            showObject(invalidQuestionText);
+            backgroundPink(newQuestionText);
+            backgroundPink(newQuestionTextInput);
+
+        } else {
+            hideObject(invalidQuestionText);
+            backgroundWhite(newQuestionText);
+            backgroundWhite(newQuestionTextInput);
+        }
+
+    }
+    
 }
 
 
@@ -470,6 +509,10 @@ function isValidNumberOfLevels(){
 //= function renderQuizzesList(arr, documentObject)
 //= function displayNone(documentObject)
 //= function displayFlex(documentObject)
+//= function backgroundPink(documentObject)
+//= function backgroundWhite(documentObject)
+//= function hideObject(documentObject)
+//= function showObject(documentObject)
 //=======================================================================================
 
 function renderQuizzesList(arr, documentObject) {
@@ -489,3 +532,27 @@ function displayNone(documentObject){
 function displayFlex(documentObject){
     documentObject.setAttribute("style", "display:flex");
 }
+
+function backgroundPink(documentObject){
+    documentObject.setAttribute("style", "background-color: #FFE9E9");
+}
+
+function backgroundWhite(documentObject){
+    documentObject.setAttribute("style", "background-color: #FFFFFF");
+}
+
+function hideObject(documentObject){
+    documentObject.classList.add("hidden");
+}
+
+function showObject(documentObject){
+    documentObject.classList.remove("hidden");
+}
+
+
+
+displayNone(first_SCREEN);
+displayFlex(third_SCREEN);
+displayNone(newQuizzStart);
+displayFlex(newQuizzQuestions);
+
