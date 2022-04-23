@@ -315,8 +315,10 @@ function renderUserQuizzes(response) {
 }
 
 function createNewQuizz() {
+    const newQuizzStart = third_SCREEN.querySelector(".new-quizz-start");
     displayNone(first_SCREEN);
     displayFlex(third_SCREEN);
+    displayFlex(newQuizzStart);
 }
 
 //=======================================================================================
@@ -351,6 +353,22 @@ function moveToCreateLevelsScreen() {
     displayFlex(newQuizzLevels);
 }
 
+function moveToSuccessScreen() {
+    const newQuizzLevels = third_SCREEN.querySelector(".new-quizz-levels");
+    const newQuizzSuccess = third_SCREEN.querySelector(".new-quizz-success");
+
+    displayNone(newQuizzLevels);
+    displayFlex(newQuizzSuccess);
+}
+
+function moveToFirstScreen() {
+    const newQuizzSuccess = third_SCREEN.querySelector(".new-quizz-success");
+
+    displayNone(newQuizzSuccess);
+    displayNone(third_SCREEN);
+    displayFlex(first_SCREEN);
+}
+
 
 
 //=======================================================================================
@@ -365,7 +383,7 @@ function renderQuizzesList(arr, documentObject) {
     for(let i = 0; i < arr.length; i++) {
         documentObject.innerHTML += `<div class="quizz-card">                 
                                         <img src=${arr[i].image}>
-                                        <img class="black-mask" src="./img/black-mask.png" style="height: 55%; bottom: 0;">
+                                        <img class="black-mask" src="./img/black-mask.png" style="height: 55%">
                                         <p>${arr[i].title}</p>
                                     </div>`
     }

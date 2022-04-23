@@ -227,7 +227,17 @@
                         </div>
                     </div>
                 </div>
-                <button>Finalizar Quizz</button>
+                <button onclick="moveToSuccessScreen()">Finalizar Quizz</button>
+            </div>
+            <div class="new-quizz-success">
+                <p>Seu quizz está pronto</p>
+                <div class="new-quizz-card">
+                    <img src="./img/test-img-simpsons.png">
+                    <img class="black-mask" src="./img/black-mask.png" style="height: 55%">
+                    <p>Título do card Título do card Título do card Título do card</p>
+                </div>
+                <button id="access-quizz">Acessar Quizz</button>
+                <button id="home" onclick="moveToFirstScreen()">Voltar para home</button>
             </div>
         </section>
     </main>

@@ -463,7 +463,9 @@ body {
     width: 340px;
     height: 180px;
     border-radius: 5px;
+
     position: absolute;
+    bottom: 0;
 }
 
 .quizz-card > p {
@@ -477,7 +479,7 @@ body {
     color: #FFFFFF;
 
     position: absolute;
-    bottom: 8px;
+    bottom: 18px;
     left: 18px;
 }
 
@@ -491,8 +493,8 @@ body {
 ======================================================================================== */
 
 .screen_third {
-    display: flex;
-    /*display: none;*/
+    /*display: flex;*/
+    display: none;
     flex-direction: column;
     align-items: center;
 }
@@ -506,6 +508,7 @@ body {
     height: fit-content;
     margin-top: 70px;
 
+    /*display: none;*/
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -787,3 +790,100 @@ body {
     line-height: 24px;
     color: #FFF5F4;
 }
+
+/* ================================================================
+========================= NEW QUIZZ SUCCESS =======================
+================================================================ */
+
+.new-quizz-success {
+    width: 600px;
+    height: fit-content;
+    margin-top: 70px;
+    
+    /*display: flex;*/
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    /*border: 1px dashed black;*/
+}
+
+.new-quizz-success p {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 26px;
+}
+
+.new-quizz-card {
+    width: 500px;
+    height: 266px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-radius: 5px;
+    position: relative;
+
+    /*border: 1px dashed black;*/
+}
+
+.new-quizz-card img {
+    width: 500px;
+    height: 266px;
+    margin-top: 46px;
+    border-radius: 5px;
+
+    position: absolute;
+    bottom: 0;
+}
+
+.new-quizz-card > p {
+    width: 450px;
+    height: fit-content;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 22px;
+    color: #FFFFFF;
+
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+
+    /*border: 1px dashed black;*/
+}
+
+.new-quizz-success button#access-quizz {
+    width: 220px;
+    height: 54px;
+    margin-bottom: 10px;
+
+    background: #EC362D;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #FFF5F4;
+}
+
+.new-quizz-success button#home {
+    width: 220px;
+    height: 54px;
+    margin-bottom: 10px;
+
+    border: none;
+    outline: none;
+    background: none;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #818181;
+}
+
