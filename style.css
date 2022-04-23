@@ -448,6 +448,55 @@ body {
 }
 
 /* ================================================================
+======================= MOBILE FIRST SCREEN =======================
+================================================================ */
+
+@media (max-width: 1100px) {
+    .screen_first {
+        padding: 0 18px;
+    }
+
+    .no-quizzes {
+        width: 100%;
+        margin-top: 31px;
+    }
+
+    .user-quizzes, .all-quizzes {
+        margin-top: 38px;
+        margin-bottom: 38px;
+        width: 100%;
+    }
+
+    .user-quizzes > p {
+        justify-content: space-between;
+    }
+
+    .user-quizzes > .quizzes {
+        width: 100%;
+        overflow-y: scroll;
+    }
+
+    .quizz-card {
+        width: 100% !important;
+        margin-top: 14px !important;
+    }
+
+    .quizz-card > p {
+        word-break: break-word;
+    }
+
+    .quizz-card > img {
+        width: 100% !important;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .all-quizzes > .quizzes {
+        width: 100%;
+    }
+}
+
+/* ================================================================
 =========================== QUIZZ CARD ============================
 ================================================================ */
 

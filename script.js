@@ -287,8 +287,8 @@ function deuErrado(erro) {
 //= function createNewQuizz()
 //=======================================================================================
 
-getAllQuizzes()
-getUserQuizzes()
+getAllQuizzes();
+getUserQuizzes();
 
 function getAllQuizzes() {
     const promise = axios.get(API);
