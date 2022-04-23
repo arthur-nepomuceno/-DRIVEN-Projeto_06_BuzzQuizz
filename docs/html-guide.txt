@@ -1,5 +1,7 @@
 body
     header
+        h1
+    main
         .screen_first
             .no-quizzes
                 p
@@ -20,7 +22,7 @@ body
         .screen_third
             .new-quizz-start
                 p
-                .basic-data
+                .new-quizz-basic
                     .title
                         input
                     .url
@@ -29,9 +31,56 @@ body
                         input
                     .number-of-levels
                         input
-                button
+                button (prosseguir)
             .new-quizz-questions
+                p
+                .new-question (x3)
+                    p
+                    .new-question-data
+                        .question-text
+                            input
+                        .question-color
+                            input
+                        p
+                        .right-answer-text
+                            input
+                        .righr-answer-image
+                            input
+                        p
+                        .wrong-answer-text
+                            input
+                        .wrong-answer-image
+                            input
+                        .wrong-answer-text
+                            input
+                        .wrong-answer-image
+                            input
+                        .wrong-answer-text
+                            input
+                        .wrong-answer-image
+                            input
+                button (prosseguir)
             .new-quizz-levels
-    main
+                p
+                .new-level
+                    p
+                    .new-level-data
+                        .level-text
+                            input
+                        .level-percentage
+                            input
+                        .level-url
+                            input
+                        .level-description
+                            input
+                button (prosseguir)
+            .new-quizz-success
+                p
+                .new-quizz-card
+                    img (quizz)
+                    img (black gradient)
+                    p (quizz title)
+                button (acessar quizz)
+                button (voltar para home)
     footer
         scripts

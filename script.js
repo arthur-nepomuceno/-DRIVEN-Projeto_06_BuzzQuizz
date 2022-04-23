@@ -284,6 +284,7 @@ function deuErrado(erro) {
 //= function renderAllQuizzes(response)
 //= function getUserQuizzes()
 //= function renderUserQuizzes(response)
+//= function createNewQuizz()
 //=======================================================================================
 
 getAllQuizzes();
@@ -314,8 +315,58 @@ function renderUserQuizzes(response) {
 }
 
 function createNewQuizz() {
+    const newQuizzStart = third_SCREEN.querySelector(".new-quizz-start");
     displayNone(first_SCREEN);
     displayFlex(third_SCREEN);
+    displayFlex(newQuizzStart);
+}
+
+//=======================================================================================
+//=============================== THIRD SCREEN FUNCTIONS ================================
+//=======================================================================================
+
+//=======================================================================================
+
+function hideNewQuestionData(element){
+    const newQuestionData = element.parentNode.parentNode.querySelector(".new-question-data");
+    newQuestionData.classList.toggle("hidden");
+}
+
+function hideNewLevelData(element){
+    const newLevelData = element.parentNode.parentNode.querySelector(".new-level-data");
+    newLevelData.classList.toggle("hidden");
+}
+
+function moveToCreateQuestionsScreen() {
+    const newQuizzStart = third_SCREEN.querySelector(".new-quizz-start");
+    const newQuizzQuestions = third_SCREEN.querySelector(".new-quizz-questions")
+
+    displayNone(newQuizzStart);
+    displayFlex(newQuizzQuestions);
+}
+
+function moveToCreateLevelsScreen() {
+    const newQuizzQuestions = third_SCREEN.querySelector(".new-quizz-questions");
+    const newQuizzLevels = third_SCREEN.querySelector(".new-quizz-levels");
+
+    displayNone(newQuizzQuestions);
+    displayFlex(newQuizzLevels);
+}
+
+function moveToSuccessScreen() {
+    const newQuizzLevels = third_SCREEN.querySelector(".new-quizz-levels");
+    const newQuizzSuccess = third_SCREEN.querySelector(".new-quizz-success");
+
+    displayNone(newQuizzLevels);
+    displayFlex(newQuizzSuccess);
+}
+
+function moveToFirstScreen() {
+    const newQuizzSuccess = third_SCREEN.querySelector(".new-quizz-success");
+
+    displayNone(newQuizzSuccess);
+    displayNone(third_SCREEN);
+    displayFlex(first_SCREEN);
 }
 
 
@@ -330,13 +381,11 @@ function createNewQuizz() {
 
 function renderQuizzesList(arr, documentObject) {
     for(let i = 0; i < arr.length; i++) {
-        documentObject.innerHTML += `
-            <div class="quizz-card">                 
-                <img src=${arr[i].image}>
-                <img class="black-mask" src="./img/black-mask.png" style="height: 55%; bottom: 0;">
-                <p>${arr[i].title}</p>
-            </div>
-        `
+        documentObject.innerHTML += `<div class="quizz-card">                 
+                                        <img src=${arr[i].image}>
+                                        <img class="black-mask" src="./img/black-mask.png" style="height: 55%">
+                                        <p>${arr[i].title}</p>
+                                    </div>`
     }
 }
 

@@ -41,7 +41,7 @@
         <section class="screen_third">
             <div class="new-quizz-start">
                 <p>Comece pelo começo</p>
-                <div class="basic-data">
+                <div class="new-quizz-basic">
                     <div class="title">
                         <input type="text" placeholder="Título do seu quizz">
                     </div>
@@ -55,10 +55,190 @@
                         <input type="text" placeholder="Quantidade de níveis do quizz">
                     </div>
                 </div>
-                <button>Prosseguir para criar perguntas</button>
+                <button onclick="moveToCreateQuestionsScreen()">Prosseguir para criar perguntas</button>
             </div>
-            <div class="new-quizz-questions"></div>
-            <div class="new-quizz-levels"></div>
+            <div class="new-quizz-questions">
+                <p>Crie suas perguntas</p>
+                <div class="new-question">
+                    <p>Pergunta 1</p>
+                    <div class="new-question-data">
+                        <div class="question-text">
+                            <input type="text" placeholder="Texto da pergunta">
+                        </div>
+                        <div class="question-color">
+                            <input type="text" placeholder="Cor de fundo da pergunta">  
+                        </div>
+                        <p>Resposta correta</p>
+                        <div class="right-answer-text">
+                            <input type="text" placeholder="Resposta correta">
+                        </div>
+                        <div class="right-answer-image">
+                            <input type="text" placeholder="URL da imagem">
+                        </div>
+                        <p>Respostas incorretas</p>
+                        <div class="wrong-answer-text">
+                            <input type="text" placeholder="Resposta incorreta 1">
+                        </div>
+                        <div class="wrong-answer-image">
+                            <input type="text" placeholder="URL da imagem 1">
+                        </div>
+                        <div class="wrong-answer-text">
+                            <input type="text" placeholder="Resposta incorreta 2">
+                        </div>
+                        <div class="wrong-answer-image">
+                            <input type="text" placeholder="URL da imagem 2">
+                        </div>
+                        <div class="wrong-answer-text">
+                            <input type="text" placeholder="Resposta incorreta 3">
+                        </div>
+                        <div class="wrong-answer-image">
+                            <input type="text" placeholder="URL da imagem 3">
+                        </div>
+                    </div>               
+                </div>
+                <div class="new-question">
+                    <p>Pergunta 2 <ion-icon name="create-outline" onclick="hideNewQuestionData(this)"></ion-icon></p>
+                    
+                    <div class="new-question-data hidden">
+                        <div class="question-text">
+                            <input type="text" placeholder="Texto da pergunta">
+                        </div>
+                        <div class="question-color">
+                            <input type="text" placeholder="Cor de fundo da pergunta">  
+                        </div>
+                        <p>Resposta correta</p>
+                        <div class="right-answer-text">
+                            <input type="text" placeholder="Resposta correta">
+                        </div>
+                        <div class="right-answer-image">
+                            <input type="text" placeholder="URL da imagem">
+                        </div>
+                        <p>Respostas incorretas</p>
+                        <div class="wrong-answer-text">
+                            <input type="text" placeholder="Resposta incorreta 1">
+                        </div>
+                        <div class="wrong-answer-image">
+                            <input type="text" placeholder="URL da imagem 1">
+                        </div>
+                        <div class="wrong-answer-text">
+                            <input type="text" placeholder="Resposta incorreta 2">
+                        </div>
+                        <div class="wrong-answer-image">
+                            <input type="text" placeholder="URL da imagem 2">
+                        </div>
+                        <div class="wrong-answer-text">
+                            <input type="text" placeholder="Resposta incorreta 3">
+                        </div>
+                        <div class="wrong-answer-image">
+                            <input type="text" placeholder="URL da imagem 3">
+                        </div>
+                    </div>               
+                </div>
+                <div class="new-question">
+                    <p>Pergunta 3 <ion-icon name="create-outline" onclick="hideNewQuestionData(this)"></ion-icon></p>
+                    
+                    <div class="new-question-data hidden">
+                        <div class="question-text">
+                            <input type="text" placeholder="Texto da pergunta">
+                        </div>
+                        <div class="question-color">
+                            <input type="text" placeholder="Cor de fundo da pergunta">  
+                        </div>
+                        <p>Resposta correta</p>
+                        <div class="right-answer-text">
+                            <input type="text" placeholder="Resposta correta">
+                        </div>
+                        <div class="right-answer-image">
+                            <input type="text" placeholder="URL da imagem">
+                        </div>
+                        <p>Respostas incorretas</p>
+                        <div class="wrong-answer-text">
+                            <input type="text" placeholder="Resposta incorreta 1">
+                        </div>
+                        <div class="wrong-answer-image">
+                            <input type="text" placeholder="URL da imagem 1">
+                        </div>
+                        <div class="wrong-answer-text">
+                            <input type="text" placeholder="Resposta incorreta 2">
+                        </div>
+                        <div class="wrong-answer-image">
+                            <input type="text" placeholder="URL da imagem 2">
+                        </div>
+                        <div class="wrong-answer-text">
+                            <input type="text" placeholder="Resposta incorreta 3">
+                        </div>
+                        <div class="wrong-answer-image">
+                            <input type="text" placeholder="URL da imagem 3">
+                        </div>
+                    </div>               
+                </div>
+                <button onclick="moveToCreateLevelsScreen()">Prosseguir para criar níveis</button>
+            </div>
+            <div class="new-quizz-levels">
+                <p>Agora, decida os níveis</p>
+                <div class="new-level">
+                    <p>Nível 1</p>
+                    <div class="new-level-data">
+                        <div class="level-text">
+                            <input type="text" placeholder="Título do nível">
+                        </div>
+                        <div class="level-percentage">
+                            <input type="text" placeholder="% de acerto mínima">
+                        </div>
+                        <div class="level-url">
+                            <input type="text" placeholder="URL da imagem do nível">
+                        </div>
+                        <div class="level-description">
+                            <input type="text" placeholder="Descrição do nível">
+                        </div>
+                    </div>
+                </div>
+                <div class="new-level">
+                    <p>Nível 2 <ion-icon name="create-outline" onclick="hideNewLevelData(this)"></ion-icon></p>
+                    <div class="new-level-data hidden">
+                        <div class="level-text">
+                            <input type="text" placeholder="Título do nível">
+                        </div>
+                        <div class="level-percentage">
+                            <input type="text" placeholder="% de acerto mínima">
+                        </div>
+                        <div class="level-url">
+                            <input type="text" placeholder="URL da imagem do nível">
+                        </div>
+                        <div class="level-description">
+                            <input type="text" placeholder="Descrição do nível">
+                        </div>
+                    </div>
+                </div>
+                <div class="new-level">
+                    <p>Nível 3 <ion-icon name="create-outline" onclick="hideNewLevelData(this)"></ion-icon></p>
+                    <div class="new-level-data hidden">
+                        <div class="level-text">
+                            <input type="text" placeholder="Título do nível">
+                        </div>
+                        <div class="level-percentage">
+                            <input type="text" placeholder="% de acerto mínima">
+                        </div>
+                        <div class="level-url">
+                            <input type="text" placeholder="URL da imagem do nível">
+                        </div>
+                        <div class="level-description">
+                            <input type="text" placeholder="Descrição do nível">
+                        </div>
+                    </div>
+                </div>
+                <button onclick="moveToSuccessScreen()">Finalizar Quizz</button>
+            </div>
+            <div class="new-quizz-success">
+                <p>Seu quizz está pronto</p>
+                <div class="new-quizz-card">
+                    <img src="./img/test-img-simpsons.png">
+                    <img class="black-mask" src="./img/black-mask.png" style="height: 55%">
+                    <p>Título do card Título do card Título do card Título do card</p>
+                </div>
+                <button id="access-quizz">Acessar Quizz</button>
+                <button id="home" onclick="moveToFirstScreen()">Voltar para home</button>
+            </div>
         </section>
     </main>
 </body>
