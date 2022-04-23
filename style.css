@@ -457,7 +457,7 @@ body {
     }
 
 
-    .user-quizzes {
+    .user-quizzes, .all-quizzes {
         margin-top: 38px;
         margin-bottom: 38px;
         width: 100%;
@@ -469,15 +469,27 @@ body {
 
     .user-quizzes > .quizzes {
         width: 100%;
-        flex-direction: column;
-        max-height: none;
-
+        overflow-y: scroll;
     }
 
     .quizz-card {
-        width: 100%;
+        width: 100% !important;
+        margin-top: 14px !important;
     }
 
+    .quizz-card > p {
+        word-break: break-word;
+    }
+
+    .quizz-card > img {
+        width: 100% !important;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .all-quizzes > .quizzes {
+        width: 100%;
+    }
 
 
 
