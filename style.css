@@ -456,6 +456,10 @@ body {
         padding: 0 18px;
     }
 
+    .no-quizzes {
+        width: 100%;
+        margin-top: 31px;
+    }
 
     .user-quizzes, .all-quizzes {
         margin-top: 38px;
@@ -490,14 +494,7 @@ body {
     .all-quizzes > .quizzes {
         width: 100%;
     }
-
-
-
-
 }
-
-
-
 
 /* ================================================================
 =========================== QUIZZ CARD ============================
