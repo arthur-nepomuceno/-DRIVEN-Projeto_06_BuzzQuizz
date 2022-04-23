@@ -315,7 +315,6 @@ function renderUserQuizzes(response) {
 }
 
 function createNewQuizz() {
-    const newQuizzStart = third_SCREEN.querySelector(".new-quizz-start");
     displayNone(first_SCREEN);
     displayFlex(third_SCREEN);
     displayFlex(newQuizzStart);
@@ -324,8 +323,19 @@ function createNewQuizz() {
 //=======================================================================================
 //=============================== THIRD SCREEN FUNCTIONS ================================
 //=======================================================================================
-
+//= function hideNewQuestionData(element)
+//= function hideNewLevelData(element)
+//
+//= function moveToCreateQuestionsScreen()
+//= function moveToCreateLevelsScreen()
+//= function moveToSuccessScreen()
+//= function moveToFirstScreen()
 //=======================================================================================
+
+const newQuizzStart = third_SCREEN.querySelector(".new-quizz-start");
+const newQuizzQuestions = third_SCREEN.querySelector(".new-quizz-questions")
+const newQuizzLevels = third_SCREEN.querySelector(".new-quizz-levels");
+const newQuizzSuccess = third_SCREEN.querySelector(".new-quizz-success");
 
 function hideNewQuestionData(element){
     const newQuestionData = element.parentNode.parentNode.querySelector(".new-question-data");
@@ -338,35 +348,118 @@ function hideNewLevelData(element){
 }
 
 function moveToCreateQuestionsScreen() {
-    const newQuizzStart = third_SCREEN.querySelector(".new-quizz-start");
-    const newQuizzQuestions = third_SCREEN.querySelector(".new-quizz-questions")
+    isValidTitle();
+    isValidURL();
+    isValidNumberOfQuestions();
+    isValidNumberOfLevels();
 
-    displayNone(newQuizzStart);
-    displayFlex(newQuizzQuestions);
+    if (isValidTitle() && isValidURL() && isValidNumberOfQuestions()  && isValidNumberOfLevels()) {
+        displayNone(newQuizzStart);
+        displayFlex(newQuizzQuestions);
+    }    
 }
 
 function moveToCreateLevelsScreen() {
-    const newQuizzQuestions = third_SCREEN.querySelector(".new-quizz-questions");
-    const newQuizzLevels = third_SCREEN.querySelector(".new-quizz-levels");
-
     displayNone(newQuizzQuestions);
     displayFlex(newQuizzLevels);
 }
 
 function moveToSuccessScreen() {
-    const newQuizzLevels = third_SCREEN.querySelector(".new-quizz-levels");
-    const newQuizzSuccess = third_SCREEN.querySelector(".new-quizz-success");
-
     displayNone(newQuizzLevels);
     displayFlex(newQuizzSuccess);
 }
 
 function moveToFirstScreen() {
-    const newQuizzSuccess = third_SCREEN.querySelector(".new-quizz-success");
-
     displayNone(newQuizzSuccess);
     displayNone(third_SCREEN);
     displayFlex(first_SCREEN);
+}
+
+/* ============================================================================
+===================== NEW QUIZZ - START SCREEN FUNCTIONS ======================
+============================================================================ */
+
+function isValidTitle(){    
+    const newQuizzTitle = document.querySelector(".new-quizz-basic > .title");
+    const newQuizzTitleInput = newQuizzTitle.querySelector("input");
+    const invalidTitle = document.querySelector(".new-quizz-basic > .invalid-info#title");
+
+    if(newQuizzTitleInput.value.length < 20) {        
+        invalidTitle.classList.remove("hidden");
+        newQuizzTitle.setAttribute("style", "background-color: #FFE9E9");
+        newQuizzTitleInput.setAttribute("style", "background-color: #FFE9E9"); 
+        return false;
+    } else {
+        invalidTitle.classList.add("hidden");
+        newQuizzTitle.setAttribute("style", "background-color: #FFFFFF");
+        newQuizzTitleInput.setAttribute("style", "background-color: #FFFFFF");
+        return true;
+    }
+}
+
+function isValidURL() {
+    const newQuizzURL = document.querySelector(".new-quizz-basic > .url");
+    const newQuizzURLInput = newQuizzURL.querySelector("input");
+    const invalidURL = document.querySelector(".new-quizz-basic > .invalid-info#url");
+
+    const url = newQuizzURLInput.value
+    const testResult = url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    const includesHTTPS = url.includes("https://");
+    const includesWWW = url.includes("www.");
+
+    if (testResult === null || (includesHTTPS === false && includesWWW === false)) {
+        invalidURL.classList.remove("hidden");
+        newQuizzURL.setAttribute("style", "background-color: #FFE9E9");
+        newQuizzURLInput.setAttribute("style", "background-color: #FFE9E9");
+        return false;
+    } else {
+        invalidURL.classList.add("hidden");
+        newQuizzURL.setAttribute("style", "background-color: #FFFFFF");
+        newQuizzURLInput.setAttribute("style", "background-color: #FFFFFF");
+        return true;
+    }
+}
+
+/*
+function isValidURL(string) {
+    var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    return (res !== null)
+};*/
+
+function isValidNumberOfQuestions(){    
+    const newQuizzNumberOfQuestions = document.querySelector(".new-quizz-basic > .number-of-questions");
+    const newQuizzNumberOfQuestionsInput = newQuizzNumberOfQuestions.querySelector("input");
+    const invalidNumberOfQuestions = document.querySelector(".new-quizz-basic > .invalid-info#number-of-questions");
+
+    if(newQuizzNumberOfQuestionsInput.value < 3 ||  isNaN(Number(newQuizzNumberOfQuestionsInput.value))) {        
+        invalidNumberOfQuestions.classList.remove("hidden");
+        newQuizzNumberOfQuestions.setAttribute("style", "background-color: #FFE9E9");
+        newQuizzNumberOfQuestionsInput.setAttribute("style", "background-color: #FFE9E9");
+        return false; 
+    } else {
+        invalidNumberOfQuestions.classList.add("hidden");
+        newQuizzNumberOfQuestions.setAttribute("style", "background-color: #FFFFFF");
+        newQuizzNumberOfQuestionsInput.setAttribute("style", "background-color: #FFFFFF");
+        return true;
+    }
+}
+
+function isValidNumberOfLevels(){    
+    const newQuizzNumberOfLevels = document.querySelector(".new-quizz-basic > .number-of-levels");
+    const newQuizzNumberOfLevelsInput = newQuizzNumberOfLevels.querySelector("input");
+    const invalidNumberOfLevels = document.querySelector(".new-quizz-basic > .invalid-info#number-of-levels");
+
+    if(newQuizzNumberOfLevelsInput.value < 2 ||  isNaN(Number(newQuizzNumberOfLevelsInput.value))) {        
+        invalidNumberOfLevels.classList.remove("hidden");
+        newQuizzNumberOfLevels.setAttribute("style", "background-color: #FFE9E9");
+        newQuizzNumberOfLevelsInput.setAttribute("style", "background-color: #FFE9E9");
+        return false;
+    } else {
+        invalidNumberOfLevels.classList.add("hidden");
+        newQuizzNumberOfLevels.setAttribute("style", "background-color: #FFFFFF");
+        newQuizzNumberOfLevelsInput.setAttribute("style", "background-color: #FFFFFF");
+        return true;
+    }
 }
 
 

@@ -25,12 +25,16 @@ body
                 .new-quizz-basic
                     .title
                         input
+                    p (invalid-info)
                     .url
                         input
+                    p (invalid-info)
                     .number-of-questions
                         input
+                    p (invalid-info)
                     .number-of-levels
                         input
+                    p (invalid-info)
                 button (prosseguir)
             .new-quizz-questions
                 p
