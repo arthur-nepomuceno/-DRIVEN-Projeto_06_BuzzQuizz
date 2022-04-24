@@ -360,7 +360,9 @@ function moveToCreateQuestionsScreen() {
 }
 
 function moveToCreateLevelsScreen() {
-    isValidQuestionText();
+    //isValidQuestionText();
+    //isValidQuestionColor();
+    isValidRightAnswer();
 
     //displayNone(newQuizzQuestions);
     //displayFlex(newQuizzLevels);
@@ -477,16 +479,16 @@ function isValidNumberOfLevels(){
 //= isValidRightAnswer()
 //= isValidWrongAnswer()
 ============================================================================ */
+const allQuestionData = document.querySelectorAll(".new-question-data");
 
-function isValidQuestionText() {
-    const allQuestionData = document.querySelectorAll(".new-question-data");
-    
+function isValidQuestionText() { 
+ 
     for (let i = 0; i <= allQuestionData.length; i++){
         const newQuestionText = allQuestionData[i].querySelector(".question-text");
         const newQuestionTextInput = newQuestionText.querySelector("input");
         const invalidQuestionText = allQuestionData[i].querySelector(".invalid-info#question-text");
-
-        if (newQuestionTextInput.value < 20) {
+        
+        if (newQuestionTextInput.value.length < 20) {
             showObject(invalidQuestionText);
             backgroundPink(newQuestionText);
             backgroundPink(newQuestionTextInput);
@@ -496,9 +498,46 @@ function isValidQuestionText() {
             backgroundWhite(newQuestionText);
             backgroundWhite(newQuestionTextInput);
         }
+    }    
+}
 
+function isValidQuestionColor() {
+    for (let i = 0; i <= allQuestionData.length; i++){
+        const newQuestionColor = allQuestionData[i].querySelector(".question-color");
+        const newQuestionColorInput = newQuestionColor.querySelector("input");
+        const invalidQuestionColor = allQuestionData[i].querySelector(".invalid-info#question-color");
+        
+        
+        if(startsWithHash(newQuestionColorInput.value) && 
+            isHexadecimal(newQuestionColorInput.value)) {
+                hideObject(invalidQuestionColor);
+                backgroundWhite(newQuestionColor);
+                backgroundWhite(newQuestionColorInput);
+        } else {
+            showObject(invalidQuestionColor);
+            backgroundPink(newQuestionColor);
+            backgroundPink(newQuestionColorInput);
+        }
     }
-    
+}
+
+function isValidRightAnswer(){
+    for (let i = 0; i <= allQuestionData.length; i++){
+        const newRightAnswer = allQuestionData[i].querySelector(".right-answer-text");
+        const newRightAnswerInput = newRightAnswer.querySelector("input");
+        const invalidRightAnswer = allQuestionData[i].querySelector(".invalid-info#right-answer-text");
+        
+        if (newRightAnswerInput.value.length == 0) {
+            showObject(invalidRightAnswer);
+            backgroundPink(newRightAnswer);
+            backgroundPink(newRightAnswerInput);
+
+        } else {
+            hideObject(invalidRightAnswer);
+            backgroundWhite(newRightAnswer);
+            backgroundWhite(newRightAnswerInput);
+        }
+    }  
 }
 
 
@@ -513,6 +552,8 @@ function isValidQuestionText() {
 //= function backgroundWhite(documentObject)
 //= function hideObject(documentObject)
 //= function showObject(documentObject)
+//= function startsWithHash(str)
+//= function isHexadecimal(str)
 //=======================================================================================
 
 function renderQuizzesList(arr, documentObject) {
@@ -549,7 +590,33 @@ function showObject(documentObject){
     documentObject.classList.remove("hidden");
 }
 
+function startsWithHash(str) {
+    if(str[0] === "#") {
+        return true;
+    }
+    return false;
+}
 
+function isHexadecimal(str) {
+    const newStr = str.toLowerCase().replace("#", "");
+    let count = 0;
+    if (newStr.length === 6) {
+        for(let i = 0; i <= newStr.length; i++) {
+            
+            if(newStr[i] == "a" || newStr[i] == "b" || newStr[i] == "c" || newStr[i] == "d" ||
+                newStr[i] == "e" || newStr[i] == "f" || newStr[i] == "0" || newStr[i] == "1" || 
+                newStr[i] == "2" || newStr[i] == "3" || newStr[i] == "4" || newStr[i] == "5" ||
+                newStr[i] == "6" || newStr[i] == "7" || newStr[i] == "8" ||newStr[i] == "9") {
+                    count ++;
+            }
+        }
+    }
+
+    if (count == 6) {
+        return true;
+    }
+    return false;
+}
 
 displayNone(first_SCREEN);
 displayFlex(third_SCREEN);
