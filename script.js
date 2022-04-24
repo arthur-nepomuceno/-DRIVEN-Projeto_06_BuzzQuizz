@@ -9,6 +9,7 @@ const first_SCREEN = document.querySelector(".screen_first");
 const second_SCREEN = document.querySelector(".screen_second");
 const third_SCREEN = document.querySelector(".screen_third");
 
+
 function quizzPage () {
     resetVariables();
     //Usando um único quizz (id = 2) para estilizar tudo e montar o código, depois trocar isso.
@@ -299,7 +300,7 @@ function getAllQuizzes() {
 function renderAllQuizzes(response) {
     const allQuizzesList = response.data;
     const allQuizzesHTML = document.querySelector(".all-quizzes > .quizzes");
-    renderQuizzesList(allQuizzesList, allQuizzesHTML);
+    renderAllQuizzesList(allQuizzesList, allQuizzesHTML);
 }
 
 function getUserQuizzes() {
@@ -311,7 +312,7 @@ function getUserQuizzes() {
 function renderUserQuizzes(response) {
     const userQuizzesList = response.data;
     const userQuizzesHTML = document.querySelector(".user-quizzes > .quizzes");
-    renderQuizzesList(userQuizzesList, userQuizzesHTML);
+    renderUserQuizzesList(userQuizzesList, userQuizzesHTML);
 }
 
 function createNewQuizz() {
@@ -363,6 +364,7 @@ function moveToCreateLevelsScreen() {
     isValidQuestionText();
     isValidQuestionColor();
     isValidRightAnswer();
+    isValidWrongAnswer();
 
     //displayNone(newQuizzQuestions);
     //displayFlex(newQuizzLevels);
@@ -473,7 +475,7 @@ function isValidNumberOfLevels(){
 }
 
 /* ============================================================================
-=================== NEW QUIZZ - QUESTIONS SCREEN FUNCTIONS ====================
+=================== NEW QUIZZ QUESTIONS SCREEN FUNCTIONS ====================
 //= isValidQuestionText()
 //= isValidQuestionColor()
 //= isValidRightAnswer()
@@ -552,12 +554,49 @@ function isValidRightAnswer(){
     return isValid;
 }
 
+function hideWrongAnswerWarnings(documentObject){
+    const invalidWrongAnswer = documentObject.querySelector(".invalid-info#wrong-answer-text");
+    hideObject(invalidWrongAnswer);
+
+    const newWrongAnswer = documentObject.querySelector(".wrong-answer-text");
+    backgroundWhite(newWrongAnswer)
+
+    const newWrongAnswerInput = newWrongAnswer.querySelector("input");
+    backgroundWhite(newWrongAnswerInput)
+}
+
+function isValidWrongAnswer(){
+    let isValid;
+    for(let i = 0; i < allQuestions.length; i++){
+        const allWrongAnswers = [...allQuestions[i].querySelectorAll(".wrong-answer")];  
+        for(let j = 0; j < allWrongAnswers.length; j++) {
+            const newWrongAnswer = allWrongAnswers[j].querySelector(".wrong-answer-text");
+            const newWrongAnswerInput = newWrongAnswer.querySelector("input");
+            const invalidWrongAnswer = allWrongAnswers[j].querySelector(".invalid-info#wrong-answer-text");   
+
+            if (newWrongAnswerInput.value.length != 0) {
+                allWrongAnswers.forEach(hideWrongAnswerWarnings);
+                isValid = true;
+                break;                        
+    
+            } else {             
+                showObject(invalidWrongAnswer);
+                backgroundPink(newWrongAnswer);
+                backgroundPink(newWrongAnswerInput);
+                isValid = false;
+            }
+        
+        }
+    }
+}
+
 
 
 //=======================================================================================
 //================================= AUXILIAR FUNCTIONS ==================================
 //=======================================================================================
-//= function renderQuizzesList(arr, documentObject)
+//= function renderAllQuizzesList(arr, documentObject)
+//= function renderUserQuizzesList(arr, documentObject)
 //= function displayNone(documentObject)
 //= function displayFlex(documentObject)
 //= function backgroundPink(documentObject)
@@ -568,7 +607,17 @@ function isValidRightAnswer(){
 //= function isHexadecimal(str)
 //=======================================================================================
 
-function renderQuizzesList(arr, documentObject) {
+function renderAllQuizzesList(arr, documentObject) {
+    for(let i = 0; i < arr.length; i++) {
+        documentObject.innerHTML += `<div class="quizz-card">                 
+                                        <img src=${arr[i].image}>
+                                        <img class="black-mask" src="./img/black-mask.png" style="height: 55%">
+                                        <p>${arr[i].title}</p>
+                                    </div>`
+    }
+}
+
+function renderUserQuizzesList(arr, documentObject) {
     for(let i = 0; i < arr.length; i++) {
         documentObject.innerHTML += `<div class="quizz-card">                 
                                         <img src=${arr[i].image}>
@@ -630,8 +679,10 @@ function isHexadecimal(str) {
     return false;
 }
 
+
 displayNone(first_SCREEN);
 displayFlex(third_SCREEN);
+
 displayNone(newQuizzStart);
 displayFlex(newQuizzQuestions);
 

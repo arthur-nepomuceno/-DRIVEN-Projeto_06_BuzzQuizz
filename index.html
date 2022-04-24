@@ -20,8 +20,6 @@
                 <p>Você não criou nenhum quizz ainda :(</p>
                 <button onclick="createNewQuizz()">Criar Quizz</button>
             </div>
-            <!--<button onclick="getAllQuizzes()">test button: get all quizzes</button>
-            <button onclick="getUserQuizzes()">test button: get user quizzes</button>-->
             <div class="user-quizzes">
                 <p>Seus Quizzes<ion-icon name="add-circle-sharp" onclick="createNewQuizz()"></ion-icon></p>
                 <div class="quizzes">
@@ -66,161 +64,183 @@
                 <p>Crie suas perguntas</p>
 
                 <div class="new-question">
-                    <p>Pergunta 1</p>
-                    <div class="new-question-data">
+                    <p>Pergunta 1<ion-icon name="create-outline" onclick="hideNewQuestionData(this)"></ion-icon></p>
+                    <div class="new-question-data hidden">
                         <div class="question-text">
                             <input type="text" placeholder="Texto da pergunta 1">
                         </div>
                         <p class="invalid-info hidden" id="question-text">O texto 1 deve ter no mínimo 20 caracteres.</p>
+                        
                         <div class="question-color">
                             <input type="text" placeholder="Cor de fundo da pergunta">  
                         </div>
                         <p class="invalid-info hidden" id="question-color">A cor deve estar em formato hexadecimal, começando com "#".</p>
                         
                         <p>Resposta correta</p>
-                        <div class="right-answer-text">
-                            <input type="text" placeholder="Resposta correta">
+                        <div class="right-answer">
+                            <div class="right-answer-text">
+                                <input type="text" placeholder="Resposta correta">
+                            </div>
+                            <p class="invalid-info hidden" id="right-answer-text">O texto não pode estar vazio.</p>
+                            <div class="right-answer-image">
+                                <input type="text" placeholder="URL da imagem">
+                            </div>
+                            <p class="invalid-info hidden" id="right-answer-image">O valor informado não é uma URL válida.</p>    
                         </div>
-                        <p class="invalid-info hidden" id="right-answer-text">O texto não pode estar vazio.</p>
-                        <div class="right-answer-image">
-                            <input type="text" placeholder="URL da imagem">
-                        </div>
-                        <p class="invalid-info hidden" id="right-answer-image">O valor informado não é uma URL válida.</p>
                         
                         <p>Respostas incorretas</p>
-                        <div class="wrong-answer-text">
-                            <input type="text" placeholder="Resposta incorreta 1">
+                        <div class="wrong-answer">
+                            <div class="wrong-answer-text">
+                                <input type="text" placeholder="Resposta incorreta 1">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
+                            <div class="wrong-answer-image">
+                                <input type="text" placeholder="URL da imagem 1">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
                         </div>
-                        <p class="invalid-info hidden" id="wrong-answer-text">O texto não pode estar vazio.</p>
-                        <div class="wrong-answer-image">
-                            <input type="text" placeholder="URL da imagem 1">
+                        <div class="wrong-answer">
+                            <div class="wrong-answer-text">
+                                <input type="text" placeholder="Resposta incorreta 2">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
+                            <div class="wrong-answer-image">
+                                <input type="text" placeholder="URL da imagem 1">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
                         </div>
-                        <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-
-                        <div class="wrong-answer-text">
-                            <input type="text" placeholder="Resposta incorreta 2">
+                        <div class="wrong-answer">
+                            <div class="wrong-answer-text">
+                                <input type="text" placeholder="Resposta incorreta 3">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
+                            <div class="wrong-answer-image">
+                                <input type="text" placeholder="URL da imagem 1">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
                         </div>
-                        <p class="invalid-info hidden" id="wrong-answer-text">O texto não pode estar vazio.</p>
-                        <div class="wrong-answer-image">
-                            <input type="text" placeholder="URL da imagem 2">
-                        </div>
-                        <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-
-                        <div class="wrong-answer-text">
-                            <input type="text" placeholder="Resposta incorreta 3">
-                        </div>
-                        <p class="invalid-info hidden" id="wrong-answer-text">O texto não pode estar vazio.</p>
-                        <div class="wrong-answer-image">
-                            <input type="text" placeholder="URL da imagem 3">
-                        </div>
-                        <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-                        
+                      
                     </div>               
                 </div>
                 <div class="new-question">
-                    <p>Pergunta 2 <ion-icon name="create-outline" onclick="hideNewQuestionData(this)"></ion-icon></p>
+                    <p>Pergunta 2<ion-icon name="create-outline" onclick="hideNewQuestionData(this)"></ion-icon></p>
                     <div class="new-question-data hidden">
                         <div class="question-text">
                             <input type="text" placeholder="Texto da pergunta 2">
                         </div>
-                        <p class="invalid-info hidden" id="question-text">O texto 2 deve ter no mínimo 20 caracteres.</p>
+                        <p class="invalid-info hidden" id="question-text">O texto 1 deve ter no mínimo 20 caracteres.</p>
+                        
                         <div class="question-color">
                             <input type="text" placeholder="Cor de fundo da pergunta">  
                         </div>
                         <p class="invalid-info hidden" id="question-color">A cor deve estar em formato hexadecimal, começando com "#".</p>
                         
                         <p>Resposta correta</p>
-                        <div class="right-answer-text">
-                            <input type="text" placeholder="Resposta correta">
+                        <div class="right-answer">
+                            <div class="right-answer-text">
+                                <input type="text" placeholder="Resposta correta">
+                            </div>
+                            <p class="invalid-info hidden" id="right-answer-text">O texto não pode estar vazio.</p>
+                            <div class="right-answer-image">
+                                <input type="text" placeholder="URL da imagem">
+                            </div>
+                            <p class="invalid-info hidden" id="right-answer-image">O valor informado não é uma URL válida.</p>    
                         </div>
-                        <p class="invalid-info hidden" id="right-answer-text">O texto não pode estar vazio.</p>
-                        <div class="right-answer-image">
-                            <input type="text" placeholder="URL da imagem">
-                        </div>
-                        <p class="invalid-info hidden" id="right-answer-image">O valor informado não é uma URL válida.</p>
                         
                         <p>Respostas incorretas</p>
-                        <div class="wrong-answer-text">
-                            <input type="text" placeholder="Resposta incorreta 1">
+                        <div class="wrong-answer">
+                            <div class="wrong-answer-text">
+                                <input type="text" placeholder="Resposta incorreta 1">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
+                            <div class="wrong-answer-image">
+                                <input type="text" placeholder="URL da imagem 1">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
                         </div>
-                        <p class="invalid-info hidden" id="wrong-answer-text">O texto não pode estar vazio.</p>
-                        <div class="wrong-answer-image">
-                            <input type="text" placeholder="URL da imagem 1">
+                        <div class="wrong-answer">
+                            <div class="wrong-answer-text">
+                                <input type="text" placeholder="Resposta incorreta 2">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
+                            <div class="wrong-answer-image">
+                                <input type="text" placeholder="URL da imagem 1">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
                         </div>
-                        <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-
-                        <div class="wrong-answer-text">
-                            <input type="text" placeholder="Resposta incorreta 2">
+                        <div class="wrong-answer">
+                            <div class="wrong-answer-text">
+                                <input type="text" placeholder="Resposta incorreta 3">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
+                            <div class="wrong-answer-image">
+                                <input type="text" placeholder="URL da imagem 1">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
                         </div>
-                        <p class="invalid-info hidden" id="wrong-answer-text">O texto não pode estar vazio.</p>
-                        <div class="wrong-answer-image">
-                            <input type="text" placeholder="URL da imagem 2">
-                        </div>
-                        <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-
-                        <div class="wrong-answer-text">
-                            <input type="text" placeholder="Resposta incorreta 3">
-                        </div>
-                        <p class="invalid-info hidden" id="wrong-answer-text">O texto não pode estar vazio.</p>
-                        <div class="wrong-answer-image">
-                            <input type="text" placeholder="URL da imagem 3">
-                        </div>
-                        <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-                        
-                    </div>
+                      
+                    </div>               
                 </div>
                 <div class="new-question">
-                    <p>Pergunta 3 <ion-icon name="create-outline" onclick="hideNewQuestionData(this)"></ion-icon></p> 
+                    <p>Pergunta 3<ion-icon name="create-outline" onclick="hideNewQuestionData(this)"></ion-icon></p>
                     <div class="new-question-data hidden">
                         <div class="question-text">
                             <input type="text" placeholder="Texto da pergunta 3">
                         </div>
-                        <p class="invalid-info hidden" id="question-text">O texto 3 deve ter no mínimo 20 caracteres.</p>
+                        <p class="invalid-info hidden" id="question-text">O texto 1 deve ter no mínimo 20 caracteres.</p>
+                        
                         <div class="question-color">
                             <input type="text" placeholder="Cor de fundo da pergunta">  
                         </div>
                         <p class="invalid-info hidden" id="question-color">A cor deve estar em formato hexadecimal, começando com "#".</p>
                         
                         <p>Resposta correta</p>
-                        <div class="right-answer-text">
-                            <input type="text" placeholder="Resposta correta">
+                        <div class="right-answer">
+                            <div class="right-answer-text">
+                                <input type="text" placeholder="Resposta correta">
+                            </div>
+                            <p class="invalid-info hidden" id="right-answer-text">O texto não pode estar vazio.</p>
+                            <div class="right-answer-image">
+                                <input type="text" placeholder="URL da imagem">
+                            </div>
+                            <p class="invalid-info hidden" id="right-answer-image">O valor informado não é uma URL válida.</p>    
                         </div>
-                        <p class="invalid-info hidden" id="right-answer-text">O texto não pode estar vazio.</p>
-                        <div class="right-answer-image">
-                            <input type="text" placeholder="URL da imagem">
-                        </div>
-                        <p class="invalid-info hidden" id="right-answer-image">O valor informado não é uma URL válida.</p>
                         
                         <p>Respostas incorretas</p>
-                        <div class="wrong-answer-text">
-                            <input type="text" placeholder="Resposta incorreta 1">
+                        <div class="wrong-answer">
+                            <div class="wrong-answer-text">
+                                <input type="text" placeholder="Resposta incorreta 1">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
+                            <div class="wrong-answer-image">
+                                <input type="text" placeholder="URL da imagem 1">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
                         </div>
-                        <p class="invalid-info hidden" id="wrong-answer-text">O texto não pode estar vazio.</p>
-                        <div class="wrong-answer-image">
-                            <input type="text" placeholder="URL da imagem 1">
+                        <div class="wrong-answer">
+                            <div class="wrong-answer-text">
+                                <input type="text" placeholder="Resposta incorreta 2">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
+                            <div class="wrong-answer-image">
+                                <input type="text" placeholder="URL da imagem 1">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
                         </div>
-                        <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-
-                        <div class="wrong-answer-text">
-                            <input type="text" placeholder="Resposta incorreta 2">
+                        <div class="wrong-answer">
+                            <div class="wrong-answer-text">
+                                <input type="text" placeholder="Resposta incorreta 3">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
+                            <div class="wrong-answer-image">
+                                <input type="text" placeholder="URL da imagem 1">
+                            </div>
+                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
                         </div>
-                        <p class="invalid-info hidden" id="wrong-answer-text">O texto não pode estar vazio.</p>
-                        <div class="wrong-answer-image">
-                            <input type="text" placeholder="URL da imagem 2">
-                        </div>
-                        <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-
-                        <div class="wrong-answer-text">
-                            <input type="text" placeholder="Resposta incorreta 3">
-                        </div>
-                        <p class="invalid-info hidden" id="wrong-answer-text">O texto não pode estar vazio.</p>
-                        <div class="wrong-answer-image">
-                            <input type="text" placeholder="URL da imagem 3">
-                        </div>
-                        <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-                        
+                      
                     </div>               
                 </div>
+                
                 <button onclick="moveToCreateLevelsScreen()">Prosseguir para criar níveis</button>
             </div>
 
