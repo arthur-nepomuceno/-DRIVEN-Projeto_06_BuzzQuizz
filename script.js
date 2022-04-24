@@ -352,16 +352,16 @@ function moveToCreateQuestionsScreen() {
     isValidURL();
     isValidNumberOfQuestions();
     isValidNumberOfLevels();
-
+    
     if (isValidTitle() && isValidURL() && isValidNumberOfQuestions()  && isValidNumberOfLevels()) {
         displayNone(newQuizzStart);
         displayFlex(newQuizzQuestions);
-    }    
+    }
 }
 
 function moveToCreateLevelsScreen() {
-    //isValidQuestionText();
-    //isValidQuestionColor();
+    isValidQuestionText();
+    isValidQuestionColor();
     isValidRightAnswer();
 
     //displayNone(newQuizzQuestions);
@@ -478,34 +478,39 @@ function isValidNumberOfLevels(){
 //= isValidQuestionColor()
 //= isValidRightAnswer()
 //= isValidWrongAnswer()
+//= isValidAnswerURL()
 ============================================================================ */
-const allQuestionData = document.querySelectorAll(".new-question-data");
+const allQuestions = document.querySelectorAll(".new-question");
 
-function isValidQuestionText() { 
- 
-    for (let i = 0; i <= allQuestionData.length; i++){
-        const newQuestionText = allQuestionData[i].querySelector(".question-text");
+function isValidQuestionText() {
+    let isValid;
+    for (let i = 0; i < allQuestions.length; i++){        
+        const newQuestionText = allQuestions[i].querySelector(".question-text");      
         const newQuestionTextInput = newQuestionText.querySelector("input");
-        const invalidQuestionText = allQuestionData[i].querySelector(".invalid-info#question-text");
-        
+        const invalidQuestionText = allQuestions[i].querySelector(".invalid-info#question-text");
+
         if (newQuestionTextInput.value.length < 20) {
             showObject(invalidQuestionText);
             backgroundPink(newQuestionText);
             backgroundPink(newQuestionTextInput);
-
-        } else {
+            isValid = false;      
+        } 
+        else {
             hideObject(invalidQuestionText);
             backgroundWhite(newQuestionText);
             backgroundWhite(newQuestionTextInput);
+            isValid = true;
         }
-    }    
+    }
+    return isValid;
 }
 
 function isValidQuestionColor() {
-    for (let i = 0; i <= allQuestionData.length; i++){
-        const newQuestionColor = allQuestionData[i].querySelector(".question-color");
+    let isValid;
+    for (let i = 0; i < allQuestions.length; i++){
+        const newQuestionColor = allQuestions[i].querySelector(".question-color");
         const newQuestionColorInput = newQuestionColor.querySelector("input");
-        const invalidQuestionColor = allQuestionData[i].querySelector(".invalid-info#question-color");
+        const invalidQuestionColor = allQuestions[i].querySelector(".invalid-info#question-color");
         
         
         if(startsWithHash(newQuestionColorInput.value) && 
@@ -513,31 +518,38 @@ function isValidQuestionColor() {
                 hideObject(invalidQuestionColor);
                 backgroundWhite(newQuestionColor);
                 backgroundWhite(newQuestionColorInput);
+                isValid = true;
         } else {
             showObject(invalidQuestionColor);
             backgroundPink(newQuestionColor);
             backgroundPink(newQuestionColorInput);
+            isValid = false;
         }
     }
+    return isValid;
 }
 
 function isValidRightAnswer(){
-    for (let i = 0; i <= allQuestionData.length; i++){
-        const newRightAnswer = allQuestionData[i].querySelector(".right-answer-text");
+    let isValid;
+    for (let i = 0; i < allQuestions.length; i++){
+        const newRightAnswer = allQuestions[i].querySelector(".right-answer-text");
         const newRightAnswerInput = newRightAnswer.querySelector("input");
-        const invalidRightAnswer = allQuestionData[i].querySelector(".invalid-info#right-answer-text");
+        const invalidRightAnswer = allQuestions[i].querySelector(".invalid-info#right-answer-text");
         
         if (newRightAnswerInput.value.length == 0) {
             showObject(invalidRightAnswer);
             backgroundPink(newRightAnswer);
             backgroundPink(newRightAnswerInput);
+            isValid = false;
 
         } else {
             hideObject(invalidRightAnswer);
             backgroundWhite(newRightAnswer);
             backgroundWhite(newRightAnswerInput);
+            isValid = true;
         }
-    }  
+    }
+    return isValid;
 }
 
 
