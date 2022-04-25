@@ -366,6 +366,7 @@ function moveToCreateLevelsScreen() {
     isValidRightAnswer();
     isValidRightAnswerURL();
     isValidWrongAnswer();
+    isValidWrongAnswerURL()
 
     //displayNone(newQuizzQuestions);
     //displayFlex(newQuizzLevels);
@@ -409,8 +410,6 @@ function isValidQuizzTitle(){
         return true;
     }
 }
-
-
 
 function isValidQuizzURL() {
     const newQuizzURL = document.querySelector(".new-quizz-basic > .url");
@@ -478,7 +477,9 @@ function isValidNumberOfLevels(){
 //= isValidQuestionText()
 //= isValidQuestionColor()
 //= isValidRightAnswer()
+//= isValidRightAnswerURL()
 //= isValidWrongAnswer()
+//= isValidWrongAnswerURL()
 //= isValidAnswerURL()
 ============================================================================ */
 const allQuestions = document.querySelectorAll(".new-question");
@@ -577,7 +578,6 @@ function isValidRightAnswerURL(){
         }
     }
     return isValid;
-
 }
 
 
@@ -592,6 +592,17 @@ function hideWrongAnswerWarnings(documentObject){
 
     const newWrongAnswerInput = newWrongAnswer.querySelector("input");
     backgroundWhite(newWrongAnswerInput)
+}
+
+function hideWrongAnswerURLWarnings(documentObject){
+    const invalidWrongAnswerURL = documentObject.querySelector(".invalid-info#wrong-answer-image");
+    hideObject(invalidWrongAnswerURL);
+
+    const newWrongAnswerURL = documentObject.querySelector(".wrong-answer-image");
+    backgroundWhite(newWrongAnswerURL)
+
+    const newWrongAnswerURLInput = newWrongAnswerURL.querySelector("input");
+    backgroundWhite(newWrongAnswerURLInput)
 }
 
 function isValidWrongAnswer(){
@@ -615,12 +626,40 @@ function isValidWrongAnswer(){
                 allWrongAnswers.forEach(hideWrongAnswerWarnings);
                 isValid = true;
                 wrongAnswerList.push(newWrongAnswerInput.value);
-                alert(newWrongAnswerInput.value);
-            }
-            
+                //alert(newWrongAnswerInput.value);
+            }            
         }
     }
 }
+
+function isValidWrongAnswerURL(){
+    let isValid;
+    let wrongAnswerURLList = [];
+    for(let i = 0; i < allQuestions.length; i++){
+        const allWrongAnswers = [...allQuestions[i].querySelectorAll(".wrong-answer")];
+        for(let j = 0; j < allWrongAnswers.length; j++) {
+            
+            const newWrongAnswerURL = allWrongAnswers[j].querySelector(".wrong-answer-image");
+            const newWrongAnswerURLInput = newWrongAnswerURL.querySelector("input");
+            const invalidWrongAnswer = allWrongAnswers[j].querySelector(".invalid-info#wrong-answer-image"); 
+
+            if (newWrongAnswerURLInput.value.length == 0 && wrongAnswerURLList.length == 0) {
+                showObject(invalidWrongAnswer);
+                backgroundPink(newWrongAnswerURL);
+                backgroundPink(newWrongAnswerURLInput);
+                isValid = false;                                
+    
+            } else if (newWrongAnswerURLInput.value.length != 0){                    
+                allWrongAnswers.forEach(hideWrongAnswerURLWarnings);
+                isValid = true;
+                wrongAnswerURLList.push(newWrongAnswerURLInput.value);
+                //alert(newWrongAnswerURLInput.value);
+            }            
+        }
+    }
+}
+
+
 
 
 
