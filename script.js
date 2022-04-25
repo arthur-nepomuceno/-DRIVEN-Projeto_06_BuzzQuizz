@@ -376,6 +376,7 @@ function moveToCreateLevelsScreen() {
 
 function moveToSuccessScreen() {
     isValidLevelTitle();
+    isValidLevelPercentage();
 
     //displayNone(newQuizzLevels);
     //displayFlex(newQuizzSuccess);
@@ -711,8 +712,30 @@ function isValidLevelTitle() {
     return isValid;
 }
 
-function isValidLevelPercentage() { }
+function isValidLevelPercentage() {
+    let isValid;
+    for (let i = 0; i < allLevels.length; i++){        
+        const newLevelPercentage = allLevels[i].querySelector(".level-percentage");      
+        const newLevelPercentageInput = newLevelPercentage.querySelector("input");
+        const invalidLevelPercentage = allLevels[i].querySelector(".invalid-info#level-percentage");
+        
+        const levelPercentage = Math.floor(Number(newLevelPercentageInput.value));       
 
+        if (newLevelPercentageInput.value == "" || levelPercentage < 0 || levelPercentage > 100) {
+            showObject(invalidLevelPercentage);
+            backgroundPink(newLevelPercentage);
+            backgroundPink(newLevelPercentageInput);
+            isValid = false;      
+        } 
+        else {
+            hideObject(invalidLevelPercentage);
+            backgroundWhite(newLevelPercentage);
+            backgroundWhite(newLevelPercentageInput);
+            isValid = true;
+        }
+    }
+    return isValid;
+}
 
 
 
@@ -822,7 +845,7 @@ displayNone(first_SCREEN);
 displayFlex(third_SCREEN);
 
 displayNone(newQuizzStart);
-displayFlex(newQuizzQuestions);
+displayNone(newQuizzQuestions);
 displayFlex(newQuizzLevels);
 
 
