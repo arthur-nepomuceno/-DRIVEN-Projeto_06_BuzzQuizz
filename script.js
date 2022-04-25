@@ -383,8 +383,13 @@ function moveToSuccessScreen() {
     isValidLevelURL();
     isValidLevelDescription();
 
-    //displayNone(newQuizzLevels);
-    //displayFlex(newQuizzSuccess);
+    if(isValidLevelTitle() && isValidLevelPercentage() 
+    && isValidLevelURL() && isValidLevelDescription()){
+        displayNone(newQuizzLevels);
+        displayFlex(newQuizzSuccess);
+    }
+
+    
 }
 
 function moveToFirstScreen() {
@@ -685,11 +690,11 @@ function isValidWrongAnswerData(){
 }
 
 /* ============================================================================
-=================== NEW QUIZZ LEVELS SCREEN FUNCTIONS ====================
-//= isValidLevelTitle()
-//= isValidLevelPercentage()
-//= isValidLevelURL()
-//= isValidLevelDescription()
+====================== NEW QUIZZ LEVELS SCREEN FUNCTIONS ======================
+isValidLevelTitle()
+isValidLevelPercentage()
+isValidLevelURL()
+isValidLevelDescription()
 ============================================================================ */
 
 const allLevels = document.querySelectorAll(".new-level");
@@ -726,7 +731,8 @@ function isValidLevelPercentage() {
         
         const levelPercentage = Math.floor(Number(newLevelPercentageInput.value));       
 
-        if (newLevelPercentageInput.value == "" || levelPercentage < 0 || levelPercentage > 100) {
+        if (isNaN(Number(newLevelPercentageInput.value)) || newLevelPercentageInput.value == "" 
+        || levelPercentage < 0 || levelPercentage > 100) {
             showObject(invalidLevelPercentage);
             backgroundPink(newLevelPercentage);
             backgroundPink(newLevelPercentageInput);
