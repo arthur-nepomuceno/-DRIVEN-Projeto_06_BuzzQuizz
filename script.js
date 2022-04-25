@@ -365,12 +365,13 @@ function moveToCreateLevelsScreen() {
     isValidQuestionColor();
     isValidRightAnswer();
     isValidRightAnswerURL();
-    isValidWrongAnswerData();
-    //isValidWrongAnswer();
-    //isValidWrongAnswerURL()
+    isValidWrongAnswerData();    
 
-    //displayNone(newQuizzQuestions);
-    //displayFlex(newQuizzLevels);
+    if (isValidQuestionText() && isValidQuestionColor() && isValidRightAnswer() && 
+    isValidRightAnswerURL() && isValidWrongAnswerData()) {
+        displayNone(newQuizzQuestions);
+        displayFlex(newQuizzLevels);
+    }
 }
 
 function moveToSuccessScreen() {
@@ -606,63 +607,6 @@ function hideWrongAnswerURLWarnings(documentObject){
     backgroundWhite(newWrongAnswerURLInput)
 }
 
-function isValidWrongAnswer(){
-    let isValid;
-    let wrongAnswerList = [];
-    for(let i = 0; i < allQuestions.length; i++){
-        const allWrongAnswers = [...allQuestions[i].querySelectorAll(".wrong-answer")];
-        for(let j = 0; j < allWrongAnswers.length; j++) {
-            
-            const newWrongAnswer = allWrongAnswers[j].querySelector(".wrong-answer-text");
-            const newWrongAnswerInput = newWrongAnswer.querySelector("input");
-            const invalidWrongAnswer = allWrongAnswers[j].querySelector(".invalid-info#wrong-answer-text"); 
-
-            if (newWrongAnswerInput.value.length == 0 && wrongAnswerList.length == 0) {
-                showObject(invalidWrongAnswer);
-                backgroundPink(newWrongAnswer);
-                backgroundPink(newWrongAnswerInput);
-                isValid = false;                                
-    
-            } else if (newWrongAnswerInput.value.length != 0){                    
-                allWrongAnswers.forEach(hideWrongAnswerWarnings);
-                isValid = true;
-                wrongAnswerList.push(newWrongAnswerInput.value);
-                //alert(newWrongAnswerInput.value);
-            }            
-        }
-    }
-    return isValid;
-}
-
-function isValidWrongAnswerURL(){
-    let isValid;
-    let wrongAnswerURLList = [];
-    for(let i = 0; i < allQuestions.length; i++){
-        const allWrongAnswers = [...allQuestions[i].querySelectorAll(".wrong-answer")];
-        for(let j = 0; j < allWrongAnswers.length; j++) {
-            
-            const newWrongAnswerURL = allWrongAnswers[j].querySelector(".wrong-answer-image");
-            const newWrongAnswerURLInput = newWrongAnswerURL.querySelector("input");
-            const invalidWrongAnswerURL = allWrongAnswers[j].querySelector(".invalid-info#wrong-answer-image"); 
-
-            if (newWrongAnswerURLInput.value.length == 0 && wrongAnswerURLList.length == 0) {
-                showObject(invalidWrongAnswerURL);
-                backgroundPink(newWrongAnswerURL);
-                backgroundPink(newWrongAnswerURLInput);
-                isValid = false;                                
-    
-            } else if (newWrongAnswerURLInput.value.length != 0){                    
-                allWrongAnswers.forEach(hideWrongAnswerURLWarnings);
-                isValid = true;
-                wrongAnswerURLList.push(newWrongAnswerURLInput.value);
-                //alert(newWrongAnswerURLInput.value);
-            }            
-        }
-    }
-    return isValid;
-}
-
-//=testando
 function isValidWrongAnswerData(){
     let isValid;
     let wrongAnswerList = [];
@@ -714,10 +658,8 @@ function isValidWrongAnswerData(){
                 backgroundWhite(newWrongAnswerURLInput);
 
                 isValid = false;
-            }
-            
-            
-            else if (newWrongAnswerInput.value.length != 0 && isValidURL(url) == true){                    
+
+            } else if (newWrongAnswerInput.value.length != 0 && isValidURL(url) == true){                    
                 allWrongAnswers.forEach(hideWrongAnswerWarnings);
                 wrongAnswerList.push(newWrongAnswerInput.value);
 
@@ -726,17 +668,13 @@ function isValidWrongAnswerData(){
 
                 isValid = true;
                 
-                alert(newWrongAnswerURLInput.value);
-                alert(newWrongAnswerInput.value);
+                //alert(newWrongAnswerURLInput.value);
+                //alert(newWrongAnswerInput.value);
             }
         }
     }
     return isValid;
 }
-
-
-
-
 
 //=======================================================================================
 //================================= AUXILIAR FUNCTIONS ==================================
@@ -844,4 +782,64 @@ displayFlex(third_SCREEN);
 
 displayNone(newQuizzStart);
 displayFlex(newQuizzQuestions);
+
+
+
+//============================ IGNORAR POR ENQUANTO. ESTÁ AQUI SÓ POR SEGURANÇA.
+/*
+function isValidWrongAnswer(){
+    let isValid;
+    let wrongAnswerList = [];
+    for(let i = 0; i < allQuestions.length; i++){
+        const allWrongAnswers = [...allQuestions[i].querySelectorAll(".wrong-answer")];
+        for(let j = 0; j < allWrongAnswers.length; j++) {
+            
+            const newWrongAnswer = allWrongAnswers[j].querySelector(".wrong-answer-text");
+            const newWrongAnswerInput = newWrongAnswer.querySelector("input");
+            const invalidWrongAnswer = allWrongAnswers[j].querySelector(".invalid-info#wrong-answer-text"); 
+
+            if (newWrongAnswerInput.value.length == 0 && wrongAnswerList.length == 0) {
+                showObject(invalidWrongAnswer);
+                backgroundPink(newWrongAnswer);
+                backgroundPink(newWrongAnswerInput);
+                isValid = false;                                
+    
+            } else if (newWrongAnswerInput.value.length != 0){                    
+                allWrongAnswers.forEach(hideWrongAnswerWarnings);
+                isValid = true;
+                wrongAnswerList.push(newWrongAnswerInput.value);
+                //alert(newWrongAnswerInput.value);
+            }            
+        }
+    }
+    return isValid;
+}
+
+function isValidWrongAnswerURL(){
+    let isValid;
+    let wrongAnswerURLList = [];
+    for(let i = 0; i < allQuestions.length; i++){
+        const allWrongAnswers = [...allQuestions[i].querySelectorAll(".wrong-answer")];
+        for(let j = 0; j < allWrongAnswers.length; j++) {
+            
+            const newWrongAnswerURL = allWrongAnswers[j].querySelector(".wrong-answer-image");
+            const newWrongAnswerURLInput = newWrongAnswerURL.querySelector("input");
+            const invalidWrongAnswerURL = allWrongAnswers[j].querySelector(".invalid-info#wrong-answer-image"); 
+
+            if (newWrongAnswerURLInput.value.length == 0 && wrongAnswerURLList.length == 0) {
+                showObject(invalidWrongAnswerURL);
+                backgroundPink(newWrongAnswerURL);
+                backgroundPink(newWrongAnswerURLInput);
+                isValid = false;                                
+    
+            } else if (newWrongAnswerURLInput.value.length != 0){                    
+                allWrongAnswers.forEach(hideWrongAnswerURLWarnings);
+                isValid = true;
+                wrongAnswerURLList.push(newWrongAnswerURLInput.value);
+                //alert(newWrongAnswerURLInput.value);
+            }            
+        }
+    }
+    return isValid;
+}*/
 
