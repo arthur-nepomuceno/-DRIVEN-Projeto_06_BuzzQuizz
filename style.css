@@ -861,10 +861,6 @@ body {
     border-radius: 5px;
 }
 
-.new-level-data > .level-description {
-    margin-bottom: 28px;
-}
-
 .new-level-data input {
     width: 100%;
     outline: none;

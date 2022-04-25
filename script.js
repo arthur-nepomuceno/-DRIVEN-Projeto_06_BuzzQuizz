@@ -414,9 +414,17 @@ function moveToCreateLevelsScreen() {
 
 function moveToSuccessScreen() {
     isValidLevelTitle();
+    isValidLevelPercentage();
+    isValidLevelURL();
+    isValidLevelDescription();
 
-    //displayNone(newQuizzLevels);
-    //displayFlex(newQuizzSuccess);
+    if(isValidLevelTitle() && isValidLevelPercentage() 
+    && isValidLevelURL() && isValidLevelDescription()){
+        displayNone(newQuizzLevels);
+        displayFlex(newQuizzSuccess);
+    }
+
+    
 }
 
 function moveToFirstScreen() {
@@ -717,11 +725,11 @@ function isValidWrongAnswerData(){
 }
 
 /* ============================================================================
-=================== NEW QUIZZ LEVELS SCREEN FUNCTIONS ====================
-//= isValidLevelTitle()
-//= isValidLevelPercentage()
-//= isValidLevelURL()
-//= isValidLevelDescription()
+====================== NEW QUIZZ LEVELS SCREEN FUNCTIONS ======================
+isValidLevelTitle()
+isValidLevelPercentage()
+isValidLevelURL()
+isValidLevelDescription()
 ============================================================================ */
 
 const allLevels = document.querySelectorAll(".new-level");
@@ -749,8 +757,85 @@ function isValidLevelTitle() {
     return isValid;
 }
 
-function isValidLevelPercentage() { }
+function isValidLevelPercentage() {
+    let isValid;
+    for (let i = 0; i < allLevels.length; i++){        
+        const newLevelPercentage = allLevels[i].querySelector(".level-percentage");      
+        const newLevelPercentageInput = newLevelPercentage.querySelector("input");
+        const invalidLevelPercentage = allLevels[i].querySelector(".invalid-info#level-percentage");
+        
+        const levelPercentage = Math.floor(Number(newLevelPercentageInput.value));       
 
+        if (isNaN(Number(newLevelPercentageInput.value)) || newLevelPercentageInput.value == "" 
+        || levelPercentage < 0 || levelPercentage > 100) {
+            showObject(invalidLevelPercentage);
+            backgroundPink(newLevelPercentage);
+            backgroundPink(newLevelPercentageInput);
+            isValid = false;      
+        } 
+        else {
+            hideObject(invalidLevelPercentage);
+            backgroundWhite(newLevelPercentage);
+            backgroundWhite(newLevelPercentageInput);
+            isValid = true;
+        }
+    }
+    return isValid;
+}
+
+function isValidLevelURL() {
+    let isValid;
+    for (let i = 0; i < allLevels.length; i++){
+        const newLevelURL = allLevels[i].querySelector(".level-url");
+        const newLevelURLInput = newLevelURL.querySelector("input");
+        const invalidLevelURL = allLevels[i].querySelector(".invalid-info#level-url");
+
+        //alert(newLevelURL);
+        //alert(newLevelURLInput);
+        //alert(invalidLevelURL);
+
+        
+        const url = newLevelURLInput.value;
+
+        if (isValidURL(url)) {
+            hideObject(invalidLevelURL);
+            backgroundWhite(newLevelURL);
+            backgroundWhite(newLevelURLInput);       
+    
+            isValid = true;
+        } else {
+            showObject(invalidLevelURL);
+            backgroundPink(newLevelURL);
+            backgroundPink(newLevelURLInput);    
+    
+            isValid = false;
+        }
+    }
+    return isValid;
+}
+
+function isValidLevelDescription() {
+    let isValid;
+    for (let i = 0; i < allLevels.length; i++){        
+        const newLevelDescription = allLevels[i].querySelector(".level-description");      
+        const newLevelDescriptionInput = newLevelDescription.querySelector("input");
+        const invalidLevelDescription = allLevels[i].querySelector(".invalid-info#level-description");
+
+        if (newLevelDescriptionInput.value.length < 30) {
+            showObject(invalidLevelDescription);
+            backgroundPink(newLevelDescription);
+            backgroundPink(newLevelDescriptionInput);
+            isValid = false;      
+        } 
+        else {
+            hideObject(invalidLevelDescription);
+            backgroundWhite(newLevelDescription);
+            backgroundWhite(newLevelDescriptionInput);
+            isValid = true;
+        }
+    }
+    return isValid;
+}
 
 
 
@@ -866,7 +951,7 @@ function isHexadecimal(str) {
 //displayFlex(third_SCREEN);
 
 displayNone(newQuizzStart);
-displayFlex(newQuizzQuestions);
+displayNone(newQuizzQuestions);
 displayFlex(newQuizzLevels);
 
 
