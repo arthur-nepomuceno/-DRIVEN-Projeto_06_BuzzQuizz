@@ -377,6 +377,8 @@ function moveToCreateLevelsScreen() {
 function moveToSuccessScreen() {
     isValidLevelTitle();
     isValidLevelPercentage();
+    isValidLevelURL();
+    isValidLevelDescription();
 
     //displayNone(newQuizzLevels);
     //displayFlex(newQuizzSuccess);
@@ -731,6 +733,60 @@ function isValidLevelPercentage() {
             hideObject(invalidLevelPercentage);
             backgroundWhite(newLevelPercentage);
             backgroundWhite(newLevelPercentageInput);
+            isValid = true;
+        }
+    }
+    return isValid;
+}
+
+function isValidLevelURL() {
+    let isValid;
+    for (let i = 0; i < allLevels.length; i++){
+        const newLevelURL = allLevels[i].querySelector(".level-url");
+        const newLevelURLInput = newLevelURL.querySelector("input");
+        const invalidLevelURL = allLevels[i].querySelector(".invalid-info#level-url");
+
+        //alert(newLevelURL);
+        //alert(newLevelURLInput);
+        //alert(invalidLevelURL);
+
+        
+        const url = newLevelURLInput.value;
+
+        if (isValidURL(url)) {
+            hideObject(invalidLevelURL);
+            backgroundWhite(newLevelURL);
+            backgroundWhite(newLevelURLInput);       
+    
+            isValid = true;
+        } else {
+            showObject(invalidLevelURL);
+            backgroundPink(newLevelURL);
+            backgroundPink(newLevelURLInput);    
+    
+            isValid = false;
+        }
+    }
+    return isValid;
+}
+
+function isValidLevelDescription() {
+    let isValid;
+    for (let i = 0; i < allLevels.length; i++){        
+        const newLevelDescription = allLevels[i].querySelector(".level-description");      
+        const newLevelDescriptionInput = newLevelDescription.querySelector("input");
+        const invalidLevelDescription = allLevels[i].querySelector(".invalid-info#level-description");
+
+        if (newLevelDescriptionInput.value.length < 30) {
+            showObject(invalidLevelDescription);
+            backgroundPink(newLevelDescription);
+            backgroundPink(newLevelDescriptionInput);
+            isValid = false;      
+        } 
+        else {
+            hideObject(invalidLevelDescription);
+            backgroundWhite(newLevelDescription);
+            backgroundWhite(newLevelDescriptionInput);
             isValid = true;
         }
     }
