@@ -9,9 +9,12 @@ const first_SCREEN = document.querySelector(".screen_first");
 const second_SCREEN = document.querySelector(".screen_second");
 const third_SCREEN = document.querySelector(".screen_third");
 
+<<<<<<< HEAD
 //=======================================================================================
 //=============================== SECOND SCREEN FUNCTIONS ===============================
 //=======================================================================================
+=======
+>>>>>>> 37aeeae5cf3298328baba9e23004bc7a3668e493
 
 function quizzPage () {
     resetVariables();
@@ -303,7 +306,7 @@ function getAllQuizzes() {
 function renderAllQuizzes(response) {
     const allQuizzesList = response.data;
     const allQuizzesHTML = document.querySelector(".all-quizzes > .quizzes");
-    renderQuizzesList(allQuizzesList, allQuizzesHTML);
+    renderAllQuizzesList(allQuizzesList, allQuizzesHTML);
 }
 
 function getUserQuizzes() {
@@ -315,7 +318,7 @@ function getUserQuizzes() {
 function renderUserQuizzes(response) {
     const userQuizzesList = response.data;
     const userQuizzesHTML = document.querySelector(".user-quizzes > .quizzes");
-    renderQuizzesList(userQuizzesList, userQuizzesHTML);
+    renderUserQuizzesList(userQuizzesList, userQuizzesHTML);
 }
 
 function createNewQuizz() {
@@ -352,12 +355,12 @@ function hideNewLevelData(element){
 }
 
 function moveToCreateQuestionsScreen() {
-    isValidTitle();
-    isValidURL();
+    isValidQuizzTitle();
+    isValidQuizzURL();
     isValidNumberOfQuestions();
     isValidNumberOfLevels();
     
-    if (isValidTitle() && isValidURL() && isValidNumberOfQuestions()  && isValidNumberOfLevels()) {
+    if (isValidQuizzTitle() && isValidQuizzURL() && isValidNumberOfQuestions()  && isValidNumberOfLevels()) {
         displayNone(newQuizzStart);
         displayFlex(newQuizzQuestions);
     }
@@ -367,14 +370,21 @@ function moveToCreateLevelsScreen() {
     isValidQuestionText();
     isValidQuestionColor();
     isValidRightAnswer();
+    isValidRightAnswerURL();
+    isValidWrongAnswerData();    
 
-    //displayNone(newQuizzQuestions);
-    //displayFlex(newQuizzLevels);
+    if (isValidQuestionText() && isValidQuestionColor() && isValidRightAnswer() && 
+    isValidRightAnswerURL() && isValidWrongAnswerData()) {
+        displayNone(newQuizzQuestions);
+        displayFlex(newQuizzLevels);
+    }
 }
 
 function moveToSuccessScreen() {
-    displayNone(newQuizzLevels);
-    displayFlex(newQuizzSuccess);
+    isValidLevelTitle();
+
+    //displayNone(newQuizzLevels);
+    //displayFlex(newQuizzSuccess);
 }
 
 function moveToFirstScreen() {
@@ -385,13 +395,13 @@ function moveToFirstScreen() {
 
 /* ============================================================================
 ===================== NEW QUIZZ - START SCREEN FUNCTIONS ======================
-//= isValidTitle()
-//= isValidURL()
+//= isValidQuizzTitle()
+//= isValidQuizzURL()
 //= isValidNumberOfQuestions()
 //= isValidNumberOfLevels()
 ============================================================================ */
 
-function isValidTitle(){    
+function isValidQuizzTitle(){    
     const newQuizzTitle = document.querySelector(".new-quizz-basic > .title");
     const newQuizzTitleInput = newQuizzTitle.querySelector("input");
     const invalidTitle = document.querySelector(".new-quizz-basic > .invalid-info#title");
@@ -411,28 +421,24 @@ function isValidTitle(){
     }
 }
 
-function isValidURL() {
+function isValidQuizzURL() {
     const newQuizzURL = document.querySelector(".new-quizz-basic > .url");
     const newQuizzURLInput = newQuizzURL.querySelector("input");
     const invalidURL = document.querySelector(".new-quizz-basic > .invalid-info#url");
-
     const url = newQuizzURLInput.value
-    const testResult = url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-    const includesHTTPS = url.includes("https://");
-    const includesWWW = url.includes("www.");
 
-    if (testResult === null || (includesHTTPS === false && includesWWW === false)) {
-        showObject(invalidURL);
-        backgroundPink(newQuizzURL);
-        backgroundPink(newQuizzURLInput);
-
-        return false;
-    } else {
+    if (isValidURL(url)) {
         hideObject(invalidURL);
         backgroundWhite(newQuizzURL);
-        backgroundWhite(newQuizzURLInput);
+        backgroundWhite(newQuizzURLInput);       
 
         return true;
+    } else {
+        showObject(invalidURL);
+        backgroundPink(newQuizzURL);
+        backgroundPink(newQuizzURLInput);        
+
+        return false;
     }
 }
 
@@ -477,12 +483,14 @@ function isValidNumberOfLevels(){
 }
 
 /* ============================================================================
-=================== NEW QUIZZ - QUESTIONS SCREEN FUNCTIONS ====================
+=================== NEW QUIZZ QUESTIONS SCREEN FUNCTIONS ====================
 //= isValidQuestionText()
 //= isValidQuestionColor()
 //= isValidRightAnswer()
-//= isValidWrongAnswer()
-//= isValidAnswerURL()
+//= isValidRightAnswerURL()
+//= hideWrongAnswerWarnings(documentObject)
+//= hideWrongAnswerURLWarnings(documentObject)
+//= isValidWrongData()
 ============================================================================ */
 const allQuestions = document.querySelectorAll(".new-question");
 
@@ -556,23 +564,192 @@ function isValidRightAnswer(){
     return isValid;
 }
 
+function isValidRightAnswerURL(){
+    let isValid;
+    for (let i = 0; i < allQuestions.length; i++){
+        const newRightAnswerURL = allQuestions[i].querySelector(".right-answer-image");
+        const newRightAnswerURLInput = newRightAnswerURL.querySelector("input");
+        const invalidRightAnswerURL = allQuestions[i].querySelector(".invalid-info#right-answer-image");
+
+        const url = newRightAnswerURLInput.value;
+
+        if (isValidURL(url)) {
+            hideObject(invalidRightAnswerURL);
+            backgroundWhite(newRightAnswerURL);
+            backgroundWhite(newRightAnswerURLInput);       
+    
+            isValid = true;
+        } else {
+            showObject(invalidRightAnswerURL);
+            backgroundPink(newRightAnswerURL);
+            backgroundPink(newRightAnswerURLInput);    
+    
+            isValid = false;
+        }
+    }
+    return isValid;
+}
+
+
+
+
+function hideWrongAnswerWarnings(documentObject){
+    const invalidWrongAnswer = documentObject.querySelector(".invalid-info#wrong-answer-text");
+    hideObject(invalidWrongAnswer);
+
+    const newWrongAnswer = documentObject.querySelector(".wrong-answer-text");
+    backgroundWhite(newWrongAnswer)
+
+    const newWrongAnswerInput = newWrongAnswer.querySelector("input");
+    backgroundWhite(newWrongAnswerInput)
+}
+
+function hideWrongAnswerURLWarnings(documentObject){
+    const invalidWrongAnswerURL = documentObject.querySelector(".invalid-info#wrong-answer-image");
+    hideObject(invalidWrongAnswerURL);
+
+    const newWrongAnswerURL = documentObject.querySelector(".wrong-answer-image");
+    backgroundWhite(newWrongAnswerURL)
+
+    const newWrongAnswerURLInput = newWrongAnswerURL.querySelector("input");
+    backgroundWhite(newWrongAnswerURLInput)
+}
+
+function isValidWrongAnswerData(){
+    let isValid;
+    let wrongAnswerList = [];
+    let wrongAnswerURLList = [];
+    for(let i = 0; i < allQuestions.length; i++){
+        const allWrongAnswers = [...allQuestions[i].querySelectorAll(".wrong-answer")];
+
+        for(let j = 0; j < allWrongAnswers.length; j++) {            
+            const newWrongAnswer = allWrongAnswers[j].querySelector(".wrong-answer-text");
+            const newWrongAnswerInput = newWrongAnswer.querySelector("input");
+            const invalidWrongAnswer = allWrongAnswers[j].querySelector(".invalid-info#wrong-answer-text");
+
+            const newWrongAnswerURL = allWrongAnswers[j].querySelector(".wrong-answer-image");
+            const newWrongAnswerURLInput = newWrongAnswerURL.querySelector("input");
+            const invalidWrongAnswerURL = allWrongAnswers[j].querySelector(".invalid-info#wrong-answer-image");
+
+            const url = newWrongAnswerURLInput.value;
+
+            if (newWrongAnswerInput.value.length == 0 && wrongAnswerList.length == 0
+                && isValidURL(url) == false && wrongAnswerURLList.length == 0) {
+                showObject(invalidWrongAnswer);
+                backgroundPink(newWrongAnswer);
+                backgroundPink(newWrongAnswerInput);
+
+                showObject(invalidWrongAnswerURL);
+                backgroundPink(newWrongAnswerURL);
+                backgroundPink(newWrongAnswerURLInput);
+
+                isValid = false;                                
+    
+            } else if (newWrongAnswerInput.value.length != 0 && isValidURL(url) == false){
+                hideObject(invalidWrongAnswer);
+                backgroundWhite(newWrongAnswer);
+                backgroundWhite(newWrongAnswerInput);
+
+                showObject(invalidWrongAnswerURL);
+                backgroundPink(newWrongAnswerURL);
+                backgroundPink(newWrongAnswerURLInput);
+
+                isValid = false;
+
+            } else if (newWrongAnswerInput.value.length == 0 && isValidURL(url) == true) {
+                showObject(invalidWrongAnswer);
+                backgroundPink(newWrongAnswer);
+                backgroundPink(newWrongAnswerInput);
+
+                hideObject(invalidWrongAnswerURL);
+                backgroundWhite(newWrongAnswerURL);
+                backgroundWhite(newWrongAnswerURLInput);
+
+                isValid = false;
+
+            } else if (newWrongAnswerInput.value.length != 0 && isValidURL(url) == true){                    
+                allWrongAnswers.forEach(hideWrongAnswerWarnings);
+                wrongAnswerList.push(newWrongAnswerInput.value);
+
+                allWrongAnswers.forEach(hideWrongAnswerURLWarnings);
+                wrongAnswerURLList.push(newWrongAnswerURLInput.value);
+
+                isValid = true;
+                
+                //alert(newWrongAnswerURLInput.value);
+                //alert(newWrongAnswerInput.value);
+            }
+        }
+    }
+    return isValid;
+}
+
+/* ============================================================================
+=================== NEW QUIZZ LEVELS SCREEN FUNCTIONS ====================
+//= isValidLevelTitle()
+//= isValidLevelPercentage()
+//= isValidLevelURL()
+//= isValidLevelDescription()
+============================================================================ */
+
+const allLevels = document.querySelectorAll(".new-level");
+
+function isValidLevelTitle() {
+    let isValid;
+    for (let i = 0; i < allLevels.length; i++){        
+        const newLevelTitle = allLevels[i].querySelector(".level-text");      
+        const newLevelTitleInput = newLevelTitle.querySelector("input");
+        const invalidLevelTitle = allLevels[i].querySelector(".invalid-info#level-text");
+
+        if (newLevelTitleInput.value.length < 10) {
+            showObject(invalidLevelTitle);
+            backgroundPink(newLevelTitle);
+            backgroundPink(newLevelTitleInput);
+            isValid = false;      
+        } 
+        else {
+            hideObject(invalidLevelTitle);
+            backgroundWhite(newLevelTitle);
+            backgroundWhite(newLevelTitleInput);
+            isValid = true;
+        }
+    }
+    return isValid;
+}
+
+function isValidLevelPercentage() {}
+
+
+
 
 
 //=======================================================================================
 //================================= AUXILIAR FUNCTIONS ==================================
 //=======================================================================================
-//= function renderQuizzesList(arr, documentObject)
+//= function renderAllQuizzesList(arr, documentObject)
+//= function renderUserQuizzesList(arr, documentObject)
 //= function displayNone(documentObject)
 //= function displayFlex(documentObject)
 //= function backgroundPink(documentObject)
 //= function backgroundWhite(documentObject)
 //= function hideObject(documentObject)
 //= function showObject(documentObject)
+//= function isValidURL(str)
 //= function startsWithHash(str)
 //= function isHexadecimal(str)
 //=======================================================================================
 
-function renderQuizzesList(arr, documentObject) {
+function renderAllQuizzesList(arr, documentObject) {
+    for(let i = 0; i < arr.length; i++) {
+        documentObject.innerHTML += `<div class="quizz-card">                 
+                                        <img src=${arr[i].image}>
+                                        <img class="black-mask" src="./img/black-mask.png" style="height: 55%">
+                                        <p>${arr[i].title}</p>
+                                    </div>`
+    }
+}
+
+function renderUserQuizzesList(arr, documentObject) {
     for(let i = 0; i < arr.length; i++) {
         documentObject.innerHTML += `<div class="quizz-card">                 
                                         <img src=${arr[i].image}>
@@ -606,6 +783,18 @@ function showObject(documentObject){
     documentObject.classList.remove("hidden");
 }
 
+function isValidURL(str) {
+    const testResult = str.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    const includesHTTPS = str.includes("https://");
+    const includesWWW = str.includes("www.");
+
+    if (testResult === null || (includesHTTPS === false && includesWWW === false)) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 function startsWithHash(str) {
     if(str[0] === "#") {
         return true;
@@ -634,8 +823,71 @@ function isHexadecimal(str) {
     return false;
 }
 
+
 displayNone(first_SCREEN);
 displayFlex(third_SCREEN);
+
 displayNone(newQuizzStart);
 displayFlex(newQuizzQuestions);
+displayFlex(newQuizzLevels);
+
+
+
+//============================ IGNORAR POR ENQUANTO. ESTÁ AQUI SÓ POR SEGURANÇA.
+/*
+function isValidWrongAnswer(){
+    let isValid;
+    let wrongAnswerList = [];
+    for(let i = 0; i < allQuestions.length; i++){
+        const allWrongAnswers = [...allQuestions[i].querySelectorAll(".wrong-answer")];
+        for(let j = 0; j < allWrongAnswers.length; j++) {
+            
+            const newWrongAnswer = allWrongAnswers[j].querySelector(".wrong-answer-text");
+            const newWrongAnswerInput = newWrongAnswer.querySelector("input");
+            const invalidWrongAnswer = allWrongAnswers[j].querySelector(".invalid-info#wrong-answer-text"); 
+
+            if (newWrongAnswerInput.value.length == 0 && wrongAnswerList.length == 0) {
+                showObject(invalidWrongAnswer);
+                backgroundPink(newWrongAnswer);
+                backgroundPink(newWrongAnswerInput);
+                isValid = false;                                
+    
+            } else if (newWrongAnswerInput.value.length != 0){                    
+                allWrongAnswers.forEach(hideWrongAnswerWarnings);
+                isValid = true;
+                wrongAnswerList.push(newWrongAnswerInput.value);
+                //alert(newWrongAnswerInput.value);
+            }            
+        }
+    }
+    return isValid;
+}
+
+function isValidWrongAnswerURL(){
+    let isValid;
+    let wrongAnswerURLList = [];
+    for(let i = 0; i < allQuestions.length; i++){
+        const allWrongAnswers = [...allQuestions[i].querySelectorAll(".wrong-answer")];
+        for(let j = 0; j < allWrongAnswers.length; j++) {
+            
+            const newWrongAnswerURL = allWrongAnswers[j].querySelector(".wrong-answer-image");
+            const newWrongAnswerURLInput = newWrongAnswerURL.querySelector("input");
+            const invalidWrongAnswerURL = allWrongAnswers[j].querySelector(".invalid-info#wrong-answer-image"); 
+
+            if (newWrongAnswerURLInput.value.length == 0 && wrongAnswerURLList.length == 0) {
+                showObject(invalidWrongAnswerURL);
+                backgroundPink(newWrongAnswerURL);
+                backgroundPink(newWrongAnswerURLInput);
+                isValid = false;                                
+    
+            } else if (newWrongAnswerURLInput.value.length != 0){                    
+                allWrongAnswers.forEach(hideWrongAnswerURLWarnings);
+                isValid = true;
+                wrongAnswerURLList.push(newWrongAnswerURLInput.value);
+                //alert(newWrongAnswerURLInput.value);
+            }            
+        }
+    }
+    return isValid;
+}*/
 
