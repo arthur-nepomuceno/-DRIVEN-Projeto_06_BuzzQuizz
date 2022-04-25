@@ -979,8 +979,8 @@ function renderUserQuizzesList(arr, documentObject) {
             <img class="black-mask" src="./img/black-mask.png" style="height: 55%">
             <p>${arr[i].title}</p>
             <div class="EditRemoveQuizz">
-	            <ion-icon name="create-outline" onclick="editQuizz(this)"></ion-icon>
-	            <ion-icon name="trash-outline"></ion-icon>
+	            <ion-icon name="create-outline" onclick="editQuizz(${arr[i].id})"></ion-icon>
+	            <ion-icon name="trash-outline" onclick="removeQuizz(${arr[i].id})"></ion-icon>
             </div>
         </div>
         `
@@ -1122,11 +1122,6 @@ function isValidWrongAnswerURL(){
 
 
 function loadPageIn() {
-
-    //ALTERAR ISSO DE APAGAR A PAGINA, VE SE VAI DAR DISPLAY NONE E ETC;
-    
-    document.querySelector(".screen_first").innerHTML = "";
-    document.querySelector(".screen_third").innerHTML = "";
 
     document.querySelector("main").innerHTML += `
     <div class="loadPage">
