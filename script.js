@@ -349,12 +349,12 @@ function hideNewLevelData(element){
 }
 
 function moveToCreateQuestionsScreen() {
-    isValidTitle();
-    isValidURL();
+    isValidQuizzTitle();
+    isValidQuizzURL();
     isValidNumberOfQuestions();
     isValidNumberOfLevels();
     
-    if (isValidTitle() && isValidURL() && isValidNumberOfQuestions()  && isValidNumberOfLevels()) {
+    if (isValidQuizzTitle() && isValidQuizzURL() && isValidNumberOfQuestions()  && isValidNumberOfLevels()) {
         displayNone(newQuizzStart);
         displayFlex(newQuizzQuestions);
     }
@@ -364,6 +364,7 @@ function moveToCreateLevelsScreen() {
     isValidQuestionText();
     isValidQuestionColor();
     isValidRightAnswer();
+    isValidRightAnswerURL();
     isValidWrongAnswer();
 
     //displayNone(newQuizzQuestions);
@@ -383,13 +384,13 @@ function moveToFirstScreen() {
 
 /* ============================================================================
 ===================== NEW QUIZZ - START SCREEN FUNCTIONS ======================
-//= isValidTitle()
-//= isValidURL()
+//= isValidQuizzTitle()
+//= isValidQuizzURL()
 //= isValidNumberOfQuestions()
 //= isValidNumberOfLevels()
 ============================================================================ */
 
-function isValidTitle(){    
+function isValidQuizzTitle(){    
     const newQuizzTitle = document.querySelector(".new-quizz-basic > .title");
     const newQuizzTitleInput = newQuizzTitle.querySelector("input");
     const invalidTitle = document.querySelector(".new-quizz-basic > .invalid-info#title");
@@ -409,28 +410,26 @@ function isValidTitle(){
     }
 }
 
-function isValidURL() {
+
+
+function isValidQuizzURL() {
     const newQuizzURL = document.querySelector(".new-quizz-basic > .url");
     const newQuizzURLInput = newQuizzURL.querySelector("input");
     const invalidURL = document.querySelector(".new-quizz-basic > .invalid-info#url");
-
     const url = newQuizzURLInput.value
-    const testResult = url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-    const includesHTTPS = url.includes("https://");
-    const includesWWW = url.includes("www.");
 
-    if (testResult === null || (includesHTTPS === false && includesWWW === false)) {
-        showObject(invalidURL);
-        backgroundPink(newQuizzURL);
-        backgroundPink(newQuizzURLInput);
-
-        return false;
-    } else {
+    if (isValidURL(url)) {
         hideObject(invalidURL);
         backgroundWhite(newQuizzURL);
-        backgroundWhite(newQuizzURLInput);
+        backgroundWhite(newQuizzURLInput);       
 
         return true;
+    } else {
+        showObject(invalidURL);
+        backgroundPink(newQuizzURL);
+        backgroundPink(newQuizzURLInput);        
+
+        return false;
     }
 }
 
@@ -554,6 +553,36 @@ function isValidRightAnswer(){
     return isValid;
 }
 
+function isValidRightAnswerURL(){
+    let isValid;
+    for (let i = 0; i < allQuestions.length; i++){
+        const newRightAnswerURL = allQuestions[i].querySelector(".right-answer-image");
+        const newRightAnswerURLInput = newRightAnswerURL.querySelector("input");
+        const invalidRightAnswerURL = allQuestions[i].querySelector(".invalid-info#right-answer-image");
+
+        const url = newRightAnswerURLInput.value;
+
+        if (isValidURL(url)) {
+            hideObject(invalidRightAnswerURL);
+            backgroundWhite(newRightAnswerURL);
+            backgroundWhite(newRightAnswerURLInput);       
+    
+            isValid = true;
+        } else {
+            showObject(invalidRightAnswerURL);
+            backgroundPink(newRightAnswerURL);
+            backgroundPink(newRightAnswerURLInput);    
+    
+            isValid = false;
+        }
+    }
+    return isValid;
+
+}
+
+
+
+
 function hideWrongAnswerWarnings(documentObject){
     const invalidWrongAnswer = documentObject.querySelector(".invalid-info#wrong-answer-text");
     hideObject(invalidWrongAnswer);
@@ -606,6 +635,7 @@ function isValidWrongAnswer(){
 //= function backgroundWhite(documentObject)
 //= function hideObject(documentObject)
 //= function showObject(documentObject)
+//= function isValidURL(str)
 //= function startsWithHash(str)
 //= function isHexadecimal(str)
 //=======================================================================================
@@ -652,6 +682,18 @@ function hideObject(documentObject){
 
 function showObject(documentObject){
     documentObject.classList.remove("hidden");
+}
+
+function isValidURL(str) {
+    const testResult = str.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    const includesHTTPS = str.includes("https://");
+    const includesWWW = str.includes("www.");
+
+    if (testResult === null || (includesHTTPS === false && includesWWW === false)) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 function startsWithHash(str) {
