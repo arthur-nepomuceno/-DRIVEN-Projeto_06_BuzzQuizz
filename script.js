@@ -9,6 +9,9 @@ const first_SCREEN = document.querySelector(".screen_first");
 const second_SCREEN = document.querySelector(".screen_second");
 const third_SCREEN = document.querySelector(".screen_third");
 
+//=======================================================================================
+//=============================== SECOND SCREEN FUNCTIONS ===============================
+//=======================================================================================
 
 function quizzPage () {
     resetVariables();
