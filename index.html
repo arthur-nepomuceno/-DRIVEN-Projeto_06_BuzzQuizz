@@ -64,7 +64,7 @@
 
             <div class="new-quizz-questions">
                 <p>Crie suas perguntas</p>
-
+                <!--
                 <div class="new-question">
                     <p>Pergunta 1<ion-icon name="create-outline" onclick="hideNewQuestionData(this)"></ion-icon></p>
                     <div class="new-question-data hidden">
@@ -120,8 +120,7 @@
                                 <input type="text" placeholder="URL da imagem 3">
                             </div>
                             <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-                        </div>
-                      
+                        </div>                      
                     </div>               
                 </div>
                 <div class="new-question">
@@ -242,15 +241,16 @@
                       
                     </div>               
                 </div>
+                <button onclick="moveToCreateLevelsScreen()">Prosseguir para criar níveis</button>-->
                 
-                <button onclick="moveToCreateLevelsScreen()">Prosseguir para criar níveis</button>
             </div>
 
             <div class="new-quizz-levels">
                 <p>Agora, decida os níveis</p>
+                
                 <div class="new-level">
-                    <p>Nível 1</p>
-                    <div class="new-level-data">
+                    <p>Nível 1<ion-icon name="create-outline" onclick="hideNewLevelData(this)"></ion-icon></p>
+                    <div class="new-level-data  hidden">
                         <div class="level-text">
                             <input type="text" placeholder="Título do nível">
                         </div>
@@ -274,8 +274,8 @@
                 </div>
 
                 <div class="new-level">
-                    <p>Nível 2</p>
-                    <div class="new-level-data">
+                    <p>Nível 2<ion-icon name="create-outline" onclick="hideNewLevelData(this)"></ion-icon></p>
+                    <div class="new-level-data hidden">
                         <div class="level-text">
                             <input type="text" placeholder="Título do nível">
                         </div>
