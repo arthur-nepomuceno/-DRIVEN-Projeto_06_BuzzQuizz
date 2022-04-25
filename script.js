@@ -567,25 +567,28 @@ function hideWrongAnswerWarnings(documentObject){
 
 function isValidWrongAnswer(){
     let isValid;
+    let wrongAnswerList = [];
     for(let i = 0; i < allQuestions.length; i++){
-        const allWrongAnswers = [...allQuestions[i].querySelectorAll(".wrong-answer")];  
+        const allWrongAnswers = [...allQuestions[i].querySelectorAll(".wrong-answer")];
         for(let j = 0; j < allWrongAnswers.length; j++) {
+            
             const newWrongAnswer = allWrongAnswers[j].querySelector(".wrong-answer-text");
             const newWrongAnswerInput = newWrongAnswer.querySelector("input");
-            const invalidWrongAnswer = allWrongAnswers[j].querySelector(".invalid-info#wrong-answer-text");   
+            const invalidWrongAnswer = allWrongAnswers[j].querySelector(".invalid-info#wrong-answer-text"); 
 
-            if (newWrongAnswerInput.value.length != 0) {
-                allWrongAnswers.forEach(hideWrongAnswerWarnings);
-                isValid = true;
-                break;                        
-    
-            } else {             
+            if (newWrongAnswerInput.value.length == 0 && wrongAnswerList.length == 0) {
                 showObject(invalidWrongAnswer);
                 backgroundPink(newWrongAnswer);
                 backgroundPink(newWrongAnswerInput);
-                isValid = false;
+                isValid = false;                                
+    
+            } else if (newWrongAnswerInput.value.length != 0){                    
+                allWrongAnswers.forEach(hideWrongAnswerWarnings);
+                isValid = true;
+                wrongAnswerList.push(newWrongAnswerInput.value);
+                alert(newWrongAnswerInput.value);
             }
-        
+            
         }
     }
 }
