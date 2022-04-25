@@ -540,8 +540,6 @@ function isValidNumberOfLevels(){
 //= isValidWrongData()
 ============================================================================ */
 const newQuizzQuestionsHTML = document.querySelector(".new-quizz-questions");
-const allQuestions = newQuizzQuestionsHTML.querySelectorAll(".new-question");
-
 function renderNewQuizzQuestionsScreen(n) {
     
     for(let i = 1; i <= n; i++){
@@ -608,10 +606,9 @@ function renderNewQuizzQuestionsScreen(n) {
     }
     newQuizzQuestionsHTML.innerHTML += `<button onclick="moveToCreateLevelsScreen()">Prosseguir para criar níveis</button>`
 }
-
 renderNewQuizzQuestionsScreen(4);
 
-
+const allQuestions = newQuizzQuestionsHTML.querySelectorAll(".new-question");
 function isValidQuestionText() {
     let isValid;
     for (let i = 0; i < allQuestions.length; i++){        
@@ -809,9 +806,6 @@ isValidLevelDescription()
 ============================================================================ */
 
 const newQuizzLevelsHTML = document.querySelector(".new-quizz-levels");
-const allLevels = newQuizzLevelsHTML.querySelectorAll(".new-level");
-//renderNewQuizzLevelsScreen(5);
-
 function renderNewQuizzLevelsScreen(n){    
     for(let i = 1; i <= n; i++){
         let newLevelHTML = `<div class="new-level">
@@ -842,8 +836,11 @@ function renderNewQuizzLevelsScreen(n){
         newQuizzLevelsHTML.innerHTML += newLevelHTML;
     }
     newQuizzLevelsHTML.innerHTML += `<button onclick="moveToSuccessScreen()">Finalizar Quizz</button>`
+    
 }
+renderNewQuizzLevelsScreen(8);
 
+const allLevels = newQuizzLevelsHTML.querySelectorAll(".new-level");
 function isValidLevelTitle() {
     let isValid;
     for (let i = 0; i < allLevels.length; i++){        
@@ -1059,8 +1056,8 @@ displayFlex(third_SCREEN);
 
 displayNone(newQuizzStart);
 
-displayNone(newQuizzQuestions);
-displayFlex(newQuizzLevels);
+displayFlex(newQuizzQuestions);
+displayNone(newQuizzLevels);
 
 
 
