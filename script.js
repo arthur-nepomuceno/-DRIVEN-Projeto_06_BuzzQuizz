@@ -717,7 +717,7 @@ function isValidLevelTitle() {
     return isValid;
 }
 
-function isValidLevelPercentage() {}
+function isValidLevelPercentage() { }
 
 
 
