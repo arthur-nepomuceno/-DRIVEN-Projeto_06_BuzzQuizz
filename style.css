@@ -369,6 +369,29 @@ body {
     color: #EC362D;
 }
 
+.EditRemoveQuizz {   /* FALTA RELATIVE NA IMG OU DIV*/
+	background: #EC362D;
+	border-radius: 10px 0px 0px 11px;
+	position: absolute;
+	top: 9px;
+	right: 0;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+
+    width: 43px;
+    height: 87px;
+}
+
+.EditRemoveQuizz ion-icon {
+	color: #FFFFFF;
+	font-size: 20px;
+
+    cursor: pointer;
+}
+
 /* ================================================================
 ========================= USER QUIZZES ============================
 ================================================================ */
@@ -389,6 +412,8 @@ body {
 
     display: flex;
     align-items: center;
+
+    margin-bottom: 12px;
 }
 
 .user-quizzes > p ion-icon {
@@ -478,7 +503,7 @@ body {
 
     .quizz-card {
         width: 100% !important;
-        margin-top: 14px !important;
+        margin-bottom: 14px !important;
     }
 
     .quizz-card > p {
@@ -503,7 +528,7 @@ body {
 .quizz-card {
     width: 340px;
     height: 180px;
-    margin-top: 12px;
+    margin-bottom: 12px;
     border-radius: 5px;
     position: relative;
 }
@@ -978,5 +1003,43 @@ body {
     font-size: 20px;
     line-height: 24px;
     color: #818181;
+}
+
+
+/* ---------------------- BONUS - LOADPAGE -----------------------*/
+/* ---------------------- BONUS - LOADPAGE -----------------------*/
+/* ---------------------- BONUS - LOADPAGE -----------------------*/
+
+@keyframes rotation {
+    from{ transform: rotate(0deg); }
+    to{ transform: rotate(360deg); }
+}
+
+.loadPage {
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.loadPage img {
+    width: 76px;
+    height: 76px;
+    animation: rotation 2s infinite linear;
+    margin-bottom: 24px;
+}
+
+.loadPage h1 {
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #EC362D;
 }
 

@@ -3,23 +3,49 @@ let questionAnswered = 0;
 let quizzData;
 let answerIndex =[];
 let id = 2;
+let local; //Usará para armazenar as informações pessoais que queremos guardar
+//ID, KEY e etc
 const API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes";
 const Time_2S = 2 * 1000;
 const first_SCREEN = document.querySelector(".screen_first");
 const second_SCREEN = document.querySelector(".screen_second");
 const third_SCREEN = document.querySelector(".screen_third");
 
+
+
+//USANDO LOCAL: RESUMO ===============================================================
+//====================================================================================
+
+function storageLocal(algo) {
+    localStorage.setItem("nome", "João"); //SET ARMAZENA COMO SE FOSSE OBJETO NOME:JOÃO
+    const pessoa = localStorage.getItem("nome"); //ASSOCIA O OBJETO A VARIAVEL; PESSOA = JOAO;
+    localStorage.removeItem("nome"); //APAGA AQUELE OBJETO
+
+
+    //OBS: LOCAL SÒ GUARDA STRING,ENTAO VAMOS TRANSFORMAR TUDO AO USAR
+
+    const dados = [1,2,3]; //EXEMPLO TRANSFORMANDO ESSA ARRAY EM STRING
+    const dadosSerializados = JSON.stringify(dados);  // String "[1,2,3]"
+    const dadosDeserializados = JSON.parse(dadosSerializados);  // De volta pra Array [1,2,3]
+    //TEREMOS UMA LISTA DE ID PROPRIOS, QUE VAMOS COLOCAR NUMA ARRAY, SERIALIZAR E ARMAZENAR
+    //PARA RENDERIZAR, TRANSFORMAMOS DE VOLTA, USAMOS UM 'FOR' e PRONTO;
+
+}
+
 //=======================================================================================
 //=============================== SECOND SCREEN FUNCTIONS ===============================
 //=======================================================================================
 
-function quizzPage () {
+function quizzPage (APIid) {
+    id = APIid;
     resetVariables();
     //Usando um único quizz (id = 2) para estilizar tudo e montar o código, depois trocar isso.
 
     //SO PARA ESTILIZAR, REMOVENDO A PARTE DO ARTHUR:
     document.querySelector(".screen_first").innerHTML = "";
-    
+    document.querySelector(".screen_third").innerHTML = "";
+    loadPageIn();
+
     //Remover espaço demais
 
     const promise = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${id}`)
@@ -29,6 +55,7 @@ function quizzPage () {
 }
 
 function getQuizz(quizz) {
+    loadPageOff();
     quizzData = quizz.data;
     const questionsObject = quizz.data.questions;
 
@@ -165,7 +192,7 @@ function renderResult(result) {
             <p>${result.text}</p>
         </div>
         <div class="quizz-result-buttons">
-            <button class="quizz-result-button_answer-again" onclick="quizzPage()">Reiniciar Quizz</button>
+            <button class="quizz-result-button_answer-again" onclick="quizzPage(${id})">Reiniciar Quizz</button>
             <button class="quizz-result_button_back-home">Voltar pra home</button>
         </div>        
     </div>
@@ -322,6 +349,14 @@ function createNewQuizz() {
     displayNone(first_SCREEN);
     displayFlex(third_SCREEN);
     displayFlex(newQuizzStart);
+}
+
+function editQuizz(element) {
+
+}
+
+
+function deleteQuizz(element) {
 }
 
 //=======================================================================================
@@ -738,7 +773,7 @@ function isValidLevelPercentage() { }
 
 function renderAllQuizzesList(arr, documentObject) {
     for(let i = 0; i < arr.length; i++) {
-        documentObject.innerHTML += `<div class="quizz-card">                 
+        documentObject.innerHTML += `<div class="quizz-card" onclick="quizzPage(${arr[i].id})">                 
                                         <img src=${arr[i].image}>
                                         <img class="black-mask" src="./img/black-mask.png" style="height: 55%">
                                         <p>${arr[i].title}</p>
@@ -748,11 +783,17 @@ function renderAllQuizzesList(arr, documentObject) {
 
 function renderUserQuizzesList(arr, documentObject) {
     for(let i = 0; i < arr.length; i++) {
-        documentObject.innerHTML += `<div class="quizz-card">                 
-                                        <img src=${arr[i].image}>
-                                        <img class="black-mask" src="./img/black-mask.png" style="height: 55%">
-                                        <p>${arr[i].title}</p>
-                                    </div>`
+        documentObject.innerHTML += `
+        <div class="quizz-card" onclick="quizzPage(${arr[i].id})">                 
+            <img src=${arr[i].image}>
+            <img class="black-mask" src="./img/black-mask.png" style="height: 55%">
+            <p>${arr[i].title}</p>
+            <div class="EditRemoveQuizz">
+	            <ion-icon name="create-outline" onclick="editQuizz(this)"></ion-icon>
+	            <ion-icon name="trash-outline"></ion-icon>
+            </div>
+        </div>
+        `
     }
 }
 
@@ -821,8 +862,8 @@ function isHexadecimal(str) {
 }
 
 
-displayNone(first_SCREEN);
-displayFlex(third_SCREEN);
+//displayNone(first_SCREEN);
+//displayFlex(third_SCREEN);
 
 displayNone(newQuizzStart);
 displayFlex(newQuizzQuestions);
@@ -887,4 +928,25 @@ function isValidWrongAnswerURL(){
     }
     return isValid;
 }*/
+
+
+function loadPageIn() {
+
+    //ALTERAR ISSO DE APAGAR A PAGINA, VE SE VAI DAR DISPLAY NONE E ETC;
+    
+    document.querySelector(".screen_first").innerHTML = "";
+    document.querySelector(".screen_third").innerHTML = "";
+
+    second_SCREEN.innerHTML = `
+    <div class="loadPage">
+        <img src="./img/loading.svg">
+        <h1>Carregando</h1>
+    </div>
+    `
+}
+
+function loadPageOff() {
+    second_SCREEN.innerHTML = "";
+}
+
 
