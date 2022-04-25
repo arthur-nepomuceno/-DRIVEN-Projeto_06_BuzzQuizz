@@ -393,6 +393,8 @@ function moveToCreateQuestionsScreen() {
     isValidNumberOfLevels();
     
     if (isValidQuizzTitle() && isValidQuizzURL() && isValidNumberOfQuestions()  && isValidNumberOfLevels()) {
+        
+        renderNewQuizzQuestionsScreen(quizzNumberOfQuestions);
         displayNone(newQuizzStart);
         displayFlex(newQuizzQuestions);
     }
@@ -407,6 +409,8 @@ function moveToCreateLevelsScreen() {
 
     if (isValidQuestionText() && isValidQuestionColor() && isValidRightAnswer() && 
     isValidRightAnswerURL() && isValidWrongAnswerData()) {
+
+        renderNewQuizzLevelsScreen(quizzNumberOfLevels);
         displayNone(newQuizzQuestions);
         displayFlex(newQuizzLevels);
     }
@@ -428,9 +432,7 @@ function moveToSuccessScreen() {
 }
 
 function moveToFirstScreen() {
-    displayNone(newQuizzSuccess);
-    displayNone(third_SCREEN);
-    displayFlex(first_SCREEN);
+    window.location.reload();
 }
 
 /* ============================================================================
@@ -524,7 +526,6 @@ function isValidNumberOfLevels(){
         backgroundWhite(newQuizzNumberOfLevelsInput);
 
         quizzNumberOfLevels = newQuizzNumberOfLevelsInput.value;
-        alert(quizzNumberOfLevels);
         return true;
     }
 }
@@ -540,6 +541,7 @@ function isValidNumberOfLevels(){
 //= isValidWrongData()
 ============================================================================ */
 const newQuizzQuestionsHTML = document.querySelector(".new-quizz-questions");
+let allQuestions;
 function renderNewQuizzQuestionsScreen(n) {
     
     for(let i = 1; i <= n; i++){
@@ -605,10 +607,9 @@ function renderNewQuizzQuestionsScreen(n) {
         newQuizzQuestionsHTML.innerHTML += newQuestionHTML;
     }
     newQuizzQuestionsHTML.innerHTML += `<button onclick="moveToCreateLevelsScreen()">Prosseguir para criar níveis</button>`
+    allQuestions = newQuizzQuestionsHTML.querySelectorAll(".new-question");
 }
-renderNewQuizzQuestionsScreen(4);
 
-const allQuestions = newQuizzQuestionsHTML.querySelectorAll(".new-question");
 function isValidQuestionText() {
     let isValid;
     for (let i = 0; i < allQuestions.length; i++){        
@@ -806,6 +807,7 @@ isValidLevelDescription()
 ============================================================================ */
 
 const newQuizzLevelsHTML = document.querySelector(".new-quizz-levels");
+let allLevels;
 function renderNewQuizzLevelsScreen(n){    
     for(let i = 1; i <= n; i++){
         let newLevelHTML = `<div class="new-level">
@@ -836,11 +838,9 @@ function renderNewQuizzLevelsScreen(n){
         newQuizzLevelsHTML.innerHTML += newLevelHTML;
     }
     newQuizzLevelsHTML.innerHTML += `<button onclick="moveToSuccessScreen()">Finalizar Quizz</button>`
-    
+    allLevels = newQuizzLevelsHTML.querySelectorAll(".new-level")
 }
-renderNewQuizzLevelsScreen(8);
 
-const allLevels = newQuizzLevelsHTML.querySelectorAll(".new-level");
 function isValidLevelTitle() {
     let isValid;
     for (let i = 0; i < allLevels.length; i++){        
@@ -866,6 +866,7 @@ function isValidLevelTitle() {
 
 function isValidLevelPercentage() {
     let isValid;
+    let percentageList = [];
     for (let i = 0; i < allLevels.length; i++){        
         const newLevelPercentage = allLevels[i].querySelector(".level-percentage");      
         const newLevelPercentageInput = newLevelPercentage.querySelector("input");
@@ -884,9 +885,16 @@ function isValidLevelPercentage() {
             hideObject(invalidLevelPercentage);
             backgroundWhite(newLevelPercentage);
             backgroundWhite(newLevelPercentageInput);
+            percentageList.push(levelPercentage)
             isValid = true;
         }
     }
+
+    if(percentageList.includes(0) == false) {
+        isValid = false;
+        alert("Pelo menos um nível deve ter porcentagem igual a 0.")
+    }
+
     return isValid;
 }
 
@@ -1050,14 +1058,14 @@ function isHexadecimal(str) {
     return false;
 }
 
-
+/*
 displayNone(first_SCREEN);
 displayFlex(third_SCREEN);
 
 displayNone(newQuizzStart);
 
-displayFlex(newQuizzQuestions);
-displayNone(newQuizzLevels);
+displayNone(newQuizzQuestions);
+displayFlex(newQuizzLevels);*/
 
 
 
