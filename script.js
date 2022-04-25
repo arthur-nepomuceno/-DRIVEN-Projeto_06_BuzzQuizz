@@ -2,7 +2,7 @@ let pontuation = 0;
 let questionAnswered = 0;
 let quizzData;
 let answerIndex =[];
-let id = 2;
+let id;
 let local; //Usará para armazenar as informações pessoais que queremos guardar
 //ID, KEY e etc
 const API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes";
@@ -38,17 +38,18 @@ function storageLocal(algo) {
 
 function quizzPage (APIid) {
     id = APIid;
+
     resetVariables();
-    //Usando um único quizz (id = 2) para estilizar tudo e montar o código, depois trocar isso.
 
     //SO PARA ESTILIZAR, REMOVENDO A PARTE DO ARTHUR:
-    document.querySelector(".screen_first").innerHTML = "";
-    document.querySelector(".screen_third").innerHTML = "";
+    document.querySelector(".screen_first").setAttribute("style","display:none");
+    document.querySelector(".screen_third").setAttribute("style","display:none");
+
     loadPageIn();
 
     //Remover espaço demais
 
-    const promise = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${id}`)
+    const promise = axios.get(`${API}/${id}`);
 
     promise.then(getQuizz);
     promise.catch(error);
@@ -193,7 +194,7 @@ function renderResult(result) {
         </div>
         <div class="quizz-result-buttons">
             <button class="quizz-result-button_answer-again" onclick="quizzPage(${id})">Reiniciar Quizz</button>
-            <button class="quizz-result_button_back-home">Voltar pra home</button>
+            <button class="quizz-result_button_back-home" onclick="backHome()">Voltar pra home</button>
         </div>        
     </div>
     `
@@ -1135,7 +1136,7 @@ function loadPageIn() {
     document.querySelector(".screen_first").innerHTML = "";
     document.querySelector(".screen_third").innerHTML = "";
 
-    second_SCREEN.innerHTML = `
+    document.querySelector("main").innerHTML += `
     <div class="loadPage">
         <img src="./img/loading.svg">
         <h1>Carregando</h1>
@@ -1144,7 +1145,10 @@ function loadPageIn() {
 }
 
 function loadPageOff() {
-    second_SCREEN.innerHTML = "";
+    document.querySelector(".loadPage").remove();
 }
 
-
+function backHome() {
+    //TERMINAR ISSO, ESPERAR ARTHUR DECIDIR O QUE FARÁ OU MANTERÁ
+    document.querySelector(".screen_second").innerHTML="";
+}
