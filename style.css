@@ -813,7 +813,7 @@ body {
     /*border: 1px dashed black;*/
 }
 
-.new-level p {
+.new-level > p {
     width: 100%;
     margin-top: 22px;
     margin-bottom: 22px;
@@ -854,6 +854,16 @@ body {
 
 .new-level-data input::placeholder {
     color: #BABABA;
+}
+
+.new-level-data .invalid-info {
+    width: 100%;
+    margin-bottom: 16px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #EC362D;
 }
 
 .new-quizz-levels button {

@@ -375,8 +375,10 @@ function moveToCreateLevelsScreen() {
 }
 
 function moveToSuccessScreen() {
-    displayNone(newQuizzLevels);
-    displayFlex(newQuizzSuccess);
+    isValidLevelTitle();
+
+    //displayNone(newQuizzLevels);
+    //displayFlex(newQuizzSuccess);
 }
 
 function moveToFirstScreen() {
@@ -480,9 +482,9 @@ function isValidNumberOfLevels(){
 //= isValidQuestionColor()
 //= isValidRightAnswer()
 //= isValidRightAnswerURL()
-//= isValidWrongAnswer()
-//= isValidWrongAnswerURL()
-//= isValidAnswerURL()
+//= hideWrongAnswerWarnings(documentObject)
+//= hideWrongAnswerURLWarnings(documentObject)
+//= isValidWrongData()
 ============================================================================ */
 const allQuestions = document.querySelectorAll(".new-question");
 
@@ -676,6 +678,45 @@ function isValidWrongAnswerData(){
     return isValid;
 }
 
+/* ============================================================================
+=================== NEW QUIZZ LEVELS SCREEN FUNCTIONS ====================
+//= isValidLevelTitle()
+//= isValidLevelPercentage()
+//= isValidLevelURL()
+//= isValidLevelDescription()
+============================================================================ */
+
+const allLevels = document.querySelectorAll(".new-level");
+
+function isValidLevelTitle() {
+    let isValid;
+    for (let i = 0; i < allLevels.length; i++){        
+        const newLevelTitle = allLevels[i].querySelector(".level-text");      
+        const newLevelTitleInput = newLevelTitle.querySelector("input");
+        const invalidLevelTitle = allLevels[i].querySelector(".invalid-info#level-text");
+
+        if (newLevelTitleInput.value.length < 10) {
+            showObject(invalidLevelTitle);
+            backgroundPink(newLevelTitle);
+            backgroundPink(newLevelTitleInput);
+            isValid = false;      
+        } 
+        else {
+            hideObject(invalidLevelTitle);
+            backgroundWhite(newLevelTitle);
+            backgroundWhite(newLevelTitleInput);
+            isValid = true;
+        }
+    }
+    return isValid;
+}
+
+function isValidLevelPercentage() {}
+
+
+
+
+
 //=======================================================================================
 //================================= AUXILIAR FUNCTIONS ==================================
 //=======================================================================================
@@ -782,6 +823,7 @@ displayFlex(third_SCREEN);
 
 displayNone(newQuizzStart);
 displayFlex(newQuizzQuestions);
+displayFlex(newQuizzLevels);
 
 
 

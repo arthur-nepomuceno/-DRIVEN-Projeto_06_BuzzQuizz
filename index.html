@@ -252,6 +252,7 @@
                         <div class="level-text">
                             <input type="text" placeholder="Título do nível">
                         </div>
+                        <p class="invalid-info hidden" id="level-text">O título deve ter no mínimo 10 caracteres.</p>
                         <div class="level-percentage">
                             <input type="text" placeholder="% de acerto mínima">
                         </div>
@@ -263,12 +264,14 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="new-level">
-                    <p>Nível 2 <ion-icon name="create-outline" onclick="hideNewLevelData(this)"></ion-icon></p>
-                    <div class="new-level-data hidden">
+                    <p>Nível 2</p>
+                    <div class="new-level-data">
                         <div class="level-text">
                             <input type="text" placeholder="Título do nível">
                         </div>
+                        <p class="invalid-info hidden" id="level-text">O título deve ter no mínimo 10 caracteres.</p>
                         <div class="level-percentage">
                             <input type="text" placeholder="% de acerto mínima">
                         </div>
@@ -280,23 +283,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="new-level">
-                    <p>Nível 3 <ion-icon name="create-outline" onclick="hideNewLevelData(this)"></ion-icon></p>
-                    <div class="new-level-data hidden">
-                        <div class="level-text">
-                            <input type="text" placeholder="Título do nível">
-                        </div>
-                        <div class="level-percentage">
-                            <input type="text" placeholder="% de acerto mínima">
-                        </div>
-                        <div class="level-url">
-                            <input type="text" placeholder="URL da imagem do nível">
-                        </div>
-                        <div class="level-description">
-                            <input type="text" placeholder="Descrição do nível">
-                        </div>
-                    </div>
-                </div>
+
                 <button onclick="moveToSuccessScreen()">Finalizar Quizz</button>
             </div>
             
