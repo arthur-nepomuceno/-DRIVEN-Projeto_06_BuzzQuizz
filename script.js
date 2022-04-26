@@ -75,8 +75,6 @@ function quizzPage (APIid) {
 
     loadPageIn();
 
-    //Remover espaço demais
-
     const promise = axios.get(`${API}/${id}`);
 
     promise.then(getQuizz);
@@ -100,6 +98,8 @@ function renderQuizzTitle(object) {
     <p style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url('${object.image}');">${object.title}</p>
     </div>
     `
+
+    document.querySelector(".quizz_title").scrollIntoView();
 }
 
 function renderQuizzQuestions (questionsArray) {
@@ -143,7 +143,6 @@ function storeRightAnswer(answer,j) {
 
 function finishQuizz() {
     getResult();
-    //Adicionar scroll pra baixo depois de 2 segundos
 }
 
 function getResult() {
@@ -273,9 +272,9 @@ function scrollToNextQuestion(element) {
     const nextQuestionIndex = parseInt(element.parentElement.getAttribute("data-question"))+1;
     if (nextQuestionIndex < document.querySelectorAll(".quizz-question").length) {
         const nextQuestionElement = document.querySelector(`.question_${nextQuestionIndex}`);
-        nextQuestionElement.scrollIntoView();
+        nextQuestionElement.scrollIntoView(false);
     } else {
-        document.querySelector(".quizz-result").scrollIntoView();
+        document.querySelector(".quizz-result-buttons").scrollIntoView(false);
     }
 }
 
@@ -321,8 +320,6 @@ function resetVariables() {
     pontuation = 0;
     questionAnswered = 0;
     answerIndex = [];
-
-    document.querySelector("header").scrollIntoView();
 }
 
 function error(erro) {
@@ -351,12 +348,18 @@ getAllQuizzes();
 getUserQuizzes();
 
 function getAllQuizzes() {
+
+    loadPageIn();
+
     const promise = axios.get(API);
     promise.then(renderAllQuizzes);
     promise.catch(deuErrado);
 }
 
 function renderAllQuizzes(response) {
+
+    loadPageOff();
+
     const allQuizzesList = response.data;
     const allQuizzesHTML = document.querySelector(".all-quizzes > .quizzes");
     renderAllQuizzesList(allQuizzesList, allQuizzesHTML);
@@ -1036,13 +1039,13 @@ function renderAllQuizzesList(arr, documentObject) {
 function renderUserQuizzesList(arr, documentObject) {
     for(let i = 0; i < arr.length; i++) {
         documentObject.innerHTML += `
-        <div class="quizz-card" onclick="quizzPage(${arr[i].id})">                 
-            <img src=${arr[i].image}>
-            <img class="black-mask" src="./img/black-mask.png" style="height: 55%">
-            <p>${arr[i].title}</p>
+        <div class="quizz-card">                 
+            <img src=${arr[i].image} onclick="quizzPage(${arr[i].id})">
+            <img class="black-mask" src="./img/black-mask.png" style="height: 55%" onclick="quizzPage(${arr[i].id})">
+            <p onclick="quizzPage(${arr[i].id})">${arr[i].title}</p>
             <div class="EditRemoveQuizz">
-	            <ion-icon name="create-outline" onclick="editQuizz(this)"></ion-icon>
-	            <ion-icon name="trash-outline"></ion-icon>
+	            <ion-icon name="create-outline" onclick="editQuizz(${arr[i].id})"></ion-icon>
+	            <ion-icon name="trash-outline" onclick="removeQuizz(${arr[i].id})"></ion-icon>
             </div>
         </div>
         `
@@ -1185,11 +1188,6 @@ function isValidWrongAnswerURL(){
 
 function loadPageIn() {
 
-    //ALTERAR ISSO DE APAGAR A PAGINA, VE SE VAI DAR DISPLAY NONE E ETC;
-    
-    document.querySelector(".screen_first").innerHTML = "";
-    document.querySelector(".screen_third").innerHTML = "";
-
     document.querySelector("main").innerHTML += `
     <div class="loadPage">
         <img src="./img/loading.svg">
@@ -1203,8 +1201,7 @@ function loadPageOff() {
 }
 
 function backHome() {
-    //TERMINAR ISSO, ESPERAR ARTHUR DECIDIR O QUE FARÁ OU MANTERÁ
-    document.querySelector(".screen_second").innerHTML="";
+    window.location.reload();
 }
 
 /*
