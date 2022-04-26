@@ -101,7 +101,7 @@ function editQuizz(id) {
 function editar(object) {
 /*
     //API-ID -> OBJETO ANTIGO : OK
-    //OBJECT.DATA -> OBJETO NOVO <-PRECISAMOS DISSO - renderizar 
+    //OBJECT.DATA -> OBJETO NOVO <-PRECISAMOS DISSO - renderizar a parte
     //SECRET-KEY - OBJETO ANTIGO : JÁ SALVO
 
     id = object.data.id;
@@ -566,8 +566,6 @@ function getMyQuizz(object) {
     saveToLocalStorage(object.data.id,object.data.key);
 
     renderSucessQuizz(object);
-
-    console.log(object);
 }
 
 function renderSucessQuizz(object) {
@@ -587,8 +585,10 @@ function renderSucessQuizz(object) {
 function saveToLocalStorage(id,key) {
     const userQuizzArray = [id,key];
 
-    const myQuizzes = localStorage.getItem("quizzes");
-    local = JSON.parse(myQuizzes);
+    if(localStorage.getItem("quizzes") !== null) {
+        const myQuizzes = localStorage.getItem("quizzes");
+        local = JSON.parse(myQuizzes);
+    }
 
     local.push(userQuizzArray);
 
