@@ -72,6 +72,9 @@ function getUserQuizzes() {
                 document.querySelector(".user-quizzes").setAttribute("style","display: none");
             }
         }
+    } else {
+        document.querySelector(".no-quizzes").setAttribute("style","display: flex");
+        document.querySelector(".user-quizzes").setAttribute("style","display: none");
     }
 }
 
