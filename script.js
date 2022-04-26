@@ -718,65 +718,6 @@ function renderNewQuizzQuestionsScreen(n) {
                                     <p>Pergunta ${i}<ion-icon name="create-outline" onclick="hideNewQuestionData(this)"></ion-icon></p>
                                     <div class="new-question-data hidden">
                                         <div class="question-text">
-                                            <input type="text" value="Qual o melhor anime de todos os tempos???" placeholder="Texto da pergunta ${i}">
-                                        </div>
-                                        <p class="invalid-info hidden" id="question-text">O texto deve ter no mínimo 20 caracteres.</p>
-                                        
-                                        <div class="question-color">
-                                            <input type="text" value="#FA4D7E" placeholder="Cor de fundo da pergunta">  
-                                        </div>
-                                        <p class="invalid-info hidden" id="question-color">A cor deve estar em formato hexadecimal, começando com "#".</p>
-                                        
-                                        <p>Resposta correta</p>
-                                        <div class="right-answer">
-                                            <div class="right-answer-text">
-                                                <input type="text" value="anime da menina que vira doguin... Muito trissste" placeholder="Resposta correta">
-                                            </div>
-                                            <p class="invalid-info hidden" id="right-answer-text">O texto não pode estar vazio.</p>
-                                            <div class="right-answer-image">
-                                                <input type="text" value="https://c.tenor.com/ra1G9oMn69EAAAAC/fullmetal-alchemist.gif" placeholder="URL da imagem">
-                                            </div>
-                                            <p class="invalid-info hidden" id="right-answer-image">O valor informado não é uma URL válida.</p>    
-                                        </div>
-                                        
-                                        <p>Respostas incorretas</p>
-                                        <div class="wrong-answer">
-                                            <div class="wrong-answer-text">
-                                                <input type="text" value="anime que só tem reprise" placeholder="Resposta incorreta 1">
-                                            </div>
-                                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
-                                            <div class="wrong-answer-image">
-                                                <input type="text" value="https://c.tenor.com/ra1G9oMn69EAAAAC/fullmetal-alchemist.gif" placeholder="URL da imagem 1">
-                                            </div>
-                                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-                                        </div>
-                                        <div class="wrong-answer">
-                                            <div class="wrong-answer-text">
-                                                <input type="text" value="anime que só tem reprise" placeholder="Resposta incorreta 2">
-                                            </div>
-                                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
-                                            <div class="wrong-answer-image">
-                                                <input type="text" value="https://c.tenor.com/ra1G9oMn69EAAAAC/fullmetal-alchemist.gif" placeholder="URL da imagem 2">
-                                            </div>
-                                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-                                        </div>
-                                        <div class="wrong-answer">
-                                            <div class="wrong-answer-text">
-                                                <input type="text" value="anime que só tem reprise" placeholder="Resposta incorreta 3">
-                                            </div>
-                                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
-                                            <div class="wrong-answer-image">
-                                                <input type="text" value="https://c.tenor.com/ra1G9oMn69EAAAAC/fullmetal-alchemist.gif" placeholder="URL da imagem 3">
-                                            </div>
-                                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-                                        </div>                            
-                                    </div>               
-                                </div>`;
-
-                                /*let newQuestionHTML = `<div class="new-question" data-question="${i}">
-                                    <p>Pergunta ${i}<ion-icon name="create-outline" onclick="hideNewQuestionData(this)"></ion-icon></p>
-                                    <div class="new-question-data hidden">
-                                        <div class="question-text">
                                             <input type="text" placeholder="Texto da pergunta ${i}">
                                         </div>
                                         <p class="invalid-info hidden" id="question-text">O texto deve ter no mínimo 20 caracteres.</p>
@@ -830,7 +771,8 @@ function renderNewQuizzQuestionsScreen(n) {
                                             <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
                                         </div>                            
                                     </div>               
-                                </div>`;*/
+                                </div>
+                                `;
         
         newQuizzQuestionsHTML.innerHTML += newQuestionHTML;
     }
@@ -1042,7 +984,7 @@ const newQuizzLevelsHTML = document.querySelector(".new-quizz-levels");
 let allLevels;
 function renderNewQuizzLevelsScreen(n){    
     for(let i = 1; i <= n; i++){
-        /*let newLevelHTML = `<div class="new-level" data-level="${i}">
+        let newLevelHTML = `<div class="new-level" data-level="${i}">
                                 <p>Nível ${i}<ion-icon name="create-outline" onclick="hideNewLevelData(this)"></ion-icon></p>
                                 <div class="new-level-data hidden">
                                     <div class="level-text">
@@ -1065,33 +1007,9 @@ function renderNewQuizzLevelsScreen(n){
                                     </div>
                                     <p class="invalid-info hidden" id="level-description">A descrição deve ter no mínimo 30 caracteres.</p>
                                 </div>
-                            </div>`*/
+                            </div>
+                            `;
 
-                            let newLevelHTML = `<div class="new-level" data-level="${i}">
-                                <p>Nível ${i}<ion-icon name="create-outline" onclick="hideNewLevelData(this)"></ion-icon></p>
-                                <div class="new-level-data hidden">
-                                    <div class="level-text">
-                                        <input type="text" value="Otaku Master.................................................." placeholder="Título do nível ${i}">
-                                    </div>
-                                    <p class="invalid-info hidden" id="level-text">O título deve ter no mínimo 10 caracteres.</p>
-                                    
-                                    <div class="level-percentage">
-                                        <input type="text" value="90" placeholder="% de acerto mínima">
-                                    </div>
-                                    <p class="invalid-info hidden" id="level-percentage">Digite um número entre 0 e 100.</p>
-                                    
-                                    <div class="level-url">
-                                        <input type="text" value="https://ptanime.com/wp-content/uploads/2015/10/Umarunnnn-1024x576.jpg" placeholder="URL da imagem do nível">
-                                    </div>
-                                    <p class="invalid-info hidden" id="level-url">O valor informado não é uma URL válida.</p>    
-                                    
-                                    <div class="level-description">
-                                        <input type="text" value="Você não é otaku, é só modinha... Igual o professor da T6!............................." placeholder="Descrição do nível">
-                                    </div>
-                                    <p class="invalid-info hidden" id="level-description">A descrição deve ter no mínimo 30 caracteres.</p>
-                                </div>
-                            </div>`
-        
         newQuizzLevelsHTML.innerHTML += newLevelHTML;
     }
     newQuizzLevelsHTML.innerHTML += `<button onclick="moveToSuccessScreen()">Finalizar Quizz</button>`
