@@ -10,6 +10,12 @@
     display: none;
 }
 
+body {
+    font-family: 'Roboto';
+    font-style: normal;
+    background: #FAFAFA;
+}
+
 header {
     background: #EC362D;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -37,15 +43,268 @@ header h1 {
     cursor: pointer;
 }
 
-body {
-    font-family: 'Roboto';
-    font-style: normal;
-    background: #FAFAFA;
-}
-
 main {
     margin-top: 69px;
 }
+
+/* ========================================================================================
+=================================== FIRST SCREEN CSS ======================================
+======================================================================================== */
+
+.screen_first {
+    display: flex;
+    /*display: none;*/
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-quizzes {
+    width: 1050px;
+    height: 180px;
+    margin-top: 76px;
+    border: 1px dashed #D5D5D5;
+    border-radius: 5px;
+
+    /*display: flex;*/
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.no-quizzes p {
+    width: 250px;
+    height: 108px;
+    margin-top: 8px;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 22px;
+    color: #b9b9b9;
+
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.no-quizzes button {
+    width: 150px;
+    height: 40px;
+    margin-bottom: 32px;
+    background-color: #FAFAFA;
+    border: 1px dashed #EC362D;
+    border-radius: 50px;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    color: #EC362D;
+}
+
+.EditRemoveQuizz {
+	background: #EC362D;
+	border-radius: 10px 0px 0px 11px;
+	position: absolute;
+	top: 9px;
+	right: 0;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+
+    width: 43px;
+    height: 87px;
+    cursor: default;
+}
+
+.EditRemoveQuizz ion-icon {
+	color: #FFFFFF;
+	font-size: 20px;
+
+    cursor: pointer;
+}
+
+/* ================================================================
+========================= USER QUIZZES ============================
+================================================================ */
+
+.user-quizzes {
+    margin-top: 78px;
+    margin-bottom: 78px;
+}
+
+.user-quizzes > p {
+    width: 100%;
+    height: 30px;
+
+    font-style: normal;
+    font-weight: 700; 
+    font-size: 20px;
+    line-height: 22px;
+
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 12px;
+}
+
+.user-quizzes > p ion-icon {
+    width: 30px;
+    height: 30px;
+    margin-left: 18px;
+    color: #EC362D;
+}
+
+.user-quizzes > .quizzes {
+    width: 1050px;
+    max-height: 350px;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    overflow-y: scroll;
+}
+
+.user-quizzes > .quizzes::-webkit-scrollbar {
+    display: none;
+}
+
+/* ================================================================
+========================== ALL QUIZZES ============================
+================================================================ */
+
+.all-quizzes {    
+    margin-top: 78px;
+    margin-bottom: 78px;    
+}
+
+.all-quizzes > p {
+    width: 100%;
+    height: 30px;
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 22px;
+}
+
+.all-quizzes > .quizzes {
+    width: 1051px;
+    height: 350px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+
+    overflow-y: scroll;
+}
+
+.all-quizzes > .quizzes::-webkit-scrollbar {
+    display: none;
+}
+
+/* ================================================================
+=========================== QUIZZ CARD ============================
+================================================================ */
+
+.quizz-card {
+    width: 340px;
+    height: 180px;
+    margin-bottom: 12px;
+    margin-right: 15px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.quizz-card:nth-child(3n+3) {
+    margin-right:0;
+}
+
+.quizz-card > img {
+    width: 340px;
+    height: 180px;
+    border-radius: 5px;
+
+    position: absolute;
+    bottom: 0;
+}
+
+.quizz-card > p {
+    width: 300px;
+    height: fit-content;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 22px;
+    color: #FFFFFF;
+
+    position: absolute;
+    bottom: 18px;
+    left: 18px;
+}
+
+.black-mask {
+    -webkit-mask-image: linear-gradient(transparent,black);
+    mask-image: linear-gradient(transparent,black);
+}
+
+/* ================================================================
+======================= MOBILE FIRST SCREEN =======================
+================================================================ */
+
+@media (max-width: 1100px) {
+    .screen_first {
+        padding: 0 18px;
+    }
+
+    .no-quizzes {
+        width: 100%;
+        margin-top: 31px;
+    }
+
+    .user-quizzes, .all-quizzes {
+        margin-top: 38px;
+        margin-bottom: 38px;
+        width: 100%;
+    }
+
+    .user-quizzes > p {
+        justify-content: space-between;
+    }
+
+    .user-quizzes > .quizzes {
+        width: 100%;
+        overflow-y: scroll;
+    }
+
+    .quizz-card {
+        width: 100% !important;
+        margin-bottom: 14px !important;
+    }
+
+    .quizz-card > p {
+        word-break: break-word;
+    }
+
+    .quizz-card > img {
+        width: 100% !important;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .all-quizzes > .quizzes {
+        width: 100%;
+    }
+}
+
+/* ========================================================================================
+=================================== SECOND SCREEN CSS ======================================
+======================================================================================== */
+
 
 .screen_second {
     display: flex;
@@ -192,6 +451,7 @@ main {
     
     margin-bottom: 85px;
 }
+
 .quizz-result-button_answer-again {
     width: 261px;
     height: 52px;
@@ -323,257 +583,6 @@ main {
 
         margin-bottom: 8px;
     }
-}
-
-
-/* ========================================================================================
-=================================== FIRST SCREEN CSS ======================================
-======================================================================================== */
-
-.screen_first {
-    display: flex;
-    /*display: none;*/
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.no-quizzes {
-    width: 1050px;
-    height: 180px;
-    margin-top: 76px;
-    border: 1px dashed #D5D5D5;
-    border-radius: 5px;
-
-    /*display: flex;*/
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    
-}
-
-.no-quizzes p {
-    width: 250px;
-    height: 108px;
-    margin-top: 8px;
-
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 22px;
-    color: #b9b9b9;
-
-    display: flex;
-    text-align: center;
-    align-items: center;
-}
-
-.no-quizzes button {
-    width: 150px;
-    height: 40px;
-    margin-bottom: 32px;
-    background-color: #FAFAFA;
-    border: 1px dashed #EC362D;
-    border-radius: 50px;
-
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    color: #EC362D;
-}
-
-.EditRemoveQuizz {
-	background: #EC362D;
-	border-radius: 10px 0px 0px 11px;
-	position: absolute;
-	top: 9px;
-	right: 0;
-
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-evenly;
-
-    width: 43px;
-    height: 87px;
-    cursor: default;
-}
-
-.EditRemoveQuizz ion-icon {
-	color: #FFFFFF;
-	font-size: 20px;
-
-    cursor: pointer;
-}
-
-/* ================================================================
-========================= USER QUIZZES ============================
-================================================================ */
-
-.user-quizzes {
-    margin-top: 78px;
-    margin-bottom: 78px;
-}
-
-.user-quizzes > p {
-    width: 100%;
-    height: 30px;
-
-    font-style: normal;
-    font-weight: 700; 
-    font-size: 20px;
-    line-height: 22px;
-
-    display: flex;
-    align-items: center;
-
-    margin-bottom: 12px;
-}
-
-.user-quizzes > p ion-icon {
-    width: 30px;
-    height: 30px;
-    margin-left: 18px;
-    color: #EC362D;
-}
-
-.user-quizzes > .quizzes {
-    width: 1050px;
-    max-height: 350px;
-
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-
-    overflow-y: scroll;
-}
-
-.user-quizzes > .quizzes::-webkit-scrollbar {
-    display: none;
-}
-
-/* ================================================================
-========================== ALL QUIZZES ============================
-================================================================ */
-
-.all-quizzes {    
-    margin-top: 78px;
-    margin-bottom: 78px;    
-}
-
-.all-quizzes > p {
-    width: 100%;
-    height: 30px;
-
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 22px;
-}
-
-.all-quizzes > .quizzes {
-    width: 1050px;
-    height: 350px;
-
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; 
-
-    overflow-y: scroll;
-}
-
-.all-quizzes > .quizzes::-webkit-scrollbar {
-    display: none;
-}
-
-/* ================================================================
-======================= MOBILE FIRST SCREEN =======================
-================================================================ */
-
-@media (max-width: 1100px) {
-    .screen_first {
-        padding: 0 18px;
-    }
-
-    .no-quizzes {
-        width: 100%;
-        margin-top: 31px;
-    }
-
-    .user-quizzes, .all-quizzes {
-        margin-top: 38px;
-        margin-bottom: 38px;
-        width: 100%;
-    }
-
-    .user-quizzes > p {
-        justify-content: space-between;
-    }
-
-    .user-quizzes > .quizzes {
-        width: 100%;
-        overflow-y: scroll;
-    }
-
-    .quizz-card {
-        width: 100% !important;
-        margin-bottom: 14px !important;
-    }
-
-    .quizz-card > p {
-        word-break: break-word;
-    }
-
-    .quizz-card > img {
-        width: 100% !important;
-        object-fit: cover;
-        object-position: center;
-    }
-
-    .all-quizzes > .quizzes {
-        width: 100%;
-    }
-}
-
-/* ================================================================
-=========================== QUIZZ CARD ============================
-================================================================ */
-
-.quizz-card {
-    width: 340px;
-    height: 180px;
-    margin-bottom: 12px;
-    border-radius: 5px;
-    position: relative;
-}
-
-.quizz-card > img {
-    width: 340px;
-    height: 180px;
-    border-radius: 5px;
-
-    position: absolute;
-    bottom: 0;
-}
-
-.quizz-card > p {
-    width: 300px;
-    height: fit-content;
-
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 22px;
-    color: #FFFFFF;
-
-    position: absolute;
-    bottom: 18px;
-    left: 18px;
-}
-
-.black-mask {
-    -webkit-mask-image: linear-gradient(transparent,black);
-    mask-image: linear-gradient(transparent,black);
 }
 
 /* ========================================================================================
@@ -1013,6 +1022,75 @@ main {
     font-size: 20px;
     line-height: 24px;
     color: #818181;
+}
+
+/* ======================================
+=========== MOBILE THIRD SCREEN ========
+=======================================*/
+
+@media (max-width:1100px) {
+    .new-quizz-basic {
+        width: 375px;
+    }
+
+    .new-quizz-start button {
+        width: 324px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .new-quizz-questions {
+        width: 375px;
+    }
+
+    .new-question {
+        width: 375px;
+    }
+
+    .new-quizz-start {
+        width: 100%;
+
+
+    }
+
+    .new-question-data .question-text, .question-color, .right-answer-text,
+    .right-answer-image, .wrong-answer-text, .wrong-answer-image {
+    width: 345px;
+    height: 46px;
+    margin-bottom: 10px;
+    padding-left: 24px;
+    padding-right: 24px;
+
+    display: flex;
+    align-items: center;
+
+    border: 1px solid #D1D1D1;
+    border-radius: 5px;
+    }
+
+    .new-quizz-questions button {
+        width: 324px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .new-quizz-levels {
+        width: 375px;
+    }
+
+    .new-level {
+        width: 375px;
+    }
+
+    .new-level-data .level-text, .level-percentage, .level-url, .level-description {
+        width: 345px;
+    }
+
+    .new-quizz-levels button {
+        width: 324px;
+        margin-top: 30px;
+        margin-bottom: 30px;    
+    }
 }
 
 

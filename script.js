@@ -6,6 +6,7 @@ let id;
 let local = [];
 let myQuizzesArr = [];
 let allQuestions;
+let editKey;
 const API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes";
 const Time_2S = 2 * 1000;
 const first_SCREEN = document.querySelector(".screen_first");
@@ -21,6 +22,134 @@ let quizzQuestions = [];
 let quizzArrLevels = [];
 
 let newUserQuizz;
+
+//=======================================================================================
+//=============================== FIRST SCREEN FUNCTIONS ================================
+//=======================================================================================
+//= function getAllQuizzes()
+//= function renderAllQuizzes(response)
+//= function getUserQuizzes()
+//= function renderUserQuizzes(response)
+//= function createNewQuizz()
+//=======================================================================================
+
+getAllQuizzes();
+getUserQuizzes();
+
+function getAllQuizzes() {
+
+    loadPageIn();
+
+    const promise = axios.get(API);
+    promise.then(renderAllQuizzes);
+    promise.catch(deuErrado);
+}
+
+function renderAllQuizzes(response) {
+
+    loadPageOff();
+
+    const allQuizzesList = response.data;
+    const allQuizzesHTML = document.querySelector(".all-quizzes > .quizzes");
+    renderAllQuizzesList(allQuizzesList, allQuizzesHTML);
+}
+
+function getUserQuizzes() {
+    const myQuizzes = localStorage.getItem("quizzes");
+    myQuizzesArr = JSON.parse(myQuizzes);
+    if (myQuizzesArr !== null) {
+        if(myQuizzesArr.length > 0) {
+            for (let i = 0; i < myQuizzesArr.length; i++) {
+
+                const promise = axios.get(`${API}/${myQuizzesArr[i][0]}`);
+
+                promise.then(renderUserQuizzes);
+                promise.catch(deuErrado);
+            }
+        } else {
+            document.querySelector(".no-quizzes").setAttribute("style","display: flex");
+            document.querySelector(".user-quizzes").setAttribute("style","display: none");
+        }
+    }
+}
+
+function renderUserQuizzes(response) {
+    const userQuizzesList = response.data;
+    const userQuizzesHTML = document.querySelector(".user-quizzes > .quizzes");
+    renderUserQuizzesList(userQuizzesList, userQuizzesHTML);
+}
+
+function createNewQuizz() {
+    displayNone(first_SCREEN);
+    displayFlex(third_SCREEN);
+    displayFlex(newQuizzStart);
+}
+
+function editQuizz(id) {
+    const object = axios.get(`${API}/${id}`);
+
+    object.then(editar);
+
+    for (let i = 0; i < myQuizzesArr.length; i++) {
+        if (id === myQuizzesArr[i][0]) {
+                editKey = myQuizzesArr[i][1];
+        }
+    }
+        
+}
+
+function editar(object) {
+/*
+    //API-ID -> OBJETO ANTIGO : OK
+    //OBJECT.DATA -> OBJETO NOVO <-PRECISAMOS DISSO - renderizar 
+    //SECRET-KEY - OBJETO ANTIGO : JÁ SALVO
+
+    id = object.data.id;
+    delete object.data.id;
+    
+    console.log(object.data);
+    
+    //COMO ENVIAR PARA O SERVIDOR
+    const promise = axios.put(`${API}/${id}`,object.data,{headers:{'Secret-Key':editKey}});
+    
+    promise.then(deuCerto);
+    promise.catch(deuErrado);
+*/
+    
+}
+
+function deleteQuizz(id) {
+    if(confirm("Tem certeza que gostaria de deletar esse extraordinário Quizz?")) {
+        let getKey;
+        for (let i = 0; i < myQuizzesArr.length; i++) {
+            if (id === myQuizzesArr[i][0]) {
+                getKey = myQuizzesArr[i][1];
+            }
+        }
+        
+        if (getKey !== undefined) {
+            const promise = axios.delete(`${API}/${id}`,{headers:{'Secret-Key':getKey}});
+            
+            removeLocalStorage(id);
+
+            promise.then(backHome);
+            promise.catch(deuErrado);
+        }
+    }
+}
+
+function removeLocalStorage(id) {
+    for (let i = 0; i < myQuizzesArr.length; i++) {
+        if (id === myQuizzesArr[i][0]) {
+            myQuizzesArr.splice(i,1);
+        }
+    }
+
+    local = myQuizzesArr;
+    const stringsSave = JSON.stringify(local);
+    localStorage.removeItem("quizzers");
+    localStorage.setItem("quizzes",stringsSave);
+}
 
 //=======================================================================================
 //=============================== SECOND SCREEN FUNCTIONS ===============================
@@ -295,104 +424,6 @@ function deuErrado(erro) {
     console.log(erro.response.data);
 }
 
-//=======================================================================================
-//=============================== FIRST SCREEN FUNCTIONS ================================
-//=======================================================================================
-//= function getAllQuizzes()
-//= function renderAllQuizzes(response)
-//= function getUserQuizzes()
-//= function renderUserQuizzes(response)
-//= function createNewQuizz()
-//=======================================================================================
-
-getAllQuizzes();
-getUserQuizzes();
-
-function getAllQuizzes() {
-
-    loadPageIn();
-
-    const promise = axios.get(API);
-    promise.then(renderAllQuizzes);
-    promise.catch(deuErrado);
-}
-
-function renderAllQuizzes(response) {
-
-    loadPageOff();
-
-    const allQuizzesList = response.data;
-    const allQuizzesHTML = document.querySelector(".all-quizzes > .quizzes");
-    renderAllQuizzesList(allQuizzesList, allQuizzesHTML);
-}
-
-function getUserQuizzes() {
-    const myQuizzes = localStorage.getItem("quizzes");
-    myQuizzesArr = JSON.parse(myQuizzes);
-    if (myQuizzesArr !== null) {
-        if(myQuizzesArr.length > 0) {
-            for (let i = 0; i < myQuizzesArr.length; i++) {
-
-                const promise = axios.get(`${API}/${myQuizzesArr[i][0]}`);
-
-                promise.then(renderUserQuizzes);
-                promise.catch(deuErrado);
-            }
-        } else {
-            document.querySelector(".no-quizzes").setAttribute("style","display: flex");
-            document.querySelector(".user-quizzes").setAttribute("style","display: none");
-        }
-    }
-}
-
-function renderUserQuizzes(response) {
-    const userQuizzesList = response.data;
-    const userQuizzesHTML = document.querySelector(".user-quizzes > .quizzes");
-    renderUserQuizzesList(userQuizzesList, userQuizzesHTML);
-}
-
-function createNewQuizz() {
-    displayNone(first_SCREEN);
-    displayFlex(third_SCREEN);
-    displayFlex(newQuizzStart);
-}
-
-function editQuizz(element) {
-    console.log("Por favor, me construa :C ");
-}
-
-function deleteQuizz(id) {
-    if(confirm("Tem certeza que gostaria de deletar esse extraordinário Quizz?")) {
-        let getKey;
-        for (let i = 0; i < myQuizzesArr.length; i++) {
-            if (id === myQuizzesArr[i][0]) {
-                getKey = myQuizzesArr[i][1];
-            }
-        }
-        
-        if (getKey !== undefined) {
-            const promise = axios.delete(`${API}/${id}`,{headers:{'Secret-Key':getKey}});
-            
-            removeLocalStorage(id);
-
-            promise.then(backHome);
-            promise.catch(deuErrado);
-        }
-    }
-}
-
-function removeLocalStorage(id) {
-    for (let i = 0; i < myQuizzesArr.length; i++) {
-        if (id === myQuizzesArr[i][0]) {
-            myQuizzesArr.splice(i,1);
-        }
-    }
-
-    local = myQuizzesArr;
-    const stringsSave = JSON.stringify(local);
-    localStorage.removeItem("quizzers");
-    localStorage.setItem("quizzes",stringsSave);
-}
 
 //=======================================================================================
 //=============================== THIRD SCREEN FUNCTIONS ================================
@@ -429,11 +460,6 @@ function moveToCreateQuestionsScreen() {
     
     if (isValidQuizzTitle() && isValidQuizzURL() && isValidNumberOfQuestions()  && isValidNumberOfLevels()) {
         
-        //alert(newUserQuizz.title);
-        //alert(newUserQuizz.image);
-        //alert("deu bom");
-        
-        
         renderNewQuizzQuestionsScreen(quizzNumberOfQuestions);
         displayNone(newQuizzStart);
         displayFlex(newQuizzQuestions);
@@ -465,7 +491,6 @@ function saveObjectQuestion() {
         const valueColor = document.querySelector(`[data-question='${i}'] .question-color input`).value;
         
         const arrObjectAnswer = saveObjectAnswer(i);
-
 
         const object = {title:valueTitle,color:valueColor,answers:arrObjectAnswer};
         
@@ -806,6 +831,8 @@ function renderNewQuizzQuestionsScreen(n) {
     }
     newQuizzQuestionsHTML.innerHTML += `<button onclick="moveToCreateLevelsScreen()">Prosseguir para criar níveis</button>`
     allQuestions = newQuizzQuestionsHTML.querySelectorAll(".new-question");
+
+    hideNewQuestionData(document.querySelector("[data-question='1']"));
 }
 
 function isValidQuestionText() {
@@ -1063,7 +1090,9 @@ function renderNewQuizzLevelsScreen(n){
         newQuizzLevelsHTML.innerHTML += newLevelHTML;
     }
     newQuizzLevelsHTML.innerHTML += `<button onclick="moveToSuccessScreen()">Finalizar Quizz</button>`
-    allLevels = newQuizzLevelsHTML.querySelectorAll(".new-level")
+    allLevels = newQuizzLevelsHTML.querySelectorAll(".new-level");
+
+    hideNewLevelData(document.querySelector("[data-level='1']"));
 }
 
 function isValidLevelTitle() {
