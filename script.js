@@ -384,20 +384,22 @@ function editQuizz(element) {
 
 
 function deleteQuizz(id) {
-    let getKey;
-    for (let i = 0; i < myQuizzesArr.length; i++) {
-        if (id === myQuizzesArr[i][0]) {
-            getKey = myQuizzesArr[i][1];
+    if(confirm("Tem certeza que gostaria de deletar esse extraordinário Quizz?")) {
+        let getKey;
+        for (let i = 0; i < myQuizzesArr.length; i++) {
+            if (id === myQuizzesArr[i][0]) {
+                getKey = myQuizzesArr[i][1];
+            }
         }
-    }
-    
-    if (getKey !== undefined) {
-        const promise = axios.delete(`${API}/${id}`,{headers:{'Secret-Key':getKey}});
+        
+        if (getKey !== undefined) {
+            const promise = axios.delete(`${API}/${id}`,{headers:{'Secret-Key':getKey}});
 
-        removeLocalStorage(id);
+            removeLocalStorage(id);
 
-        promise.then(backHome);
-        promise.catch(deuErrado);
+            promise.then(backHome);
+            promise.catch(deuErrado);
+        }
     }
 }
 
