@@ -353,7 +353,7 @@ function getUserQuizzes() {
     if (myQuizzesArr !== null) {
         if(myQuizzesArr.length > 0) {
             for (let i = 0; i < myQuizzesArr.length; i++) {
-                console.log(myQuizzesArr[i][0]);
+
                 const promise = axios.get(`${API}/${myQuizzesArr[i][0]}`);
 
                 promise.then(renderUserQuizzes);
@@ -394,7 +394,7 @@ function deleteQuizz(id) {
         
         if (getKey !== undefined) {
             const promise = axios.delete(`${API}/${id}`,{headers:{'Secret-Key':getKey}});
-
+            
             removeLocalStorage(id);
 
             promise.then(backHome);
@@ -1387,27 +1387,25 @@ function isValidWrongAnswerURL(){
     return isValid;
 }*/
 
-
-/*function loadPageIn() {
-
-    document.querySelector("main").innerHTML += `
+function loadPageIn() {
+    document.querySelector(".screen_second").innerHTML += `
     <div class="loadPage">
         <img src="./img/loading.svg">
         <h1>Carregando</h1>
     </div>
     `
-}*/
-
-function loadPageIn() {
-    console.log('ola');
 }
 
-/*function loadPageOff() {
-    document.querySelector(".loadPage").remove();
+/*function loadPageIn() {
+    console.log("ola");
+}
+
+function loadPageOff() {
+    console.log("tchau");
 }*/
 
 function loadPageOff() {
-    console.log('ola');
+    document.querySelector(".loadPage").remove();
 }
 
 function backHome() {
