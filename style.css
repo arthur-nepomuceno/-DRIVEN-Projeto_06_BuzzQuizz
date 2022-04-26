@@ -13,7 +13,7 @@
 header {
     background: #EC362D;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    width: 100%;
+    width: 100vw;
     height: 69px;
     display: flex;
     align-items: center;
@@ -21,6 +21,11 @@ header {
 
     font-family: 'Roboto';
     font-style: normal;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
 }
 
 header h1 {
@@ -28,12 +33,18 @@ header h1 {
     font-size: 37px;
     line-height: 43px;
     color: #FFFFFF;
+
+    cursor: pointer;
 }
 
 body {
     font-family: 'Roboto';
     font-style: normal;
     background: #FAFAFA;
+}
+
+main {
+    margin-top: 69px;
 }
 
 .screen_second {
@@ -89,6 +100,7 @@ body {
     justify-content: space-around;
     align-items: center;
     text-align: center;
+    word-wrap: break-word;
 
     color: #FFFFFF;
     margin-bottom: 20px;
@@ -117,7 +129,7 @@ body {
     font-weight: 700;
     font-size: 20px;
     line-height: 23px;
-
+    word-break: break-all;
     color: #000000;
 
     margin-bottom: 19px;
@@ -276,7 +288,7 @@ body {
     }
 
     .quizz-result {
-        width: 100%;
+        width: 100vw;
         margin-bottom: 34px;
 
         flex-direction: column;
@@ -369,7 +381,7 @@ body {
     color: #EC362D;
 }
 
-.EditRemoveQuizz {   /* FALTA RELATIVE NA IMG OU DIV*/
+.EditRemoveQuizz {
 	background: #EC362D;
 	border-radius: 10px 0px 0px 11px;
 	position: absolute;
@@ -383,6 +395,7 @@ body {
 
     width: 43px;
     height: 87px;
+    cursor: default;
 }
 
 .EditRemoveQuizz ion-icon {
@@ -1012,12 +1025,19 @@ body {
 }
 
 .loadPage {
+    position: fixed;
+    left:0;
+    top: 0;
     width: 100vw;
-    height: 80vh;
+    height: 100%;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background: #FAFAFA;
+    padding-top: 69px;
+    z-index: 1;
 
 }
 
