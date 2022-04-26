@@ -3,8 +3,8 @@ let questionAnswered = 0;
 let quizzData;
 let answerIndex =[];
 let id;
-let local; //Usará para armazenar as informações pessoais que queremos guardar
-//ID, KEY e etc
+let local = [];
+let myQuizzesArr = [];
 const API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes";
 const Time_2S = 2 * 1000;
 const first_SCREEN = document.querySelector(".screen_first");
@@ -17,28 +17,9 @@ let quizzNumberOfQuestions;
 let quizzNumberOfLevels;
 
 let quizzQuestions = [];
-let quizzQuestion = {title:"", color: "", answers: ""}
+let quizzArrLevels = [];
 
-
-
-let newUserQuizz = {title: "",
-                    image: "", 
-                    questions: [{title:"",
-                                color:"",
-                                answers: [{text: "",
-                                        image: "",
-                                        isCorrectAnswer: ""},
-                                        {text: "",
-                                        image: "",
-                                        isCorrectAnswer: ""}]}], 
-                    levels: [{title: "",
-                            image: "",
-                            text: "",
-                            minValue:""},
-                            {title: "",
-                            image: "",
-                            text: "",
-                            minValue: ""}]}
+let newUserQuizz;
 
 
 //USANDO LOCAL: RESUMO ===============================================================
@@ -325,7 +306,8 @@ function resetVariables() {
 function error(erro) {
     alert(erro.response.data);
 }
-function deuCerto () {
+function deuCerto (object) {
+    console.log(object);
     console.log("Deu certo");
 }
 
@@ -366,9 +348,22 @@ function renderAllQuizzes(response) {
 }
 
 function getUserQuizzes() {
-    const promise = axios.get(API);
-    promise.then(renderUserQuizzes);
-    promise.catch(deuErrado);
+    const myQuizzes = localStorage.getItem("quizzes");
+    myQuizzesArr = JSON.parse(myQuizzes);
+    if (myQuizzesArr !== null) {
+        if(myQuizzesArr.length > 0) {
+            for (let i = 0; i < myQuizzesArr.length; i++) {
+                console.log(myQuizzesArr[i][0]);
+                const promise = axios.get(`${API}/${myQuizzesArr[i][0]}`);
+
+                promise.then(renderUserQuizzes);
+                promise.catch(deuErrado);
+            }
+        } else {
+            document.querySelector(".no-quizzes").setAttribute("style","display: flex");
+            document.querySelector(".user-quizzes").setAttribute("style","display: none");
+        }
+    }
 }
 
 function renderUserQuizzes(response) {
@@ -388,7 +383,35 @@ function editQuizz(element) {
 }
 
 
-function deleteQuizz(element) {
+function deleteQuizz(id) {
+    let getKey;
+    for (let i = 0; i < myQuizzesArr.length; i++) {
+        if (id === myQuizzesArr[i][0]) {
+            getKey = myQuizzesArr[i][1];
+        }
+    }
+    
+    if (getKey !== undefined) {
+        const promise = axios.delete(`${API}/${id}`,{headers:{'Secret-Key':getKey}});
+
+        removeLocalStorage(id);
+
+        promise.then(backHome);
+        promise.catch(deuErrado);
+    }
+}
+
+function removeLocalStorage(id) {
+    for (let i = 0; i < myQuizzesArr.length; i++) {
+        if (id === myQuizzesArr[i][0]) {
+            myQuizzesArr.splice(i,1);
+        }
+    }
+
+    local = myQuizzesArr;
+    const stringsSave = JSON.stringify(local);
+    localStorage.removeItem("quizzers");
+    localStorage.setItem("quizzes",stringsSave);
 }
 
 //=======================================================================================
@@ -425,16 +448,13 @@ function moveToCreateQuestionsScreen() {
     isValidNumberOfLevels();
     
     if (isValidQuizzTitle() && isValidQuizzURL() && isValidNumberOfQuestions()  && isValidNumberOfLevels()) {
-        newUserQuizz.title = quizzTitle;
-        newUserQuizz.image = quizzURL;
-
-        alert(newUserQuizz.title);
-        alert(newUserQuizz.image);
-        alert("deu bom");
+        
+        //alert(newUserQuizz.title);
+        //alert(newUserQuizz.image);
+        //alert("deu bom");
         
         
         renderNewQuizzQuestionsScreen(quizzNumberOfQuestions);
-        console.log(quizzQuestions);
         displayNone(newQuizzStart);
         displayFlex(newQuizzQuestions);
     }
@@ -451,10 +471,46 @@ function moveToCreateLevelsScreen() {
     if (isValidQuestionText() && isValidQuestionColor() && isValidRightAnswer() && 
     isValidRightAnswerURL() && isValidWrongAnswerData()) {
 
+        saveObjectQuestion();
+
         renderNewQuizzLevelsScreen(quizzNumberOfLevels);
         displayNone(newQuizzQuestions);
         displayFlex(newQuizzLevels);
     }
+}
+
+function saveObjectQuestion() {
+
+    for(let i = 1; i <= quizzNumberOfQuestions; i++) {
+        const valueTitle = document.querySelector(`[data-question='${i}'] input`).value;
+        const valueColor = document.querySelector(`[data-question='${i}'] .question-color input`).value;
+        
+        const arrObjectAnswer = saveObjectAnswer(i);
+
+
+        const object = {title:valueTitle,color:valueColor,answers:arrObjectAnswer};
+        
+        quizzQuestions.push(object);
+    }
+}
+
+function saveObjectAnswer(i) {
+    const arrObject = [];
+
+    const valueAnswerText = document.querySelector(`[data-question='${i}'] .right-answer-text input`).value;
+    const valueAnswerImage = document.querySelector(`[data-question='${i}'] .right-answer-image input`).value;
+    const objectAnswer = {text:valueAnswerText,image:valueAnswerImage,isCorrectAnswer:true};
+    arrObject.push(objectAnswer);
+    
+    const wrongAnswersText = [...document.querySelectorAll(`[data-question='${i}'] .wrong-answer-text input`)];
+    const wrongAnswerImage = [...document.querySelectorAll(`[data-question='${i}'] .wrong-answer-image input`)];
+    
+    for (let j=0; j < 3; j++) {
+            const objectAnswer = {text:wrongAnswersText[j].value,image:wrongAnswerImage[j].value,isCorrectAnswer:false};
+            arrObject.push(objectAnswer);
+        }
+
+    return arrObject;
 }
 
 function moveToSuccessScreen() {
@@ -465,11 +521,76 @@ function moveToSuccessScreen() {
 
     if(isValidLevelTitle() && isValidLevelPercentage() 
     && isValidLevelURL() && isValidLevelDescription()){
+
+        saveObjectLevels();
+
+        sendQuizzToAPI();
+
         displayNone(newQuizzLevels);
         displayFlex(newQuizzSuccess);
     }
 
     
+}
+
+function saveObjectLevels() {
+    for(let i = 1; i <= quizzNumberOfLevels; i++) {
+        const valueTitle = document.querySelector(`[data-level='${i}'] .level-text input`).value;
+        const valueImage = document.querySelector(`[data-level='${i}'] .level-url input`).value;
+        const valueText = document.querySelector(`[data-level='${i}'] .level-description input`).value;
+        const valueMinValue = document.querySelector(`[data-level='${i}'] .level-percentage input`).value;
+        
+        const object = {title:valueTitle,image:valueImage,text:valueText,minValue:valueMinValue};
+        
+        quizzArrLevels.push(object);
+    }
+}
+
+function sendQuizzToAPI() {
+    newUserQuizz = {
+        title: quizzTitle,
+        image: quizzURL, 
+        questions: quizzQuestions, 
+        levels: quizzArrLevels
+    };
+
+    const promise = axios.post(API,newUserQuizz);
+
+    promise.then(getMyQuizz);
+    promise.catch(deuErrado);
+    
+}
+
+function getMyQuizz(object) {
+    saveToLocalStorage(object.data.id,object.data.key);
+
+    renderSucessQuizz(object);
+
+    console.log(object);
+}
+
+function renderSucessQuizz(object) {
+    const element = document.querySelector(".new-quizz-success");
+
+    element.innerHTML += `
+    <div class="new-quizz-card" data-id='${object.data.id}'>
+        <img src="${object.data.image}">
+        <img class="black-mask" src="./img/black-mask.png" style="height: 55%">
+        <p>${object.data.title}</p>
+    </div>
+    <button id="access-quizz" onclick="quizzPage(${object.data.id})">Acessar Quizz</button>
+    <button id="home" onclick="moveToFirstScreen()">Voltar para home</button>
+    `;
+}
+
+function saveToLocalStorage(id,key) {
+    const userQuizzArray = [id,key];
+
+    local.push(userQuizzArray);
+
+    const stringsSave = JSON.stringify(local);
+
+    localStorage.setItem("quizzes",stringsSave);
 }
 
 function moveToFirstScreen() {
@@ -587,7 +708,66 @@ let allQuestions;
 function renderNewQuizzQuestionsScreen(n) {
     
     for(let i = 1; i <= n; i++){
-        let newQuestionHTML = `<div class="new-question">
+        let newQuestionHTML = `<div class="new-question" data-question="${i}">
+                                    <p>Pergunta ${i}<ion-icon name="create-outline" onclick="hideNewQuestionData(this)"></ion-icon></p>
+                                    <div class="new-question-data hidden">
+                                        <div class="question-text">
+                                            <input type="text" value="Qual o melhor anime de todos os tempos???" placeholder="Texto da pergunta ${i}">
+                                        </div>
+                                        <p class="invalid-info hidden" id="question-text">O texto deve ter no mínimo 20 caracteres.</p>
+                                        
+                                        <div class="question-color">
+                                            <input type="text" value="#FA4D7E" placeholder="Cor de fundo da pergunta">  
+                                        </div>
+                                        <p class="invalid-info hidden" id="question-color">A cor deve estar em formato hexadecimal, começando com "#".</p>
+                                        
+                                        <p>Resposta correta</p>
+                                        <div class="right-answer">
+                                            <div class="right-answer-text">
+                                                <input type="text" value="anime da menina que vira doguin... Muito trissste" placeholder="Resposta correta">
+                                            </div>
+                                            <p class="invalid-info hidden" id="right-answer-text">O texto não pode estar vazio.</p>
+                                            <div class="right-answer-image">
+                                                <input type="text" value="https://c.tenor.com/ra1G9oMn69EAAAAC/fullmetal-alchemist.gif" placeholder="URL da imagem">
+                                            </div>
+                                            <p class="invalid-info hidden" id="right-answer-image">O valor informado não é uma URL válida.</p>    
+                                        </div>
+                                        
+                                        <p>Respostas incorretas</p>
+                                        <div class="wrong-answer">
+                                            <div class="wrong-answer-text">
+                                                <input type="text" value="anime que só tem reprise" placeholder="Resposta incorreta 1">
+                                            </div>
+                                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
+                                            <div class="wrong-answer-image">
+                                                <input type="text" value="https://c.tenor.com/ra1G9oMn69EAAAAC/fullmetal-alchemist.gif" placeholder="URL da imagem 1">
+                                            </div>
+                                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
+                                        </div>
+                                        <div class="wrong-answer">
+                                            <div class="wrong-answer-text">
+                                                <input type="text" value="anime que só tem reprise" placeholder="Resposta incorreta 2">
+                                            </div>
+                                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
+                                            <div class="wrong-answer-image">
+                                                <input type="text" value="https://c.tenor.com/ra1G9oMn69EAAAAC/fullmetal-alchemist.gif" placeholder="URL da imagem 2">
+                                            </div>
+                                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
+                                        </div>
+                                        <div class="wrong-answer">
+                                            <div class="wrong-answer-text">
+                                                <input type="text" value="anime que só tem reprise" placeholder="Resposta incorreta 3">
+                                            </div>
+                                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
+                                            <div class="wrong-answer-image">
+                                                <input type="text" value="https://c.tenor.com/ra1G9oMn69EAAAAC/fullmetal-alchemist.gif" placeholder="URL da imagem 3">
+                                            </div>
+                                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
+                                        </div>                            
+                                    </div>               
+                                </div>`;
+
+                                /*let newQuestionHTML = `<div class="new-question" data-question="${i}">
                                     <p>Pergunta ${i}<ion-icon name="create-outline" onclick="hideNewQuestionData(this)"></ion-icon></p>
                                     <div class="new-question-data hidden">
                                         <div class="question-text">
@@ -644,10 +824,9 @@ function renderNewQuizzQuestionsScreen(n) {
                                             <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
                                         </div>                            
                                     </div>               
-                                </div>`;
+                                </div>`;*/
         
         newQuizzQuestionsHTML.innerHTML += newQuestionHTML;
-        quizzQuestions.push(quizzQuestion);
     }
     newQuizzQuestionsHTML.innerHTML += `<button onclick="moveToCreateLevelsScreen()">Prosseguir para criar níveis</button>`
     allQuestions = newQuizzQuestionsHTML.querySelectorAll(".new-question");
@@ -669,12 +848,9 @@ function isValidQuestionText() {
             hideObject(invalidQuestionText);
             backgroundWhite(newQuestionText);
             backgroundWhite(newQuestionTextInput);
-            console.log(`validou essa ${i}`)
-            quizzQuestions[i].title = newQuestionTextInput.value;
             isValid = true;
         }
     }
-    console.log(quizzQuestions);
     return isValid;
 }
 
@@ -862,7 +1038,7 @@ const newQuizzLevelsHTML = document.querySelector(".new-quizz-levels");
 let allLevels;
 function renderNewQuizzLevelsScreen(n){    
     for(let i = 1; i <= n; i++){
-        let newLevelHTML = `<div class="new-level">
+        /*let newLevelHTML = `<div class="new-level" data-level="${i}">
                                 <p>Nível ${i}<ion-icon name="create-outline" onclick="hideNewLevelData(this)"></ion-icon></p>
                                 <div class="new-level-data hidden">
                                     <div class="level-text">
@@ -882,6 +1058,31 @@ function renderNewQuizzLevelsScreen(n){
                                     
                                     <div class="level-description">
                                         <input type="text" placeholder="Descrição do nível">
+                                    </div>
+                                    <p class="invalid-info hidden" id="level-description">A descrição deve ter no mínimo 30 caracteres.</p>
+                                </div>
+                            </div>`*/
+
+                            let newLevelHTML = `<div class="new-level" data-level="${i}">
+                                <p>Nível ${i}<ion-icon name="create-outline" onclick="hideNewLevelData(this)"></ion-icon></p>
+                                <div class="new-level-data hidden">
+                                    <div class="level-text">
+                                        <input type="text" value="Otaku Master.................................................." placeholder="Título do nível ${i}">
+                                    </div>
+                                    <p class="invalid-info hidden" id="level-text">O título deve ter no mínimo 10 caracteres.</p>
+                                    
+                                    <div class="level-percentage">
+                                        <input type="text" value="90" placeholder="% de acerto mínima">
+                                    </div>
+                                    <p class="invalid-info hidden" id="level-percentage">Digite um número entre 0 e 100.</p>
+                                    
+                                    <div class="level-url">
+                                        <input type="text" value="https://ptanime.com/wp-content/uploads/2015/10/Umarunnnn-1024x576.jpg" placeholder="URL da imagem do nível">
+                                    </div>
+                                    <p class="invalid-info hidden" id="level-url">O valor informado não é uma URL válida.</p>    
+                                    
+                                    <div class="level-description">
+                                        <input type="text" value="Você não é otaku, é só modinha... Igual o professor da T6!............................." placeholder="Descrição do nível">
                                     </div>
                                     <p class="invalid-info hidden" id="level-description">A descrição deve ter no mínimo 30 caracteres.</p>
                                 </div>
@@ -1036,20 +1237,19 @@ function renderAllQuizzesList(arr, documentObject) {
     }
 }
 
-function renderUserQuizzesList(arr, documentObject) {
-    for(let i = 0; i < arr.length; i++) {
+function renderUserQuizzesList(object, documentObject) {
         documentObject.innerHTML += `
-        <div class="quizz-card">                 
-            <img src=${arr[i].image} onclick="quizzPage(${arr[i].id})">
-            <img class="black-mask" src="./img/black-mask.png" style="height: 55%" onclick="quizzPage(${arr[i].id})">
-            <p onclick="quizzPage(${arr[i].id})">${arr[i].title}</p>
+        <div class="quizz-card" data-user="${object.id}">                 
+            <img src=${object.image} onclick="quizzPage(${object.id})">
+            <img class="black-mask" src="./img/black-mask.png" style="height: 55%" onclick="quizzPage(${object.id})">
+            <p onclick="quizzPage(${object.id})">${object.title}</p>
             <div class="EditRemoveQuizz">
-	            <ion-icon name="create-outline" onclick="editQuizz(${arr[i].id})"></ion-icon>
-	            <ion-icon name="trash-outline" onclick="removeQuizz(${arr[i].id})"></ion-icon>
+	            <ion-icon name="create-outline" onclick="editQuizz(${object.id})"></ion-icon>
+	            <ion-icon name="trash-outline" onclick="deleteQuizz(${object.id})"></ion-icon>
             </div>
         </div>
         `
-    }
+
 }
 
 function displayNone(documentObject){
@@ -1200,16 +1400,19 @@ function loadPageIn() {
     console.log('ola');
 }
 
-function loadPageOff() {
+/*function loadPageOff() {
     document.querySelector(".loadPage").remove();
+}*/
+
+function loadPageOff() {
+    console.log('ola');
 }
 
 function backHome() {
     window.location.reload();
 }
 
-/*
-newUserQuizz = {title: "Título do quizz",
+/*newUserQuizz = {title: "Título do quizz",
                 image: "https://http.cat/411.jpg",
                 questions: [{title: "Título da pergunta 1",
                             color: "#123456",
@@ -1243,4 +1446,4 @@ newUserQuizz = {title: "Título do quizz",
                         {title: "Título do nível 2",
                             image: "https://http.cat/412.jpg",
                             text: "Descrição do nível 2",
-                            minValue: 50}]}*/
+                           minValue: 50}]}*/
