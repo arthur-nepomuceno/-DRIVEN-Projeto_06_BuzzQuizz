@@ -1186,7 +1186,7 @@ function isValidWrongAnswerURL(){
 }*/
 
 
-function loadPageIn() {
+/*function loadPageIn() {
 
     document.querySelector("main").innerHTML += `
     <div class="loadPage">
@@ -1194,6 +1194,10 @@ function loadPageIn() {
         <h1>Carregando</h1>
     </div>
     `
+}*/
+
+function loadPageIn() {
+    console.log('ola');
 }
 
 function loadPageOff() {
