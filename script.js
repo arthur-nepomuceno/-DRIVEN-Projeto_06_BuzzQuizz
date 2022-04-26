@@ -47,8 +47,6 @@ function quizzPage (APIid) {
 
     loadPageIn();
 
-    //Remover espaço demais
-
     const promise = axios.get(`${API}/${id}`);
 
     promise.then(getQuizz);

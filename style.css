@@ -182,6 +182,7 @@ main {
 
     color: #484848;
     word-wrap: break-word;
+    word-break: break-all;
 }
 
 .quizz-result-buttons {
