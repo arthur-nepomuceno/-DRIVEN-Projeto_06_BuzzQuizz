@@ -11,6 +11,34 @@ const first_SCREEN = document.querySelector(".screen_first");
 const second_SCREEN = document.querySelector(".screen_second");
 const third_SCREEN = document.querySelector(".screen_third");
 
+let quizzTitle;
+let quizzURL;
+let quizzNumberOfQuestions;
+let quizzNumberOfLevels;
+
+let quizzQuestions = [];
+let quizzQuestion = {title:"", color: "", answers: ""}
+
+
+
+let newUserQuizz = {title: "",
+                    image: "", 
+                    questions: [{title:"",
+                                color:"",
+                                answers: [{text: "",
+                                        image: "",
+                                        isCorrectAnswer: ""},
+                                        {text: "",
+                                        image: "",
+                                        isCorrectAnswer: ""}]}], 
+                    levels: [{title: "",
+                            image: "",
+                            text: "",
+                            minValue:""},
+                            {title: "",
+                            image: "",
+                            text: "",
+                            minValue: ""}]}
 
 
 //USANDO LOCAL: RESUMO ===============================================================
@@ -394,11 +422,20 @@ function moveToCreateQuestionsScreen() {
     isValidNumberOfLevels();
     
     if (isValidQuizzTitle() && isValidQuizzURL() && isValidNumberOfQuestions()  && isValidNumberOfLevels()) {
+        newUserQuizz.title = quizzTitle;
+        newUserQuizz.image = quizzURL;
+
+        alert(newUserQuizz.title);
+        alert(newUserQuizz.image);
+        alert("deu bom");
+        
         
         renderNewQuizzQuestionsScreen(quizzNumberOfQuestions);
+        console.log(quizzQuestions);
         displayNone(newQuizzStart);
         displayFlex(newQuizzQuestions);
     }
+
 }
 
 function moveToCreateLevelsScreen() {
@@ -406,7 +443,7 @@ function moveToCreateLevelsScreen() {
     isValidQuestionColor();
     isValidRightAnswer();
     isValidRightAnswerURL();
-    isValidWrongAnswerData();    
+    isValidWrongAnswerData();
 
     if (isValidQuestionText() && isValidQuestionColor() && isValidRightAnswer() && 
     isValidRightAnswerURL() && isValidWrongAnswerData()) {
@@ -443,10 +480,7 @@ function moveToFirstScreen() {
 //= isValidNumberOfQuestions()
 //= isValidNumberOfLevels()
 ============================================================================ */
-let quizzTitle;
-let quizzURL;
-let quizzNumberOfQuestions;
-let quizzNumberOfLevels;
+
 
 function isValidQuizzTitle(){    
     const newQuizzTitle = document.querySelector(".new-quizz-basic > .title");
@@ -464,6 +498,7 @@ function isValidQuizzTitle(){
         backgroundWhite(newQuizzTitle);
         backgroundWhite(newQuizzTitleInput);
 
+        quizzTitle = newQuizzTitleInput.value;
         return true;
     }
 }
@@ -477,13 +512,14 @@ function isValidQuizzURL() {
     if (isValidURL(url)) {
         hideObject(invalidURL);
         backgroundWhite(newQuizzURL);
-        backgroundWhite(newQuizzURLInput);       
+        backgroundWhite(newQuizzURLInput);
 
+        quizzURL = url;
         return true;
     } else {
         showObject(invalidURL);
         backgroundPink(newQuizzURL);
-        backgroundPink(newQuizzURLInput);        
+        backgroundPink(newQuizzURLInput);    
 
         return false;
     }
@@ -543,6 +579,8 @@ function isValidNumberOfLevels(){
 ============================================================================ */
 const newQuizzQuestionsHTML = document.querySelector(".new-quizz-questions");
 let allQuestions;
+
+
 function renderNewQuizzQuestionsScreen(n) {
     
     for(let i = 1; i <= n; i++){
@@ -606,6 +644,7 @@ function renderNewQuizzQuestionsScreen(n) {
                                 </div>`;
         
         newQuizzQuestionsHTML.innerHTML += newQuestionHTML;
+        quizzQuestions.push(quizzQuestion);
     }
     newQuizzQuestionsHTML.innerHTML += `<button onclick="moveToCreateLevelsScreen()">Prosseguir para criar níveis</button>`
     allQuestions = newQuizzQuestionsHTML.querySelectorAll(".new-question");
@@ -623,15 +662,16 @@ function isValidQuestionText() {
             backgroundPink(newQuestionText);
             backgroundPink(newQuestionTextInput);
             isValid = false;      
-        } 
-        else {
+        } else {
             hideObject(invalidQuestionText);
             backgroundWhite(newQuestionText);
             backgroundWhite(newQuestionTextInput);
-
+            console.log(`validou essa ${i}`)
+            quizzQuestions[i].title = newQuestionTextInput.value;
             isValid = true;
         }
     }
+    console.log(quizzQuestions);
     return isValid;
 }
 
@@ -648,11 +688,13 @@ function isValidQuestionColor() {
                 hideObject(invalidQuestionColor);
                 backgroundWhite(newQuestionColor);
                 backgroundWhite(newQuestionColorInput);
+
                 isValid = true;
         } else {
             showObject(invalidQuestionColor);
             backgroundPink(newQuestionColor);
             backgroundPink(newQuestionColorInput);
+
             isValid = false;
         }
     }
@@ -661,6 +703,7 @@ function isValidQuestionColor() {
 
 function isValidRightAnswer(){
     let isValid;
+    let rightAnswerList = [];
     for (let i = 0; i < allQuestions.length; i++){
         const newRightAnswer = allQuestions[i].querySelector(".right-answer-text");
         const newRightAnswerInput = newRightAnswer.querySelector("input");
@@ -676,9 +719,14 @@ function isValidRightAnswer(){
             hideObject(invalidRightAnswer);
             backgroundWhite(newRightAnswer);
             backgroundWhite(newRightAnswerInput);
+            rightAnswerList.push(newRightAnswerInput.value);
             isValid = true;
         }
     }
+    if(rightAnswerList.length < quizzNumberOfQuestions){
+        isValid = false;
+    }
+
     return isValid;
 }
 
@@ -844,6 +892,7 @@ function renderNewQuizzLevelsScreen(n){
 
 function isValidLevelTitle() {
     let isValid;
+    let levelTitleList = [];
     for (let i = 0; i < allLevels.length; i++){        
         const newLevelTitle = allLevels[i].querySelector(".level-text");      
         const newLevelTitleInput = newLevelTitle.querySelector("input");
@@ -859,8 +908,13 @@ function isValidLevelTitle() {
             hideObject(invalidLevelTitle);
             backgroundWhite(newLevelTitle);
             backgroundWhite(newLevelTitleInput);
+            levelTitleList.push(newLevelTitleInput.value);
             isValid = true;
         }
+    }
+
+    if (levelTitleList.length < quizzNumberOfLevels) {
+        isValid = false;
     }
     return isValid;
 }
@@ -1152,3 +1206,40 @@ function backHome() {
     //TERMINAR ISSO, ESPERAR ARTHUR DECIDIR O QUE FARÁ OU MANTERÁ
     document.querySelector(".screen_second").innerHTML="";
 }
+
+/*
+newUserQuizz = {title: "Título do quizz",
+                image: "https://http.cat/411.jpg",
+                questions: [{title: "Título da pergunta 1",
+                            color: "#123456",
+                            answers: [{text: "Texto da resposta 1",
+                                        image: "https://http.cat/411.jpg",
+                                        isCorrectAnswer: true},
+                                        {text: "Texto da resposta 2",
+                                        image: "https://http.cat/412.jpg",
+                                        isCorrectAnswer: false}]},
+                            
+                            {title: "Título da pergunta 2",
+                            color: "#123456",
+                            answers: [{text: "Texto da resposta 1",
+                                        image: "https://http.cat/411.jpg",
+                                        isCorrectAnswer: true},
+                                        {text: "Texto da resposta 2",
+                                        image: "https://http.cat/412.jpg",
+                                        isCorrectAnswer: false}]},
+                            {title: "Título da pergunta 3",
+                            color: "#123456",
+                            answers: [{text: "Texto da resposta 1",
+                                        image: "https://http.cat/411.jpg",
+                                        isCorrectAnswer: true},
+                                        {text: "Texto da resposta 2",
+                                        image: "https://http.cat/412.jpg",
+                                        isCorrectAnswer: false}]}],
+                levels: [{title: "Título do nível 1",
+                            image: "https://http.cat/411.jpg",
+                            text: "Descrição do nível 1",
+                            minValue: 0},
+                        {title: "Título do nível 2",
+                            image: "https://http.cat/412.jpg",
+                            text: "Descrição do nível 2",
+                            minValue: 50}]}*/
