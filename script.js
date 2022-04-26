@@ -55,20 +55,22 @@ function renderAllQuizzes(response) {
 }
 
 function getUserQuizzes() {
-    const myQuizzes = localStorage.getItem("quizzes");
-    myQuizzesArr = JSON.parse(myQuizzes);
-    if (myQuizzesArr !== null) {
-        if(myQuizzesArr.length > 0) {
-            for (let i = 0; i < myQuizzesArr.length; i++) {
+    if (localStorage.getItem("quizzes") !== null) {
+        const myQuizzes = localStorage.getItem("quizzes");
+        myQuizzesArr = JSON.parse(myQuizzes);
+        if (myQuizzesArr !== null) {
+            if(myQuizzesArr.length > 0) {
+                for (let i = 0; i < myQuizzesArr.length; i++) {
 
-                const promise = axios.get(`${API}/${myQuizzesArr[i][0]}`);
+                    const promise = axios.get(`${API}/${myQuizzesArr[i][0]}`);
 
-                promise.then(renderUserQuizzes);
-                promise.catch(deuErrado);
+                    promise.then(renderUserQuizzes);
+                    promise.catch(deuErrado);
+                }
+            } else {
+                document.querySelector(".no-quizzes").setAttribute("style","display: flex");
+                document.querySelector(".user-quizzes").setAttribute("style","display: none");
             }
-        } else {
-            document.querySelector(".no-quizzes").setAttribute("style","display: flex");
-            document.querySelector(".user-quizzes").setAttribute("style","display: none");
         }
     }
 }
