@@ -5,6 +5,7 @@ let answerIndex =[];
 let id;
 let local = [];
 let myQuizzesArr = [];
+let allQuestions;
 const API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes";
 const Time_2S = 2 * 1000;
 const first_SCREEN = document.querySelector(".screen_first");
@@ -21,26 +22,6 @@ let quizzArrLevels = [];
 
 let newUserQuizz;
 
-
-//USANDO LOCAL: RESUMO ===============================================================
-//====================================================================================
-
-function storageLocal(algo) {
-    localStorage.setItem("nome", "João"); //SET ARMAZENA COMO SE FOSSE OBJETO NOME:JOÃO
-    const pessoa = localStorage.getItem("nome"); //ASSOCIA O OBJETO A VARIAVEL; PESSOA = JOAO;
-    localStorage.removeItem("nome"); //APAGA AQUELE OBJETO
-
-
-    //OBS: LOCAL SÒ GUARDA STRING,ENTAO VAMOS TRANSFORMAR TUDO AO USAR
-
-    const dados = [1,2,3]; //EXEMPLO TRANSFORMANDO ESSA ARRAY EM STRING
-    const dadosSerializados = JSON.stringify(dados);  // String "[1,2,3]"
-    const dadosDeserializados = JSON.parse(dadosSerializados);  // De volta pra Array [1,2,3]
-    //TEREMOS UMA LISTA DE ID PROPRIOS, QUE VAMOS COLOCAR NUMA ARRAY, SERIALIZAR E ARMAZENAR
-    //PARA RENDERIZAR, TRANSFORMAMOS DE VOLTA, USAMOS UM 'FOR' e PRONTO;
-
-}
-
 //=======================================================================================
 //=============================== SECOND SCREEN FUNCTIONS ===============================
 //=======================================================================================
@@ -50,7 +31,6 @@ function quizzPage (APIid) {
 
     resetVariables();
 
-    //SO PARA ESTILIZAR, REMOVENDO A PARTE DO ARTHUR:
     document.querySelector(".screen_first").setAttribute("style","display:none");
     document.querySelector(".screen_third").setAttribute("style","display:none");
 
@@ -211,7 +191,6 @@ function renderResult(result) {
 function shuffle() { 
 	return Math.random() - 0.5; 
 }
-
 
 function chooseAnswer(element) {
     const elementParent = element.parentElement;
@@ -379,9 +358,8 @@ function createNewQuizz() {
 }
 
 function editQuizz(element) {
-
+    console.log("Por favor, me construa :C ");
 }
-
 
 function deleteQuizz(id) {
     if(confirm("Tem certeza que gostaria de deletar esse extraordinário Quizz?")) {
@@ -460,7 +438,6 @@ function moveToCreateQuestionsScreen() {
         displayNone(newQuizzStart);
         displayFlex(newQuizzQuestions);
     }
-
 }
 
 function moveToCreateLevelsScreen() {
@@ -530,9 +507,7 @@ function moveToSuccessScreen() {
 
         displayNone(newQuizzLevels);
         displayFlex(newQuizzSuccess);
-    }
-
-    
+    } 
 }
 
 function saveObjectLevels() {
@@ -559,8 +534,7 @@ function sendQuizzToAPI() {
     const promise = axios.post(API,newUserQuizz);
 
     promise.then(getMyQuizz);
-    promise.catch(deuErrado);
-    
+    promise.catch(deuErrado); 
 }
 
 function getMyQuizz(object) {
@@ -588,10 +562,13 @@ function renderSucessQuizz(object) {
 function saveToLocalStorage(id,key) {
     const userQuizzArray = [id,key];
 
+    const myQuizzes = localStorage.getItem("quizzes");
+    local = JSON.parse(myQuizzes);
+
     local.push(userQuizzArray);
 
     const stringsSave = JSON.stringify(local);
-
+    
     localStorage.setItem("quizzes",stringsSave);
 }
 
@@ -606,7 +583,6 @@ function moveToFirstScreen() {
 //= isValidNumberOfQuestions()
 //= isValidNumberOfLevels()
 ============================================================================ */
-
 
 function isValidQuizzTitle(){    
     const newQuizzTitle = document.querySelector(".new-quizz-basic > .title");
@@ -704,8 +680,6 @@ function isValidNumberOfLevels(){
 //= isValidWrongData()
 ============================================================================ */
 const newQuizzQuestionsHTML = document.querySelector(".new-quizz-questions");
-let allQuestions;
-
 
 function renderNewQuizzQuestionsScreen(n) {
     
@@ -863,7 +837,6 @@ function isValidQuestionColor() {
         const newQuestionColorInput = newQuestionColor.querySelector("input");
         const invalidQuestionColor = allQuestions[i].querySelector(".invalid-info#question-color");
         
-        
         if(startsWithHash(newQuestionColorInput.value) && 
             isHexadecimal(newQuestionColorInput.value)) {
                 hideObject(invalidQuestionColor);
@@ -1019,9 +992,6 @@ function isValidWrongAnswerData(){
                 wrongAnswerURLList.push(newWrongAnswerURLInput.value);
 
                 isValid = true;
-                
-                //alert(newWrongAnswerURLInput.value);
-                //alert(newWrongAnswerInput.value);
             }
         }
     }
@@ -1166,11 +1136,6 @@ function isValidLevelURL() {
         const newLevelURLInput = newLevelURL.querySelector("input");
         const invalidLevelURL = allLevels[i].querySelector(".invalid-info#level-url");
 
-        //alert(newLevelURL);
-        //alert(newLevelURLInput);
-        //alert(invalidLevelURL);
-
-        
         const url = newLevelURLInput.value;
 
         if (isValidURL(url)) {
@@ -1318,75 +1283,6 @@ function isHexadecimal(str) {
     return false;
 }
 
-/*
-displayNone(first_SCREEN);
-displayFlex(third_SCREEN);
-
-displayNone(newQuizzStart);
-
-displayNone(newQuizzQuestions);
-displayFlex(newQuizzLevels);*/
-
-
-
-//============================ IGNORAR POR ENQUANTO. ESTÁ AQUI SÓ POR SEGURANÇA.
-/*
-function isValidWrongAnswer(){
-    let isValid;
-    let wrongAnswerList = [];
-    for(let i = 0; i < allQuestions.length; i++){
-        const allWrongAnswers = [...allQuestions[i].querySelectorAll(".wrong-answer")];
-        for(let j = 0; j < allWrongAnswers.length; j++) {
-            
-            const newWrongAnswer = allWrongAnswers[j].querySelector(".wrong-answer-text");
-            const newWrongAnswerInput = newWrongAnswer.querySelector("input");
-            const invalidWrongAnswer = allWrongAnswers[j].querySelector(".invalid-info#wrong-answer-text"); 
-
-            if (newWrongAnswerInput.value.length == 0 && wrongAnswerList.length == 0) {
-                showObject(invalidWrongAnswer);
-                backgroundPink(newWrongAnswer);
-                backgroundPink(newWrongAnswerInput);
-                isValid = false;                                
-    
-            } else if (newWrongAnswerInput.value.length != 0){                    
-                allWrongAnswers.forEach(hideWrongAnswerWarnings);
-                isValid = true;
-                wrongAnswerList.push(newWrongAnswerInput.value);
-                //alert(newWrongAnswerInput.value);
-            }            
-        }
-    }
-    return isValid;
-}
-
-function isValidWrongAnswerURL(){
-    let isValid;
-    let wrongAnswerURLList = [];
-    for(let i = 0; i < allQuestions.length; i++){
-        const allWrongAnswers = [...allQuestions[i].querySelectorAll(".wrong-answer")];
-        for(let j = 0; j < allWrongAnswers.length; j++) {
-            
-            const newWrongAnswerURL = allWrongAnswers[j].querySelector(".wrong-answer-image");
-            const newWrongAnswerURLInput = newWrongAnswerURL.querySelector("input");
-            const invalidWrongAnswerURL = allWrongAnswers[j].querySelector(".invalid-info#wrong-answer-image"); 
-
-            if (newWrongAnswerURLInput.value.length == 0 && wrongAnswerURLList.length == 0) {
-                showObject(invalidWrongAnswerURL);
-                backgroundPink(newWrongAnswerURL);
-                backgroundPink(newWrongAnswerURLInput);
-                isValid = false;                                
-    
-            } else if (newWrongAnswerURLInput.value.length != 0){                    
-                allWrongAnswers.forEach(hideWrongAnswerURLWarnings);
-                isValid = true;
-                wrongAnswerURLList.push(newWrongAnswerURLInput.value);
-                //alert(newWrongAnswerURLInput.value);
-            }            
-        }
-    }
-    return isValid;
-}*/
-
 function loadPageIn() {
     document.querySelector(".screen_second").innerHTML += `
     <div class="loadPage">
@@ -1396,14 +1292,6 @@ function loadPageIn() {
     `
 }
 
-/*function loadPageIn() {
-    console.log("ola");
-}
-
-function loadPageOff() {
-    console.log("tchau");
-}*/
-
 function loadPageOff() {
     document.querySelector(".loadPage").remove();
 }
@@ -1411,39 +1299,3 @@ function loadPageOff() {
 function backHome() {
     window.location.reload();
 }
-
-/*newUserQuizz = {title: "Título do quizz",
-                image: "https://http.cat/411.jpg",
-                questions: [{title: "Título da pergunta 1",
-                            color: "#123456",
-                            answers: [{text: "Texto da resposta 1",
-                                        image: "https://http.cat/411.jpg",
-                                        isCorrectAnswer: true},
-                                        {text: "Texto da resposta 2",
-                                        image: "https://http.cat/412.jpg",
-                                        isCorrectAnswer: false}]},
-                            
-                            {title: "Título da pergunta 2",
-                            color: "#123456",
-                            answers: [{text: "Texto da resposta 1",
-                                        image: "https://http.cat/411.jpg",
-                                        isCorrectAnswer: true},
-                                        {text: "Texto da resposta 2",
-                                        image: "https://http.cat/412.jpg",
-                                        isCorrectAnswer: false}]},
-                            {title: "Título da pergunta 3",
-                            color: "#123456",
-                            answers: [{text: "Texto da resposta 1",
-                                        image: "https://http.cat/411.jpg",
-                                        isCorrectAnswer: true},
-                                        {text: "Texto da resposta 2",
-                                        image: "https://http.cat/412.jpg",
-                                        isCorrectAnswer: false}]}],
-                levels: [{title: "Título do nível 1",
-                            image: "https://http.cat/411.jpg",
-                            text: "Descrição do nível 1",
-                            minValue: 0},
-                        {title: "Título do nível 2",
-                            image: "https://http.cat/412.jpg",
-                            text: "Descrição do nível 2",
-                           minValue: 50}]}*/
