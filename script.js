@@ -91,7 +91,14 @@ function createNewQuizz() {
 }
 
 function editQuizz(id) {
-    const object = axios.get(`${API}/${id}`);
+    const promise = axios.get(`${API}/${id}`);
+    promise.then(getQuizzBasicInfo);
+
+    displayNone(first_SCREEN);    
+    displayFlex(third_SCREEN);    
+    displayFlex(newQuizzStart);
+
+    /*const object = axios.get(`${API}/${id}`);
 
     object.then(editar);
 
@@ -99,12 +106,12 @@ function editQuizz(id) {
         if (id === myQuizzesArr[i][0]) {
                 editKey = myQuizzesArr[i][1];
         }
-    }
+    }*/
         
 }
 
-function editar(object) {
 /*
+function editar(object) {
     //API-ID -> OBJETO ANTIGO : OK
     //OBJECT.DATA -> OBJETO NOVO <-PRECISAMOS DISSO - renderizar a parte
     //SECRET-KEY - OBJETO ANTIGO : JÁ SALVO
@@ -119,7 +126,20 @@ function editar(object) {
     
     promise.then(deuCerto);
     promise.catch(deuErrado);
+    
+}
 */
+
+function getQuizzBasicInfo(element) {
+    quizzTitle = element.data.title;
+    quizzURL = element.data.image;
+    quizzNumberOfQuestions = element.data.questions;
+    quizzNumberOfLevels = element.data.levels;
+
+    correctAnswerText = quizzNumberOfQuestions[0].answers[0].text;
+    correctAnswerImage = quizzNumberOfQuestions[0].answers[0].image;    
+
+    renderEditScreen(quizzTitle, quizzURL, quizzNumberOfQuestions, quizzNumberOfLevels);
     
 }
 
