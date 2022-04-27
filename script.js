@@ -7,11 +7,14 @@ let local = [];
 let myQuizzesArr = [];
 let allQuestions;
 let editKey;
+let editQuizzObject;
+let fromEditQuizz = false;
 const API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes";
 const Time_2S = 2 * 1000;
 const first_SCREEN = document.querySelector(".screen_first");
 const second_SCREEN = document.querySelector(".screen_second");
 const third_SCREEN = document.querySelector(".screen_third");
+
 
 let quizzTitle;
 let quizzURL;
@@ -42,7 +45,7 @@ function getAllQuizzes() {
 
     const promise = axios.get(API);
     promise.then(renderAllQuizzes);
-    promise.catch(deuErrado);
+    promise.catch(erroMessage);
 }
 
 function renderAllQuizzes(response) {
@@ -65,7 +68,7 @@ function getUserQuizzes() {
                     const promise = axios.get(`${API}/${myQuizzesArr[i][0]}`);
 
                     promise.then(renderUserQuizzes);
-                    promise.catch(deuErrado);
+                    promise.catch(erroMessage);
                 }
             } else {
                 document.querySelector(".no-quizzes").setAttribute("style","display: flex");
@@ -90,57 +93,46 @@ function createNewQuizz() {
     displayFlex(newQuizzStart);
 }
 
-function editQuizz(id) {
-    const promise = axios.get(`${API}/${id}`);
+function editQuizz(idValue) {
+    
+    const promise = axios.get(`${API}/${idValue}`);
+    
     promise.then(getQuizzBasicInfo);
-
-    displayNone(first_SCREEN);    
-    displayFlex(third_SCREEN);    
-    displayFlex(newQuizzStart);
-
-    /*const object = axios.get(`${API}/${id}`);
-
-    object.then(editar);
-
+    
     for (let i = 0; i < myQuizzesArr.length; i++) {
-        if (id === myQuizzesArr[i][0]) {
-                editKey = myQuizzesArr[i][1];
+        if (idValue === myQuizzesArr[i][0]) {         
+            editKey = myQuizzesArr[i][1];
         }
-    }*/
-        
+    }
+    
+    id = idValue;
 }
 
-/*
-function editar(object) {
-    //API-ID -> OBJETO ANTIGO : OK
-    //OBJECT.DATA -> OBJETO NOVO <-PRECISAMOS DISSO - renderizar a parte
-    //SECRET-KEY - OBJETO ANTIGO : JÁ SALVO
-
-    id = object.data.id;
-    delete object.data.id;
+function sendEditToAPI(object) {
+    console.log(editKey);
+    const promise = axios.put(`${API}/${id}`,object,{headers:{'Secret-Key':editKey}});
     
-    console.log(object.data);
-    
-    //COMO ENVIAR PARA O SERVIDOR
-    const promise = axios.put(`${API}/${id}`,object.data,{headers:{'Secret-Key':editKey}});
-    
-    promise.then(deuCerto);
-    promise.catch(deuErrado);
-    
+    promise.then(getMyQuizz);
+    promise.catch(erroMessage);
 }
-*/
 
-function getQuizzBasicInfo(element) {
-    quizzTitle = element.data.title;
-    quizzURL = element.data.image;
-    quizzNumberOfQuestions = element.data.questions;
-    quizzNumberOfLevels = element.data.levels;
 
-    correctAnswerText = quizzNumberOfQuestions[0].answers[0].text;
-    correctAnswerImage = quizzNumberOfQuestions[0].answers[0].image;    
-
-    renderEditScreen(quizzTitle, quizzURL, quizzNumberOfQuestions, quizzNumberOfLevels);
+function getQuizzBasicInfo(object) {
     
+    createNewQuizz();
+
+    quizzTitle = object.data.title;
+    quizzURL = object.data.image;
+    quizzNumberOfQuestions = object.data.questions;
+    quizzNumberOfLevels = object.data.levels;
+
+    document.querySelector(".title input").setAttribute("value",quizzTitle);
+    document.querySelector(".url input").setAttribute("value",quizzURL);
+    document.querySelector(".number-of-questions input").setAttribute("value",quizzNumberOfQuestions.length);
+    document.querySelector(".number-of-levels input").setAttribute("value",quizzNumberOfLevels.length);
+
+    editQuizzObject = object;
+    fromEditQuizz = true;
 }
 
 function deleteQuizz(id) {
@@ -158,7 +150,7 @@ function deleteQuizz(id) {
             removeLocalStorage(id);
 
             promise.then(backHome);
-            promise.catch(deuErrado);
+            promise.catch(erroMessage);
         }
     }
 }
@@ -278,7 +270,7 @@ function scoreCalculate() {
 function checkLevelIndex() {
     const minValueList = organizeLevels();
 
-    const minValue = getMyObjectIndexLevel(minValueList); //Retorn minLevel
+    const minValue = getMyObjectIndexLevel(minValueList); 
 
     const minValueIndex = getIndexLevel(minValue);
 
@@ -444,7 +436,7 @@ function deuCerto (object) {
     console.log("Deu certo");
 }
 
-function deuErrado(erro) {
+function erroMessage(erro) {
     console.log("Erroooou " + erro.response.status);
     console.log(erro.response.data);
 }
@@ -552,7 +544,7 @@ function moveToSuccessScreen() {
     && isValidLevelURL() && isValidLevelDescription()){
 
         saveObjectLevels();
-
+        
         sendQuizzToAPI();
 
         displayNone(newQuizzLevels);
@@ -581,16 +573,24 @@ function sendQuizzToAPI() {
         levels: quizzArrLevels
     };
 
-    const promise = axios.post(API,newUserQuizz);
+    if(fromEditQuizz) {
+        sendEditToAPI(newUserQuizz);
+    } else {
+        const promise = axios.post(API,newUserQuizz);
 
-    promise.then(getMyQuizz);
-    promise.catch(deuErrado); 
+        promise.then(getMyQuizz);
+        promise.catch(erroMessage); 
+    }
 }
 
 function getMyQuizz(object) {
-    saveToLocalStorage(object.data.id,object.data.key);
+
+    if(!fromEditQuizz) {
+        saveToLocalStorage(object.data.id,object.data.key);
+    }
 
     renderSucessQuizz(object);
+    fromEditQuizz = false;
 }
 
 function renderSucessQuizz(object) {
@@ -735,71 +735,97 @@ function renderNewQuizzQuestionsScreen(n) {
     
     for(let i = 1; i <= n; i++){
         let newQuestionHTML = `<div class="new-question" data-question="${i}">
-                                    <p>Pergunta ${i}<ion-icon name="create-outline" onclick="hideNewQuestionData(this)"></ion-icon></p>
-                                    <div class="new-question-data hidden">
-                                        <div class="question-text">
-                                            <input type="text" placeholder="Texto da pergunta ${i}">
-                                        </div>
-                                        <p class="invalid-info hidden" id="question-text">O texto deve ter no mínimo 20 caracteres.</p>
-                                        
-                                        <div class="question-color">
-                                            <input type="text" placeholder="Cor de fundo da pergunta">  
-                                        </div>
-                                        <p class="invalid-info hidden" id="question-color">A cor deve estar em formato hexadecimal, começando com "#".</p>
-                                        
-                                        <p>Resposta correta</p>
-                                        <div class="right-answer">
-                                            <div class="right-answer-text">
-                                                <input type="text" placeholder="Resposta correta">
+                                        <p>Pergunta ${i}<ion-icon name="create-outline" onclick="hideNewQuestionData(this)"></ion-icon></p>
+                                        <div class="new-question-data hidden">
+                                            <div class="question-text">
+                                                <input type="text" placeholder="Texto da pergunta ${i}">
                                             </div>
-                                            <p class="invalid-info hidden" id="right-answer-text">O texto não pode estar vazio.</p>
-                                            <div class="right-answer-image">
-                                                <input type="text" placeholder="URL da imagem">
+                                            <p class="invalid-info hidden" id="question-text">O texto deve ter no mínimo 20 caracteres.</p>
+                                            
+                                            <div class="question-color">
+                                                <input type="text" placeholder="Cor de fundo da pergunta">  
                                             </div>
-                                            <p class="invalid-info hidden" id="right-answer-image">O valor informado não é uma URL válida.</p>    
-                                        </div>
-                                        
-                                        <p>Respostas incorretas</p>
-                                        <div class="wrong-answer">
-                                            <div class="wrong-answer-text">
-                                                <input type="text" placeholder="Resposta incorreta 1">
+                                            <p class="invalid-info hidden" id="question-color">A cor deve estar em formato hexadecimal, começando com "#".</p>
+                                            
+                                            <p>Resposta correta</p>
+                                            <div class="right-answer">
+                                                <div class="right-answer-text">
+                                                    <input type="text" placeholder="Resposta correta">
+                                                </div>
+                                                <p class="invalid-info hidden" id="right-answer-text">O texto não pode estar vazio.</p>
+                                                <div class="right-answer-image">
+                                                    <input type="text" placeholder="URL da imagem">
+                                                </div>
+                                                <p class="invalid-info hidden" id="right-answer-image">O valor informado não é uma URL válida.</p>    
                                             </div>
-                                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
-                                            <div class="wrong-answer-image">
-                                                <input type="text" placeholder="URL da imagem 1">
+                                            
+                                            <p>Respostas incorretas</p>
+                                            <div class="wrong-answer">
+                                                <div class="wrong-answer-text">
+                                                    <input type="text" placeholder="Resposta incorreta 1">
+                                                </div>
+                                                <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
+                                                <div class="wrong-answer-image">
+                                                    <input type="text" placeholder="URL da imagem 1">
+                                                </div>
+                                                <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
                                             </div>
-                                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-                                        </div>
-                                        <div class="wrong-answer">
-                                            <div class="wrong-answer-text">
-                                                <input type="text" placeholder="Resposta incorreta 2">
+                                            <div class="wrong-answer">
+                                                <div class="wrong-answer-text">
+                                                    <input type="text" placeholder="Resposta incorreta 2">
+                                                </div>
+                                                <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
+                                                <div class="wrong-answer-image">
+                                                    <input type="text" placeholder="URL da imagem 2">
+                                                </div>
+                                                <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
                                             </div>
-                                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
-                                            <div class="wrong-answer-image">
-                                                <input type="text" placeholder="URL da imagem 2">
-                                            </div>
-                                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-                                        </div>
-                                        <div class="wrong-answer">
-                                            <div class="wrong-answer-text">
-                                                <input type="text" placeholder="Resposta incorreta 3">
-                                            </div>
-                                            <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
-                                            <div class="wrong-answer-image">
-                                                <input type="text" placeholder="URL da imagem 3">
-                                            </div>
-                                            <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
-                                        </div>                            
-                                    </div>               
-                                </div>
-                                `;
-        
+                                            <div class="wrong-answer">
+                                                <div class="wrong-answer-text">
+                                                    <input type="text" placeholder="Resposta incorreta 3">
+                                                </div>
+                                                <p class="invalid-info hidden" id="wrong-answer-text">Deve haver pelo menos uma resposta incorreta.</p>
+                                                <div class="wrong-answer-image">
+                                                    <input type="text" placeholder="URL da imagem 3">
+                                                </div>
+                                                <p class="invalid-info hidden" id="wrong-answer-image">O valor informado não é uma URL válida.</p>
+                                            </div>                            
+                                        </div>               
+                                    </div>
+                                    `;
+            
         newQuizzQuestionsHTML.innerHTML += newQuestionHTML;
     }
+    
     newQuizzQuestionsHTML.innerHTML += `<button onclick="moveToCreateLevelsScreen()">Prosseguir para criar níveis</button>`
     allQuestions = newQuizzQuestionsHTML.querySelectorAll(".new-question");
 
     hideNewQuestionData(document.querySelector("[data-question='1']"));
+
+    if(fromEditQuizz) {
+        putValuesInQuestions(n);
+    }
+}
+
+function putValuesInQuestions(n) {
+    const objectQuestions = editQuizzObject.data.questions;
+    
+    for (let i = 1; i <= n; i++) {
+        
+        const element = document.querySelector(`[data-question="${i}"]`);
+        objectQuestion = objectQuestions[i-1];
+        
+        element.querySelector(".question-text input").setAttribute("value",objectQuestion.title);
+        element.querySelector(".question-color input").setAttribute("value",objectQuestion.color);
+        element.querySelector(".right-answer-text input").setAttribute("value",objectQuestion.answers[0].text);
+        element.querySelector(".right-answer-image input").setAttribute("value",objectQuestion.answers[0].image);
+
+        const wrongAnswersElements = [...element.querySelectorAll(".wrong-answer")];
+        for (let j = 0; j < wrongAnswersElements.length;j++) {
+            wrongAnswersElements[j].querySelector(".wrong-answer-text input").setAttribute("value",objectQuestion.answers[j+1].text);
+            wrongAnswersElements[j].querySelector(".wrong-answer-image input").setAttribute("value",objectQuestion.answers[j+1].image);
+        }
+    }
 }
 
 function isValidQuestionText() {
@@ -1036,6 +1062,23 @@ function renderNewQuizzLevelsScreen(n){
     allLevels = newQuizzLevelsHTML.querySelectorAll(".new-level");
 
     hideNewLevelData(document.querySelector("[data-level='1']"));
+
+    if(fromEditQuizz) {
+        putValuesInLevels(n);
+    }
+}
+
+function putValuesInLevels(n) {
+    let objectLevels = editQuizzObject.data.levels;
+    
+    for (let i = 1; i <= n; i++) {
+        const element = document.querySelector(`[data-level="${i}"]`);
+        
+        element.querySelector(".level-text input").setAttribute("value",objectLevels[i-1].title);
+        element.querySelector(".level-percentage input").setAttribute("value",objectLevels[i-1].minValue);
+        element.querySelector(".level-url input").setAttribute("value",objectLevels[i-1].image);
+        element.querySelector(".level-description input").setAttribute("value",objectLevels[i-1].text);
+    }
 }
 
 function isValidLevelTitle() {
